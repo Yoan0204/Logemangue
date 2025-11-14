@@ -50,8 +50,11 @@
       </section>
 
       <section class="news-section p-5">
-        <h2 class="mb-4">Actualités du monde</h2>
-        <p class="lead">Découvrez les dernières actualités et événements importants qui façonnent notre monde. De la politique aux sciences, en passant par l'économie et la culture, restez informé des développements majeurs qui impactent nos sociétés. Nous vous apportons les informations essentielles pour comprendre les enjeux contemporains et anticiper les tendances futures.</p>
+        <h2 class="mb-4">Actualités du logement</h2>
+        <p class="lead">Logemangue vous guide à travers le monde complexe de l'immobilier de location pour étudiants. 
+          Nous proposons une cellule d'étude de marché immobilier dédiée aux étudiants, offrant analyses, 
+          conseils et ressources pour trouver le logement idéal au meilleur prix.
+        </p>
       </section>
     </div>
     
