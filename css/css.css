@@ -7,124 +7,122 @@
 }
 
 /* --- SIDEBAR --- */
+.sidebar {
+  width: 230px;
+  height: 100vh;
+  min-width: 230px;
+  background-color: #fff;
+  border-right: 1px solid #eee;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.03);
+  z-index: 999;
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hamburger (mobile) */
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1100;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--green);
+}
+
+.flex-grow-1 {
+  margin-left: 230px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
   .sidebar {
-    width: 230px;
-    height: 100vh;
-    min-width: 230px;
-    background-color: #fff;
-    border-right: 1px solid #eee;
-    overflow-y: auto;
-    scrollbar-width: none; /* Pour Firefox */
-    -ms-overflow-style: none;
-    padding: 2rem 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: center;
     position: fixed;
-    left: 0;
     top: 0;
-    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.03);
-    z-index: 999;
+    left: 0;
+    transform: translateX(-100%);
+    height: 100dvh;
+    width: 230px;
+    z-index: 1000;
+    overflow-y: auto;
   }
 
-  /* Hamburger (mobile)*/
-  .hamburger {
-    display: none;
-    font-size: 2rem;
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 1100;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--green);
-  }
-
-  /* Mobile responsive */
-  @media (max-width: 768px) {
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      transform: translateX(-100%);
-      height: 100dvh; 
-      width: 230px;
-      z-index: 1000;
-      overflow-y: auto; 
-    }
-
-    .sidebar.active {
-      transform: translateX(0);
-    }
-
-    .flex-grow-1 {
-      margin-left: 0;
-    }
-
-    .hamburger {
-      display: block;
-    }
+  .sidebar.active {
+    transform: translateX(0);
   }
 
   .flex-grow-1 {
-    margin-left: 230px;
+    margin-left: 0;
   }
 
-  .sidebar::-webkit-scrollbar {
-      display: none;
+  .hamburger {
+    display: block;
   }
+}
 
-  .sidebar .nav-link {
-    color: #000;
-    font-weight: 500;
-    text-decoration: none;
-    margin-bottom: 0.8rem;
-    padding: 1rem 1rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    position: relative;
-  }
+/* Navigation links */
+.sidebar .nav-link {
+  color: #000;
+  font-weight: 500;
+  text-decoration: none;
+  margin-bottom: 0.8rem;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+}
 
-  /* Overlay au survol */
-  .sidebar .nav-link::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, var(--yellow), var(--orange));
-    opacity: 0;
-    border-radius: 8px;
-    transition: opacity 0.3s ease;
-    z-index: -1;
-  }
+.sidebar .nav-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--yellow), var(--orange));
+  opacity: 0;
+  border-radius: 8px;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
 
-  .sidebar .nav-link:hover::before {
-    opacity: 0.15;
-  }
+.sidebar .nav-link:hover::before {
+  opacity: 0.15;
+}
 
-  .sidebar .nav-link:hover {
-    color: var(--orange);
-    transform: translateX(4px);
-  }
+.sidebar .nav-link:hover {
+  color: var(--orange);
+  transform: translateX(4px);
+}
 
-  /* Ligne de séparation */
-  .sidebar hr {
-    width: 60%;
-    border: 1px solid var(--green);
-    opacity: 1;
-    margin: 1rem 0;
-    align-self: center;
-  }
+/* Separator lines */
+.sidebar hr {
+  width: 60%;
+  border: 1px solid var(--green);
+  margin: 1rem 0;
+  align-self: center;
+}
 
 /* Logo */
 .sidebar-logo {
   display: block;
   width: 150px;
   height: auto;
-  margin: -25px auto 20px auto;
+  margin: -25px auto 20px;
   object-fit: contain;
-  align-items: center;
   cursor: pointer;
   transition: transform 0.2s;
 }
@@ -133,7 +131,7 @@
   transform: scale(1.05);
 }
 
-/* Lien actif */
+/* Active link */
 .sidebar .active-link,
 .sidebar .active-profile {
   background: linear-gradient(90deg, var(--yellow), var(--orange));
