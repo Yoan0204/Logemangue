@@ -5,43 +5,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Accueil - Logemangue</title>
-  <link rel="icon" type="image/x-icon" href='icon.png' onresize="2300">
+  <link rel="icon" type="image/x-icon" href="icon.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="../css/css.css">
-
 </head>
 
 <body>
+  <button id="menu-toggle" class="hamburger">☰</button>
 
-<button id="menu-toggle" class="hamburger">☰</button>
-
-<div class="d-flex">
-  <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <div>
-      <a href="index.php">
-        <img class="sidebar-logo" src="Aberent.png" alt="Logo">
-      </a>
-      <nav class="nav flex-column">
-        <a class="nav-link active-link" href="index.php">Accueil</a>
-        <a class="nav-link" href="recherche.php">Recherche</a>
-
-        <hr>
-        <a class="nav-link" href="publish.php">Publier une annonce</a>
-        <a class="nav-link" href="mesannonces.php">Mes annonces</a>
-        <a class="nav-link" href="#">Ma messagerie</a>
-
-        <hr>
-        <a class="nav-link" href="#">FAQ</a>
-        <a class="nav-link" href="#">Contact</a>
-
-        <hr>
-        <a class="nav-link" href="admin.php">Admin ⚙️</a>
-        <a class="nav-link" href="profil.php">Mon profil</a>
-        <a class="nav-link" href="login.html">Connexion</a>
-      </nav>
+  <div class="d-flex">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div>
+        <a href="index.php">
+          <img class="sidebar-logo" src="Aberent.png" alt="Logo">
+        </a>
+        <nav class="nav flex-column">
+          <a class="nav-link active-link" href="index.php">Accueil</a>
+          <a class="nav-link" href="recherche.php">Recherche</a>
+          <hr>
+          <a class="nav-link" href="publish.php">Publier une annonce</a>
+          <a class="nav-link" href="mesannonces.php">Mes annonces</a>
+          <a class="nav-link" href="#">Ma messagerie</a>
+          <hr>
+          <a class="nav-link" href="#">FAQ</a>
+          <a class="nav-link" href="#">Contact</a>
+          <hr>
+          <a class="nav-link" href="admin.php">Admin ⚙️</a>
+          <a class="nav-link" href="profil.php">Mon profil</a>
+          <a class="nav-link" href="login.html">Connexion</a>
+        </nav>
+      </div>
     </div>
-  </div>
 
     <!-- Contenu principal -->
     <div class="flex-grow-1">
@@ -101,9 +96,7 @@
             <div class="col-md-4">
               <a href="logement1.html" class="logement-link">
                 <div class="logement-card">
-                  <img
-                    src="https://media.admagazine.fr/photos/65300bdda7dee5dd8ac5e683/16:9/w_2560%2Cc_limit/18th%2520apartment%2520-%2520wiercinski-studio%252016.jpg"
-                    alt="Logement 1">
+                  <img src="https://media.admagazine.fr/photos/65300bdda7dee5dd8ac5e683/16:9/w_2560%2Cc_limit/18th%2520apartment%2520-%2520wiercinski-studio%252016.jpg" alt="Logement 1">
                   <div class="info">
                     <h6 class="fw-bold mb-1">Appartement T1 - Lyon</h6>
                     <p class="text-muted mb-0">Proche université, meublé, 500€/mois</p>
@@ -115,9 +108,7 @@
             <div class="col-md-4">
               <a href="logement2.html" class="logement-link">
                 <div class="logement-card">
-                  <img
-                    src="https://media.admagazine.fr/photos/65300bdda7dee5dd8ac5e683/16:9/w_2560%2Cc_limit/18th%2520apartment%2520-%2520wiercinski-studio%252016.jpg"
-                    alt="Logement 2">
+                  <img src="https://media.admagazine.fr/photos/65300bdda7dee5dd8ac5e683/16:9/w_2560%2Cc_limit/18th%2520apartment%2520-%2520wiercinski-studio%252016.jpg" alt="Logement 2">
                   <div class="info">
                     <h6 class="fw-bold mb-1">Studio - Paris 13</h6>
                     <p class="text-muted mb-0">Idéal étudiant, toutes charges incluses</p>
@@ -129,9 +120,7 @@
             <div class="col-md-4">
               <a href="logement3.html" class="logement-link">
                 <div class="logement-card">
-                  <img
-                    src="https://media.admagazine.fr/photos/65300bdda7dee5dd8ac5e683/16:9/w_2560%2Cc_limit/18th%2520apartment%2520-%2520wiercinski-studio%252016.jpg"
-                    alt="Logement 3">
+                  <img src="https://media.admagazine.fr/photos/65300bdda7dee5dd8ac5e683/16:9/w_2560%2Cc_limit/18th%2520apartment%2520-%2520wiercinski-studio%252016.jpg" alt="Logement 3">
                   <div class="info">
                     <h6 class="fw-bold mb-1">Colocation - Toulouse</h6>
                     <p class="text-muted mb-0">Chambre disponible dans colocation de 3</p>
@@ -150,13 +139,14 @@
       </footer>
     </div>
   </div>
+
   <script>
     const toggle = document.getElementById("menu-toggle");
-const sidebar = document.getElementById("sidebar");
+    const sidebar = document.getElementById("sidebar");
 
-toggle.addEventListener("click", () => {
-  sidebar.classList.toggle("active");
-});
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("active");
+    });
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -50,7 +50,6 @@
   margin-left: 230px;
 }
 
-
 /* Navigation links */
 .sidebar .nav-link {
   color: #000;
@@ -157,6 +156,7 @@
 .feature-icon {
   font-size: 2.5rem;
   background: linear-gradient(135deg, var(--orange), var(--yellow));
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 1rem;
@@ -194,7 +194,7 @@
 
 .logement-card:hover {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  background: linear-gradient(to right, var(--orange),var(--yellow));
+  background: linear-gradient(to right, var(--orange), var(--yellow));
 }
 
 .logement-card img {
