@@ -48,6 +48,11 @@
         <h1 class="display-5 fw-bold mb-3">Ceci est une page test </h1>
         <p class="lead mb-5">Cette page sert uniquement à tester le menu sidebar</p>
       </section>
+
+      <section class="news-section p-5">
+        <h2 class="mb-4">Actualités du monde</h2>
+        <p class="lead">Découvrez les dernières actualités et événements importants qui façonnent notre monde. De la politique aux sciences, en passant par l'économie et la culture, restez informé des développements majeurs qui impactent nos sociétés. Nous vous apportons les informations essentielles pour comprendre les enjeux contemporains et anticiper les tendances futures.</p>
+      </section>
     </div>
     
 

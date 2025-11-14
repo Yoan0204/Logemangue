@@ -10,7 +10,7 @@
   .sidebar {
     width: 230px;
     height: 100vh;
-
+    min-width: 230px;
     background-color: #fff;
     border-right: 1px solid #eee;
     overflow-y: auto;
@@ -21,9 +21,11 @@
     flex-direction: column;
     justify-content: space-between;
     text-align: center;
-    position: sticky;
+    position: fixed;
+    left: 0;
     top: 0;
     box-shadow: 4px 0 12px rgba(0, 0, 0, 0.03);
+    z-index: 999;
   }
 
   /* Hamburger (mobile)*/
@@ -57,13 +59,17 @@
       transform: translateX(0);
     }
 
-    .main-content {
+    .flex-grow-1 {
       margin-left: 0;
     }
 
     .hamburger {
       display: block;
     }
+  }
+
+  .flex-grow-1 {
+    margin-left: 230px;
   }
 
   .sidebar::-webkit-scrollbar {
