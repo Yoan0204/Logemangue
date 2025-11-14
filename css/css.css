@@ -50,31 +50,6 @@
   margin-left: 230px;
 }
 
-/* Mobile responsive */
-@media (max-width: 768px) {
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    transform: translateX(-100%);
-    height: 100dvh;
-    width: 230px;
-    z-index: 1000;
-    overflow-y: auto;
-  }
-
-  .sidebar.active {
-    transform: translateX(0);
-  }
-
-  .flex-grow-1 {
-    margin-left: 0;
-  }
-
-  .hamburger {
-    display: block;
-  }
-}
 
 /* Navigation links */
 .sidebar .nav-link {
