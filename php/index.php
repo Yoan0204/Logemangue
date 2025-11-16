@@ -133,9 +133,11 @@
       </section>
 
       <footer class="text-center py-3">
-        © <?php echo date('Y'); ?> Logemangue - Tous droits réservés
+        © <?php echo date("Y"); ?> Logemangue - Tous droits réservés
         <br>
-        <small class="text-muted">Dernière mise à jour : <?php echo date('d/m/Y à H:i'); ?></small>
+        <small class="text-muted">Dernière mise à jour : <?php echo date(
+            "d/m/Y à H:i"
+        ); ?></small>
       </footer>
     </div>
   </div>
