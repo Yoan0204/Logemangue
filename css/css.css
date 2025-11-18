@@ -181,7 +181,7 @@
 }
 
 .logement-card {
-  background: #fff;
+  background: var(--light-bg);
   border-radius: 15px;
   box-shadow: var(--shadow);
   transition: 0.15s ease;
@@ -207,6 +207,11 @@
   padding: 1rem;
 }
 
+.logement-title-dark {
+  color: #000;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
 
 .search-input {
   border-radius: 50px;
