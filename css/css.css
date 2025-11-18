@@ -217,6 +217,14 @@
   box-shadow: var(--shadow);
 }
 
+.search-input-filters {
+  border-radius: 50px;
+  padding: 0.9rem 1.5rem;
+  border: none;
+  width: 100%;
+  box-shadow: var(--shadow);
+}
+
 .btn-search {
   background-color: var(--yellow);
   color: white;
@@ -233,4 +241,93 @@
   background-color: var(--orange);
   color: black;
   transform: translateY(-2px);
+}
+/* === STYLES SPÉCIFIQUES PAGE RECHERCHE === */
+/* === BARRE DE RECHERCHE === */
+.search-bar {
+  background: linear-gradient(90deg, var(--yellow), var(--orange));
+  box-shadow: var(--shadow);
+  border-radius: 20px;
+  padding: 1.2rem;
+}
+
+/* Grille à 4 colonnes proportionnées */
+.search-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.2fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Champs de saisie */
+.search-bar .form-control,
+.search-bar .form-select {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  height: 48px;
+}
+
+.search-bar .form-control:focus,
+.search-bar .form-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(34, 139, 34, 0.2);
+}
+
+/* Bouton filtres */
+.btn-filters {
+  background-color: var(--green);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  height: 48px;
+  border-radius: 15px;
+  padding: 0 5px 0 5px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-filters:hover {
+  background-color: #1f5f07;
+  transform: translateY(-2px);
+}
+
+/* Filtres */
+.filters {
+  background: linear-gradient(90deg, var(--orange), var(--yellow));
+  border-radius: 16px;
+  color: #000;
+}
+/* Slider personnalisé */
+.custom-range::-webkit-slider-thumb {
+  background-color: var(--green);
+}
+
+.custom-range::-moz-range-thumb {
+  background-color: var(--green);
+}
+
+.custom-range {
+  accent-color: var(--green);
+}
+
+/* Cases à cocher personnalisées */
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+
+/* Étoiles interactives */
+.stars {
+  font-size: 1.8rem;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.stars .star.selected {
+  color: var(--green);
+  text-shadow: 0 0 5px rgba(0, 128, 0, 0.4);
 }
