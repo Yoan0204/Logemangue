@@ -1,157 +1,197 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<!-- Formated by Astral v1 -->
- 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Accueil - Logemangue</title>
-  <link rel="icon" type="image/x-icon" href="icon.png">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="../css/css.css">
-</head>
+  <!-- Formated by Astral v1 -->
 
-<body>
-  <button id="menu-toggle" class="hamburger">☰</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accueil - Logemangue</title>
+    <link rel="icon" type="image/x-icon" href="icon.png" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="../css/css.css" />
+  </head>
 
-  <div class="d-flex">
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-      <div>
-        <a href="index.php">
-          <img class="sidebar-logo" src="Aberent.png" alt="Logo">
-        </a>
-        <nav class="nav flex-column">
-          <a class="nav-link active-link" href="index.php">Accueil</a>
-          <a class="nav-link" href="recherche.html">Recherche</a>
-          <hr>
-          <a class="nav-link" href="publish.php">Publier une annonce</a>
-          <a class="nav-link" href="mesannonces.php">Mes annonces</a>
-          <a class="nav-link" href="#">Ma messagerie</a>
-          <hr>
-          <a class="nav-link" href="#">FAQ</a>
-          <a class="nav-link" href="#">Contact</a>
-          <hr>
-          <a class="nav-link" href="admin.php">Admin ⚙️</a>
-          <a class="nav-link" href="profil.php">Mon profil</a>
-          <a class="nav-link" href="login.html">Connexion</a>
-        </nav>
-      </div>
-    </div>
+  <body>
+    <button id="menu-toggle" class="hamburger">☰</button>
 
-    <!-- Contenu principal -->
-    <div class="flex-grow-1">
-      <section class="hero text-center text-white">
-        <h1 class="display-5 fw-bold mb-3">Trouvez votre logement étudiant idéal</h1>
-        <p class="lead mb-5">La plateforme qui connecte étudiants et propriétaires pour trouver le logement parfait</p>
-
-        <div class="d-flex justify-content-center align-items-center mb-5">
-          <input type="text" class="form-control search-input" placeholder="Ville, quartier, type de logement...">
-          <button class="btn-search">Rechercher →</button>
+    <div class="d-flex">
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+        <div>
+          <a href="index.php">
+            <img class="sidebar-logo" src="Aberent.png" alt="Logo" />
+          </a>
+          <nav class="nav flex-column">
+            <a class="nav-link active-link" href="index.php">Accueil</a>
+            <a class="nav-link" href="recherche.html">Recherche</a>
+            <hr />
+            <a class="nav-link" href="publish.php">Publier une annonce</a>
+            <a class="nav-link" href="mesannonces.php">Mes annonces</a>
+            <a class="nav-link" href="#">Ma messagerie</a>
+            <hr />
+            <a class="nav-link" href="#">FAQ</a>
+            <a class="nav-link" href="#">Contact</a>
+            <hr />
+            <a class="nav-link" href="admin.php">Admin ⚙️</a>
+            <a class="nav-link" href="profil.php">Mon profil</a>
+            <a class="nav-link" href="login.html">Connexion</a>
+          </nav>
         </div>
+      </div>
 
+      <!-- Contenu principal -->
+      <div class="flex-grow-1">
+        <section class="hero text-center text-white">
+          <h1 class="display-5 fw-bold mb-3">
+            Trouvez votre logement étudiant idéal
+          </h1>
+          <p class="lead mb-5">
+            La plateforme qui connecte étudiants et propriétaires pour trouver
+            le logement parfait
+          </p>
+
+          <div class="d-flex justify-content-center align-items-center mb-5">
+            <input
+              type="text"
+              class="form-control search-input"
+              placeholder="Ville, quartier, type de logement..."
+            />
+            <button class="btn-search">Rechercher →</button>
+          </div>
+
+          <!--
         <div class="d-flex justify-content-center gap-5 stats">
           <div><strong>15+</strong><br>Logements disponibles</div>
           <div><strong>100%</strong><br>Annonces vérifiées</div>
           <div><strong>24/7</strong><br>Support étudiant</div>
         </div>
-      </section>
+        --></section>
 
-      <section class="features text-center">
-        <h2 class="fw-bold mb-4">Pourquoi choisir Logemangue ?</h2>
-        <p class="text-muted mb-5">Une plateforme moderne conçue pour faciliter votre recherche de logement</p>
+        <section class="features text-center">
+          <h2 class="fw-bold mb-4">Pourquoi choisir Logemangue ?</h2>
+          <p class="text-muted mb-5">
+            Une plateforme moderne conçue pour faciliter votre recherche de
+            logement
+          </p>
 
-        <div class="container">
-          <div class="row g-4">
-            <div class="col-md-4">
-              <div class="p-4 feature-card">
-                <div class="feature-icon">🔍</div>
-                <h5 class="fw-bold">Recherche Facile</h5>
-                <p>Trouvez votre logement idéal en quelques clics sur Logemangue</p>
+          <div class="container">
+            <div class="row g-4">
+              <div class="col-md-4">
+                <div class="p-4 feature-card">
+                  <div class="feature-icon">🔍</div>
+                  <h5 class="fw-bold">Recherche Facile</h5>
+                  <p>
+                    Trouvez votre logement idéal en quelques clics sur
+                    Logemangue
+                  </p>
+                </div>
               </div>
-            </div>
 
-            <div class="col-md-4">
-              <div class="p-4 feature-card">
-                <div class="feature-icon">✔️</div>
-                <h5 class="fw-bold">Logements Vérifiés</h5>
-                <p>Annonces vérifiées de particuliers et organismes par nos modérateurs spécialisés.</p>
+              <div class="col-md-4">
+                <div class="p-4 feature-card">
+                  <div class="feature-icon">✔️</div>
+                  <h5 class="fw-bold">Logements Vérifiés</h5>
+                  <p>
+                    Annonces vérifiées de particuliers et organismes par nos
+                    modérateurs spécialisés.
+                  </p>
+                </div>
               </div>
-            </div>
 
-            <div class="col-md-4">
-              <div class="p-4 feature-card">
-                <div class="feature-icon">👥</div>
-                <h5 class="fw-bold">Colocation</h5>
-                <p>Trouvez des colocataires en formant un groupe de candidatures.</p>
+              <div class="col-md-4">
+                <div class="p-4 feature-card">
+                  <div class="feature-icon">👥</div>
+                  <h5 class="fw-bold">Colocation</h5>
+                  <p>
+                    Trouvez des colocataires en formant un groupe de
+                    candidatures.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section class="recent">
-        <div class="container">
-          <h2 class="fw-bold text-center mb-4">Logements récents</h2>
-          <div class="row g-4">
-            <div class="col-md-4">
-              <a href="logement1.html" class="logement-link">
-                <div class="logement-card">
-                  <img src="https://media.admagazine.fr/photos/65300bdda7dee5dd8ac5e683/16:9/w_2560%2Cc_limit/18th%2520apartment%2520-%2520wiercinski-studio%252016.jpg" alt="Logement 1">
-                  <div class="info">
-                    <h6 class="fw-bold mb-1">Appartement T1 - Lyon</h6>
-                    <p class="text-muted mb-0">Proche université, meublé, 500€/mois</p>
+        <section class="recent">
+          <div class="container">
+            <h2 class="fw-bold text-center mb-4">Logements récents</h2>
+            <div class="row g-4">
+              <div class="col-md-4">
+                <a href="logement1.html" class="logement-link">
+                  <div class="logement-card">
+                    <img
+                      src="https://media.admagazine.fr/photos/65300bdda7dee5dd8ac5e683/16:9/w_2560%2Cc_limit/18th%2520apartment%2520-%2520wiercinski-studio%252016.jpg"
+                      alt="Logement 1"
+                    />
+                    <div class="info">
+                      <h6 class="fw-bold mb-1">Appartement T1 - Lyon</h6>
+                      <p class="text-muted mb-0">
+                        Proche université, meublé, 500€/mois
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </a>
-            </div>
+                </a>
+              </div>
 
-            <div class="col-md-4">
-              <a href="logement2.html" class="logement-link">
-                <div class="logement-card">
-                  <img src="https://media.admagazine.fr/photos/65300bdda7dee5dd8ac5e683/16:9/w_2560%2Cc_limit/18th%2520apartment%2520-%2520wiercinski-studio%252016.jpg" alt="Logement 2">
-                  <div class="info">
-                    <h6 class="fw-bold mb-1">Studio - Paris 13</h6>
-                    <p class="text-muted mb-0">Idéal étudiant, toutes charges incluses</p>
+              <div class="col-md-4">
+                <a href="logement2.html" class="logement-link">
+                  <div class="logement-card">
+                    <img
+                      src="https://media.admagazine.fr/photos/65300bdda7dee5dd8ac5e683/16:9/w_2560%2Cc_limit/18th%2520apartment%2520-%2520wiercinski-studio%252016.jpg"
+                      alt="Logement 2"
+                    />
+                    <div class="info">
+                      <h6 class="fw-bold mb-1">Studio - Paris 13</h6>
+                      <p class="text-muted mb-0">
+                        Idéal étudiant, toutes charges incluses
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </a>
-            </div>
+                </a>
+              </div>
 
-            <div class="col-md-4">
-              <a href="logement3.html" class="logement-link">
-                <div class="logement-card">
-                  <img src="https://media.admagazine.fr/photos/65300bdda7dee5dd8ac5e683/16:9/w_2560%2Cc_limit/18th%2520apartment%2520-%2520wiercinski-studio%252016.jpg" alt="Logement 3">
-                  <div class="info">
-                    <h6 class="fw-bold mb-1">Colocation - Toulouse</h6>
-                    <p class="text-muted mb-0">Chambre disponible dans colocation de 3</p>
+              <div class="col-md-4">
+                <a href="logement3.html" class="logement-link">
+                  <div class="logement-card">
+                    <img
+                      src="https://media.admagazine.fr/photos/65300bdda7dee5dd8ac5e683/16:9/w_2560%2Cc_limit/18th%2520apartment%2520-%2520wiercinski-studio%252016.jpg"
+                      alt="Logement 3"
+                    />
+                    <div class="info">
+                      <h6 class="fw-bold mb-1">Colocation - Toulouse</h6>
+                      <p class="text-muted mb-0">
+                        Chambre disponible dans colocation de 3
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </a>
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <footer class="text-center py-3">
-        © <?php echo date("Y"); ?> Logemangue - Tous droits réservés
-        <br>
-        <small class="text-muted">Dernière mise à jour : <?php echo date(
-            "d/m/Y à H:i"
-        ); ?></small>
-      </footer>
+        <footer class="text-center py-3">
+          © <?php echo date("Y"); ?> Logemangue - Tous droits réservés
+          <br />
+          <small class="text-muted"
+            >Dernière mise à jour : <?php echo date( "d/m/Y à H:i" ); ?></small
+          >
+        </footer>
+      </div>
     </div>
-  </div>
 
-  <script>
-    const toggle = document.getElementById("menu-toggle");
-    const sidebar = document.getElementById("sidebar");
+    <script>
+      const toggle = document.getElementById("menu-toggle");
+      const sidebar = document.getElementById("sidebar");
 
-    toggle.addEventListener("click", () => {
-      sidebar.classList.toggle("active");
-    });
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
+      toggle.addEventListener("click", () => {
+        sidebar.classList.toggle("active");
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
+
