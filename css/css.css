@@ -6,6 +6,84 @@
   --green: #2b7a0b;
 }
 
+/* --- TOPBAR --- */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* logo à gauche, bloc menu à droite */
+    padding: 10px 20px;
+    background: white;
+    border-bottom: 1px solid #ddd;
+}
+
+.topbar-nav {
+    display: flex;
+    gap: 20px;
+    margin: 0 auto;          /* centre le menu */
+    transform: translateX(-40px); /* compense l’espace du logo si nécessaire */
+}
+
+
+.topbar-logo img {
+    height: 40px;
+    margin-right: 20px;
+}
+
+
+.topbar-nav .nav-link {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 8px 12px;
+    transition: all 0.3s ease;    
+}
+
+.topbar-nav .nav-link:hover {
+    background: #f0f0f0;
+    border-radius: 5px;
+}
+
+/* Active link */
+.topbar-nav .active-link,
+.topbar-nav .active-profile {
+  background: linear-gradient(90deg, var(--yellow), var(--orange));
+  color: black !important;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.topbar-nav .active-link:hover::before,
+.topbar-nav .active-profile:hover::before {
+  opacity: 0;
+}
+
+/* Navigation links */
+
+
+.topbar-nav .nav-link::before {
+  content: "";
+  inset: 0;
+  background: linear-gradient(90deg, var(--yellow), var(--orange));
+  opacity: 0;
+  border-radius: 8px;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.topbar-nav .nav-link:hover::before {
+  opacity: 0.15;
+}
+
+.topbar-nav .nav-link:hover {
+  color: var(--orange);
+  transform: translateY(2px);
+}
+
 /* --- SIDEBAR --- */
 .sidebar {
   width: 230px;
