@@ -414,3 +414,94 @@
   color: var(--green);
   text-shadow: 0 0 5px rgba(0, 128, 0, 0.4);
 }
+
+/* === SECTION PUBLICATION === */
+.publication-container {
+  background-color: #fffdf8;
+  border: 2px solid #d3cfc6;
+}
+
+.publication-header {
+  border-radius: 15px;
+  color: #000;
+  font-weight: 800;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+}
+
+.publication-form .form-field {
+  border: none;
+  border-radius: 15px;
+  padding: 10px 15px;
+  background: linear-gradient(to right, #ffd53d, #ff9c42);
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+  font-size: 15px;
+}
+
+.publication-form .form-field:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 136, 0, 0.6);
+}
+
+.photo-sample {
+  width: 130px;
+  height: 90px;
+  border-radius: 12px;
+  background: url('placeholder.png') center/cover no-repeat;
+  box-shadow: 3px 3px 6px rgba(0,0,0,0.15);
+}
+
+.photo-upload {
+  width: 130px;
+  height: 90px;
+  border-radius: 12px;
+  background: linear-gradient(to right, #ffb648, #e37b3f);
+  color: #000;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 3px 3px 6px rgba(0,0,0,0.15);
+}
+
+.add-photo-btn {
+  border: none;
+  background: #fff;
+  color: #000;
+  border-radius: 50%;
+  font-size: 22px;
+  width: 32px;
+  height: 32px;
+  margin-top: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+.abandon-btn {
+  background: linear-gradient(to right, #ffb648, #ff8c2b);
+  color: #000;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 8px 25px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.15);
+}
+
+.publier-btn {
+  background: linear-gradient(to right, #ffd53d, #ff9c42);
+  color: #000;
+  font-weight: 700;
+  border-radius: 12px;
+  padding: 8px 25px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.15);
+}
+
+.btn-login {
+  background: linear-gradient(135deg, var(--orange), var(--yellow));
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: 0.3s ease;
+}
+
+.btn-login:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, var(--yellow), var(--orange));
+}

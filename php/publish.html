@@ -5,38 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Publier une annonce - Logemangue</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../css/css.css">
 </head>
-  <body>
-    <button id="menu-toggle" class="hamburger">☰</button>
+<header class="topbar">
+    <a href="index.php" class="topbar-logo">
+        <img src="topbar.png" onresize="3000" alt="Logo">
+    </a>
 
-    <div class="d-flex">
-      <!-- Sidebar -->
-      <div class="sidebar" id="sidebar">
-        <div>
-          <a href="index.php">
-            <img class="sidebar-logo" src="Aberent.png" alt="Logo" />
-          </a>
-          <nav class="nav flex-column">
-            <a class="nav-link active-link" href="index.php">Accueil</a>
-            <a class="nav-link" href="recherche.html">Recherche</a>
-            <hr />
-            <a class="nav-link" href="publish.php">Publier une annonce</a>
+    <nav class="topbar-nav">
+        <a class="nav-link " href="index.php">Accueil</a>
+        <a class="nav-link" href="recherche.html">Recherche</a>
+
+            <a class="nav-link active-link" href="publish.html">Publier une annonce</a>
             <a class="nav-link" href="mesannonces.php">Mes annonces</a>
-            <a class="nav-link" href="#">Ma messagerie</a>
-            <hr />
-            <a class="nav-link" href="#">FAQ</a>
-            <a class="nav-link" href="#">Contact</a>
-            <hr />
-            <a class="nav-link" href="admin.php">Admin ⚙️</a>
-            <a class="nav-link" href="profil.php">Mon profil</a>
-            <a class="nav-link" href="login.html">Connexion</a>
-          </nav>
-        </div>
-      </div>
 
+        <a class="nav-link" href="messagerie.php?dest=8">Ma messagerie</a>  
+
+            <a class="nav-link" href="admin.php">Admin ⚙️</a>
+
+        <a class="nav-link" href="profil.php">Mon profil</a>
+    </nav>
+</header>
+  <body>
     <!-- Contenu principal -->
-    <main class="flex-grow-1 p-4">
+    <main>
       <div class="publication-container shadow p-4 rounded-4">
         <h1 class="text-center text-dark fw-bold p-3 mb-4 publication-header">
           Publier une annonce
