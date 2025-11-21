@@ -189,7 +189,7 @@
 
 .search-input-filters {
   border-radius: 50px;
-  padding: 0.9rem 1.5rem;
+  padding: 0.95rem 1.5rem;
   border: none;
   width: 100%;
   box-shadow: var(--shadow);
@@ -200,7 +200,7 @@
   color: white;
   border: none;
   border-radius: 50px;
-  padding: 1rem 1.8rem;
+  padding: 0.9rem 1.8rem;
   font-weight: 600;
   margin-left: -2.5rem;
   box-shadow: var(--shadow);
