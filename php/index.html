@@ -5,16 +5,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/carrousel.css" />
-    <link rel="icon" type="image/x-icon" href="Aberent.png" onresize="2300" />
+    <link rel="icon" type="image/x-icon" href='icon.png'/>
     <title>Accueil - Logemangue</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <link rel="stylesheet" type="text/css" href="../css/css.css" />
-    <script src="../js/carrousel.js"></script>
   </head>
+  <style>
+            .carousel-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .carousel-item img {
+            height: 500px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        
+        .carousel-caption {
+            background-color: rgba(250, 194, 81, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .property-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .property-info {
+            font-size: 1.1rem;
+        }
+        
+        /* Transition de défilement plus douce */
+        .carousel-item {
+            transition: transform 1.2s ease-in-out;
+        }
+  </style>
   <header class="topbar">
     <a href="index.php" class="topbar-logo">
       <img src="topbar.png" onresize="3000" alt="Logo" />
@@ -62,64 +93,51 @@
 <div><strong>100%</strong><br>Annonces vérifiées</div>
 <div><strong>24/7</strong><br>Support étudiant</div>
 </div>-->
-        <div class="container p-3">
-          <div class="row g-4">
-            <div class="col-md-4">
-              <a href="logement1.html" class="logement-link">
-                <div class="logement-card">
-                  <img
-                    src="https://media.ouest-france.fr/v1/pictures/MjAyNTAzNzRlZGJjMzkyMTE3MDAwYjhhMDcyNDRjZWU1NDIyZDI?width=630&height=354&focuspoint=50%2C25&cropresize=1&client_id=bpeditorial&sign=fc6738042c167692858ff0af38f68071d2553bb6c47ea13f880968838751d160"
-                    alt="Logement 1"
-                  />
-                  <div class="info">
-                    <h6 class="fw-bold mb-1 logement-title-dark">
-                      Appartement T1 - Lyon
-                    </h6>
-                    <p class="text-muted mb-0">
-                      Proche université, meublé, 500€/mois
-                    </p>
-                  </div>
-                </div>
-              </a>
+      <div class="container carousel-container" style="margin-bottom: 0px;">        
+        <div id="carouselLogements" class="carousel slide" data-bs-ride="carousel">
+            <!-- Indicateurs -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselLogements" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#carouselLogements" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#carouselLogements" data-bs-slide-to="2"></button>
+                <button type="button" data-bs-target="#carouselLogements" data-bs-slide-to="3"></button>
             </div>
-
-            <div class="col-md-4">
-              <a href="logement2.html" class="logement-link">
-                <div class="logement-card">
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/en/9/96/Meme_Man_on_transparent_background.webp"
-                    alt="Logement 2"
-                  />
-                  <div class="info">
-                    <h6 class="fw-bold mb-1 logement-title-dark">
-                      Studio - Paris 13
-                    </h6>
-                    <p class="text-muted mb-0">
-                      Idéal étudiant, toutes charges incluses
-                    </p>
-                  </div>
+            
+            <!-- Images du carousel -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1000&h=500&fit=crop" class="d-block w-100" alt="Appartement moderne">
+                    <div class="carousel-caption">
+                        <h5 class="property-title">Appartement Moderne - Centre Ville</h5>
+                        <p class="property-info">3 chambres • 2 salles de bain • 95m² • 1 200€/mois</p>
+                    </div>
                 </div>
-              </a>
-            </div>
-
-            <div class="col-md-4">
-              <a href="logement3.html" class="logement-link">
-                <div class="logement-card">
-                  <img
-                    src="https://preview.redd.it/post-the-best-cat-memes-you-got-in-the-comments-please-v0-kg82lbnu0ste1.png?auto=webp&s=e6f9eee86484f5de3f4e31f3c33b2d07fb982bd5"
-                    alt="Logement 3"
-                  />
-                  <div class="info">
-                    <h6 class="fw-bold mb-1 logement-title-dark">
-                      Colocation - Toulouse
-                    </h6>
-                    <p class="text-muted mb-0">
-                      Chambre disponible dans colocation de 3
-                    </p>
-                  </div>
+                
+                <div class="carousel-item">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1000&h=500&fit=crop" class="d-block w-100" alt="Maison avec jardin">
+                    <div class="carousel-caption">
+                        <h5 class="property-title">Maison avec Jardin - Banlieue</h5>
+                        <p class="property-info">4 chambres • 3 salles de bain • 150m² • 1 800€/mois</p>
+                    </div>
                 </div>
-              </a>
+                
+                <div class="carousel-item">
+                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1000&h=500&fit=crop" class="d-block w-100" alt="Studio lumineux">
+                    <div class="carousel-caption">
+                        <h5 class="property-title">Studio Lumineux - Quartier Résidentiel</h5>
+                        <p class="property-info">1 chambre • 1 salle de bain • 35m² • 650€/mois</p>
+                    </div>
+                </div>
+                
+                <div class="carousel-item">
+                    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&h=500&fit=crop" class="d-block w-100" alt="Loft contemporain">
+                    <div class="carousel-caption">
+                        <h5 class="property-title">Loft Contemporain - Zone Artistique</h5>
+                        <p class="property-info">2 chambres • 2 salles de bain • 110m² • 1 500€/mois</p>
+                    </div>
+                </div>
             </div>
+<<<<<<< HEAD
           </div>
         </div>
         <div class="carousel">
@@ -134,16 +152,26 @@
               src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=900&h=500&fit=crop"
               alt="Photo 2"
             />
-            <img
-              src="topbar.png?w=900&h=500&fit=crop"
-              alt="Photo 3"
-            />
+            <img src="topbar.png?w=900&h=500&fit=crop" alt="Photo 3" />
           </div>
 
           <button class="carousel-btn next">❯</button>
 
           <div class="carousel-dots"></div>
+=======
+            
+            <!-- Contrôles précédent/suivant -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselLogements" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Précédent</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselLogements" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Suivant</span>
+            </button>
+>>>>>>> mathis2
         </div>
+    </div>  
       </section>
 
       <section class="features text-center">
@@ -190,8 +218,7 @@
       </section>
 
       <footer class="text-center py-3">
-        <a class="link" href="faq.html">FAQ</a>
-        <a class="link" href="contact.html">Contact</a>
+        <a class="link text-muted" href="faqcgu.html" >FAQ, CGU et Contact</a>
         © <?php echo date("Y"); ?> Logemangue - Tous droits réservés
         <br />
         <small class="text-muted"
