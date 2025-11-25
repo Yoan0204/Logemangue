@@ -7,8 +7,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const carousel = document.querySelector(".carousel");
 
   // Vérifications basiques : si un élément manque, on logge et on sort proprement
-  if (!container || !images.length || !dotsContainer || !prevBtn || !nextBtn || !carousel) {
-    console.error("Carousel: élément manquant. Vérifie que les classes .carousel, .carousel-images, .prev, .next et .carousel-dots existent dans ton HTML.");
+  if (
+    !container ||
+    !images.length ||
+    !dotsContainer ||
+    !prevBtn ||
+    !nextBtn ||
+    !carousel
+  ) {
+    console.error(
+      "Carousel: élément manquant. Vérifie que les classes .carousel, .carousel-images, .prev, .next et .carousel-dots existent dans ton HTML.",
+    );
     return;
   }
 
@@ -18,9 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Attendre que toutes les images soient chargées pour récupérer la largeur correcte
   const waitForImages = () => {
-    const promises = Array.from(images).map(img => {
+    const promises = Array.from(images).map((img) => {
       if (img.complete) return Promise.resolve();
-      return new Promise(resolve => img.addEventListener("load", resolve, { once: true }));
+      return new Promise((resolve) =>
+        img.addEventListener("load", resolve, { once: true }),
+      );
     });
     return Promise.all(promises);
   };
@@ -94,15 +105,17 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Démarrer après chargement complet des images
-  waitForImages().then(() => {
-    calculateWidth();
-    updateCarousel();
-    startAutoPlay();
-  }).catch(err => {
-    // En cas d'erreur (rare), on tente quand même de démarrer
-    console.warn("Carousel: erreur lors du chargement d'images", err);
-    calculateWidth();
-    updateCarousel();
-    startAutoPlay();
-  });
+  waitForImages()
+    .then(() => {
+      calculateWidth();
+      updateCarousel();
+      startAutoPlay();
+    })
+    .catch((err) => {
+      // En cas d'erreur (rare), on tente quand même de démarrer
+      console.warn("Carousel: erreur lors du chargement d'images", err);
+      calculateWidth();
+      updateCarousel();
+      startAutoPlay();
+    });
 });
