@@ -50,6 +50,7 @@ $userTypes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Organiser les données par type
 $proprietaires = 0;
+$organismes = 0;
 $etudiants = 0;
 $totalUsers = 0;
 
@@ -61,6 +62,8 @@ foreach ($userTypes as $type) {
         $proprietaires = $count;
     } elseif (strtolower($type['type_utilisateur']) === 'etudiant') {
         $etudiants = $count;
+    } elseif (strtolower($type['type_utilisateur']) === 'organisme') {
+        $organismes = $count;
     }
 }
 ?>
@@ -305,8 +308,8 @@ foreach ($userTypes as $type) {
         <!-- Header -->
         <div class="header">
             <div>
-                <h1>Dashboard Administrateur</h1>
-                <p class="mb-0">Vue d'ensemble des statistiques de la plateforme Logemangue</p>
+                <h1>Dashboard</h1>
+                <p class="mb-0">Vue d'ensemble des statistiques Logemangue</p>
             </div>
         </div>
 
@@ -445,7 +448,8 @@ toggle.addEventListener("click", () => {
             totalLogements: <?php echo $totalLogements; ?>,
             totalUsers: <?php echo $totalUsers; ?>,
             proprietaires: <?php echo $proprietaires; ?>,
-            etudiants: <?php echo $etudiants; ?>
+            etudiants: <?php echo $etudiants; ?>,
+            organismes: <?php echo $organismes; ?>
         };
 
         // Animation des compteurs
@@ -477,12 +481,12 @@ toggle.addEventListener("click", () => {
             
             // Attendre un peu avant de créer le graphique pour être sûr que tout est chargé
             setTimeout(() => {
-                createChart(statsData.proprietaires, statsData.etudiants);
+                createChart(statsData.proprietaires, statsData.etudiants, statsData.organismes);
             }, 10);
         });
 
         // Création du graphique
-        function createChart(proprietaires, etudiants) {
+        function createChart(proprietaires, etudiants, organismes) {
             const ctx = document.getElementById('userTypeChart');
             
             if (!ctx) {
@@ -501,14 +505,16 @@ toggle.addEventListener("click", () => {
             new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Propriétaires', 'Étudiants'],
+                    labels: ['Propriétaires', 'Étudiants', 'Organismes'],
                     datasets: [{
-                        data: [proprietaires, etudiants],
+                        data: [proprietaires, etudiants, organismes],
                         backgroundColor: [
                             '#f97720ff',
-                            '#f1d130ff'
+                            '#f1d130ff',
+                            '#25721aff'
                         ],
                         borderColor: [
+                            '#fff',
                             '#fff',
                             '#fff'
                         ],
