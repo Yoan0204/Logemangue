@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ – LogeMangue</title>
+    <link rel="stylesheet" href="css/faq.css">
+</head>
+
+<body>
+
+    <header class="faq-header" style="padding: 20px; background: #ff7a00; color: white; text-align: center;">
+        <h1>Foire Aux Questions (FAQ)</h1>
+        <p>Trouvez rapidement les réponses aux questions les plus fréquentes.</p>
+    </header>
+
+    <main style="max-width: 900px; margin: 40px auto; font-family: Arial; line-height: 1.7;">
+
+        <div class="faq-item">
+            <a class="faq-question">Comment créer un compte ?</a>
+            <div class="faq-answer">
+                <p>Il suffit de cliquer sur “Inscription”, remplir vos informations personnelles et valider votre adresse e-mail.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <a class="faq-question">Comment rechercher un logement ?</a>
+            <div class="faq-answer">
+                <p>Rendez-vous sur la page “Annonces”, puis utilisez la barre de recherche ou les filtres (ville, prix, surface…).</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <a class="faq-question">Comment réserver un logement ?</a>
+            <div class="faq-answer">
+                <p>Sur la page d’une annonce, cliquez sur “Réserver”, puis confirmez votre demande.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Comment publier une annonce ?</a>
+            <div class="faq-answer">
+                <p>Les propriétaires peuvent accéder à l’espace “Publier une annonce” après connexion à leur compte.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <a class="faq-question">J’ai perdu mon mot de passe, que faire ?</a>
+            <div class="faq-answer">
+                <p>Cliquez sur “Mot de passe oublié” sur la page de connexion et suivez les instructions.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Comment contacter l’équipe ASTRAL ?</div>
+            <div class="faq-answer">
+                <p>Utilisez l’onglet “Contact” ou envoyez un message via votre espace utilisateur.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <footer style="text-align:center; padding:20px; background:#f3f3f3;">
+        <a href="index.php">Retour à l’accueil</a>
+    </footer>
+
+    <script src="js/faq.js"></script>
+
+</body>
+</html>
