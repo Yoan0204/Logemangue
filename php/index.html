@@ -195,7 +195,7 @@
       </section>
 
       <footer class="text-center py-3">
-        <a class="link text-muted" href="faqcgu.html" >FAQ, CGU et Contact</a>
+        <a class="link text-muted" href="cgu.html" >FAQ, CGU et Contact</a>
         © <?php echo date("Y"); ?> Logemangue - Tous droits réservés
         <br />
         <small class="text-muted"
