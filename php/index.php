@@ -26,7 +26,7 @@
         }
         
         .carousel-caption {
-            background-color: rgba(250, 194, 81, 0.7);
+            background: #feb200ff;
             border-radius: 10px;
             padding: 20px;
         }
