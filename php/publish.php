@@ -50,11 +50,11 @@ $conn->close();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Publier une annonce - Logemangue</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../css/css.css">
+  <link rel="stylesheet" href="../css/Style.css">
 </head>
   <header class="topbar">
     <a href="index.php" class="topbar-logo">
-      <img src="topbar.png" onresize="3000" alt="Logo" />
+      <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
 
     <nav class="topbar-nav">
