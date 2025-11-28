@@ -48,7 +48,7 @@
   </style>
    <header class="topbar">
     <a href="index.php" class="topbar-logo">
-      <img src="topbar.png" onresize="3000" alt="Logo" />
+      <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
 
     <nav class="topbar-nav">
