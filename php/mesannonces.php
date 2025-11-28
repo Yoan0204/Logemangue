@@ -16,7 +16,7 @@ $result = $conn->query($sql);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recherche de logements - Logemangue</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="../css/css.css">
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
 <style>
 
@@ -31,13 +31,13 @@ $result = $conn->query($sql);
       <a class="nav-link" href="recherche.html">Recherche</a>
 
       <a class="nav-link" href="publish.html">Publier une annonce</a>
-      <a class="nav-link" href="mesannonces.php">Mes annonces</a>
+      <a class="nav-link active-link" href="mesannonces.php">Mes annonces</a>
 
       <a class="nav-link" href="messagerie.html">Ma messagerie</a>
 
       <a class="nav-link" href="admin.php">Admin ⚙️</a>
 
-      <a class="nav-link active-link" href="profil.php">Mon profil</a>
+      <a class="nav-link " href="profil.php">Mon profil</a>
     </nav>
   </header>
 <body>

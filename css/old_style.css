@@ -29,7 +29,7 @@
 
 
 .topbar-logo img {
-    height: 100px;
+    height: 80px;
     margin-right: 20px;
 }
 
@@ -410,39 +410,5 @@
 
 .btn-approved:hover {
   background-color: #1f5f07;
-  transform: translateY(-2px);
-}
-
-.btn-unapproved {
-  background-color: darkred;
-  color: #fff;
-  font-weight: 600;
-  border: none;
-  height: 38px;
-  border-radius: 10px;
-  padding: 0 7px 0 7px;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-}
-
-.btn-unapproved:hover {
-  background-color: var(--orange);
-  transform: translateY(-2px);
-}
-
-.btn-unapproved {
-  background-color: darkred;
-  color: #fff;
-  font-weight: 600;
-  border: none;
-  height: 38px;
-  border-radius: 10px;
-  padding: 0 7px 0 7px;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-}
-
-.btn-unapproved:hover {
-  background-color: rgb(84, 2, 2);
   transform: translateY(-2px);
 }
