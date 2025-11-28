@@ -5,7 +5,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="icon.png" />
+    <link rel="icon" type="image/x-icon" href="../png/icon.png" />
     <title>Accueil - Logemangue</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -48,7 +48,7 @@
   </style>
    <header class="topbar">
     <a href="index.php" class="topbar-logo">
-      <img src="topbar.png" onresize="3000" alt="Logo" />
+      <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
 
     <nav class="topbar-nav">
