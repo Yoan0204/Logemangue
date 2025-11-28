@@ -14,37 +14,37 @@
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
   </head>
   <style>
-    .carousel-container {
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .carousel-item img {
-      height: 500px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-
-    .carousel-caption {
-      background-color: rgba(250, 194, 81, 0.7);
-      border-radius: 10px;
-      padding: 20px;
-    }
-
-    .property-title {
-      font-size: 1.8rem;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .property-info {
-      font-size: 1.1rem;
-    }
-
-    /* Transition de défilement plus douce */
-    .carousel-item {
-      transition: transform 1.2s ease-in-out;
-    }
+            .carousel-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .carousel-item img {
+            height: 500px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        
+        .carousel-caption {
+            background: #feb200ff;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .property-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .property-info {
+            font-size: 1.1rem;
+        }
+        
+        /* Transition de défilement plus douce */
+        .carousel-item {
+            transition: transform 1.2s ease-in-out;
+        }
   </style>
   <header class="topbar">
     <a href="index.php" class="topbar-logo">
@@ -52,7 +52,7 @@
     </a>
 
     <nav class="topbar-nav">
-      <a class="nav-link active-link" href="index.html">Accueil</a>
+      <a class="nav-link active-link" href="index.php">Accueil</a>
       <a class="nav-link" href="recherche.html">Recherche</a>
 
       <a class="nav-link" href="publish.html">Publier une annonce</a>
@@ -62,7 +62,7 @@
 
       <a class="nav-link" href="admin.php">Admin ⚙️</a>
 
-      <a class="nav-link" href="profil.html">Mon profil</a>
+      <a class="nav-link" href="profil.php">Mon profil</a>
     </nav>
   </header>
 

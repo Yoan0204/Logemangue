@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statut du compte</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Statut du compte</h1>
+    <div id="message"></div>
+
+    <script>
+        // Récupérer les paramètres de l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // Vérifier si le paramètre 'registered=1' est présent
+        if (urlParams.has('registered') && urlParams.get('registered') === '1') {
+            document.getElementById('message').innerHTML =
+                '<p class="success">Votre compte a bien été créé</p><a href="login.html"> Connectez vous </a>';
+        }
+        // Vérifier si le paramètre 'error=1' est présent
+        else if (urlParams.has('error') && urlParams.get('error') === '1') {
+            document.getElementById('message').innerHTML =
+                '<p class="error">Les identifiants sont incorrects. Veuillez réessayer.</p>';
+        }
+        // Aucun paramètre reconnu
+        else {
+            document.getElementById('message').innerHTML =
+                '<p>Nous ne pouvons pas déterminer le statut de votre compte.</p>';
+        }
+    </script>
+</body>
+</html>
