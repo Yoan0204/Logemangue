@@ -101,7 +101,7 @@
       <a class="nav-link" href="publish.php">Publier une annonce</a>
       <a class="nav-link" href="mesannonces.php">Mes annonces</a>
 
-      <a class="nav-link active-link" href="messagerie.html">Ma messagerie</a>
+      <a class="nav-link active-link" href="listemessagerie.php">Ma messagerie</a>
 
       <a class="nav-link" href="admin.php">Admin ⚙️</a>
 

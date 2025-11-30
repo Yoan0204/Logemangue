@@ -33,7 +33,7 @@ $result = $conn->query($sql);
       <a class="nav-link" href="publish.html">Publier une annonce</a>
       <a class="nav-link active-link" href="mesannonces.php">Mes annonces</a>
 
-      <a class="nav-link" href="messagerie.html">Ma messagerie</a>
+      <a class="nav-link" href="listemessagerie.php">Ma messagerie</a>
 
       <a class="nav-link" href="admin.php">Admin ⚙️</a>
 
