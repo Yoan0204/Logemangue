@@ -52,7 +52,7 @@ if (isset($_POST['delete'])) {
       <!-- BARRE DE RECHERCHE PLEINE LARGEUR -->
       <div class="search-bar p-3 rounded-14 shadow-sm mb-4">
         <div class="search-grid">
-          <input type="text" class="form-control search-input"
+          <input type="text" class="form-control search-input-filters"
             placeholder="Rechercher un logement, une ville, un type...">
           <input type="text" class="form-control" placeholder="Ville">
           <select class="form-select">
