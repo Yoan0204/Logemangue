@@ -71,7 +71,7 @@
     <div>
       <section class="hero text-center text-white">
         <h1 class="display-5 fw-bold mb-3">
-          Trouvez votre logement étudiant idéal
+          Trouvez votre logement étudiant idéal - branche Arthur
         </h1>
         <p class="lead mb-5">
           La plateforme qui connecte étudiants et propriétaires pour trouver le
