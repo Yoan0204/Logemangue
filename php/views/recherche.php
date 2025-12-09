@@ -122,9 +122,16 @@ $min_rating = $_GET['min_rating'] ?? '0';
                         <div class="info">
                             <h6 class="fw-bold mb-1"><?php echo $row['titre']; ?></h6>
                             <p class="text-muted mb-0"><?php echo $row['loyer']; ?> € / mois</p>
-                            <p class="small text-muted">
+                            <p class="small text-muted mb-0">
+                                <?php echo $row['ville']; ?>
+                            <p class="small text-muted mb-0">
                                 Disponible : <?php echo ($row['disponible'] == 1) ? 'Oui' : 'Non'; ?>
                             </p>
+                            <p class="small text-muted mb-0">
+                                <?php echo $row['surface']; ?> m² - <?php echo $type; ?>
+                            </p>
+                            <p class="small text-muted">
+                                Note : <?php echo $row['rating'] ?? 'N/A'; ?> ★
                             <?php
                             // Bouton visible seulement pour l'admin
                             if (isset($isAdmin) && $isAdmin == 1) {
