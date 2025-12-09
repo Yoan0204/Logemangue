@@ -200,20 +200,12 @@ $nom_destinataire = $destinataire
 
     <nav class="topbar-nav">
       <a class="nav-link " href="index.php">Accueil</a>
-<<<<<<< HEAD
-      <a class="nav-link" href="recherche.php">Recherche</a>
-=======
       <a class="nav-link" href="logements.php">Recherche</a>
->>>>>>> mathis2
 
       <a class="nav-link" href="publish.php">Publier une annonce</a>
       <a class="nav-link" href="logements.php?view=mesannonces">Mes annonces</a>
 
-<<<<<<< HEAD
-      <a class="nav-link active-link" href="messagerie.php">Ma messagerie</a>
-=======
       <a class="nav-link active-link" href="listemessagerie.php">Ma messagerie</a>
->>>>>>> mathis2
 
       <a class="nav-link" href="admin.php">Admin ⚙️</a>
 
