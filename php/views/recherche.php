@@ -110,6 +110,7 @@ $min_rating = $_GET['min_rating'] ?? '0';
     <!-- LOGEMENTS -->
     <div class="container">
         <h1 class="text-center mb-4">Liste des Logements</h1>
+        <hr class="my-4 border-2 opacity-100" style="color: var(--green);"><br>
         <div class="row justify-content-center">
             <?php
             // Afficher les résultats
