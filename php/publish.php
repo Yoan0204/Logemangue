@@ -59,9 +59,10 @@ $conn->close();
 
     <nav class="topbar-nav">
       <a class="nav-link " href="index.php">Accueil</a>
-      <a class="nav-link" href="recherche.php">Recherche</a>
+      <a class="nav-link" href="logements.php">Recherche</a>
+
       <a class="nav-link active-link" href="publish.php">Publier une annonce</a>
-      <a class="nav-link" href="mesannonces.php">Mes annonces</a>
+      <a class="nav-link" href="logements.php?view=mesannonces">Mes annonces</a>
 
       <a class="nav-link" href="listemessagerie.php">Ma messagerie</a>
 

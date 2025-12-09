@@ -53,7 +53,7 @@ if ($view === 'mesannonces') {
         <nav class="topbar-nav">
             <a class="nav-link " href="index.php">Accueil</a>
             <a class="nav-link <?php echo $view === 'recherche' ? 'active-link' : ''; ?>" href="logements.php?view=recherche">Recherche</a>
-            <a class="nav-link" href="publish.html">Publier une annonce</a>
+            <a class="nav-link" href="publish.php">Publier une annonce</a>
             <a class="nav-link <?php echo $view === 'mesannonces' ? 'active-link' : ''; ?>" href="logements.php?view=mesannonces">Mes annonces</a>
             <a class="nav-link" href="listemessagerie.php">Ma messagerie</a>
             <a class="nav-link" href="admin.php">Admin ⚙️</a>
