@@ -142,6 +142,9 @@ $conn->close();
         </form>
       </div>
     </main>
+          <footer class="text-center py-3">
+        <?php include 'footer.php'; ?>
+      </footer>
   </div>
     <script>
     const toggle = document.getElementById("menu-toggle");

@@ -215,5 +215,7 @@ toggle.addEventListener("click", () => {
 });
   </script>
 </body>
-
+<footer class="text-center py-3">
+  <?php include 'footer.php'; ?>
+</footer>
 </html>
