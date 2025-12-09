@@ -128,7 +128,7 @@ $min_rating = $_GET['min_rating'] ?? '0';
                                 Disponible : <?php echo ($row['disponible'] == 1) ? 'Oui' : 'Non'; ?>
                             </p>
                             <p class="small text-muted mb-0">
-                                <?php echo $row['surface']; ?> m² - <?php echo $type; ?>
+                                <?php echo $row['surface']; ?> m² - <?php echo $row['TYPE']; ?>
                             </p>
                             <p class="small text-muted">
                                 Note : <?php echo $row['note'] ?? 'N/A'; ?> ★

@@ -13,6 +13,7 @@ if (
 ) {
     $titre = $_POST['titre'];
     $type = $_POST['type'];
+    echo $type;
     $adresse = $_POST['adresse'];
     $ville = $_POST['ville'];
     $code_postal = $_POST['code_postal'];
@@ -28,7 +29,7 @@ if (
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssdiiiii", $titre, $description, $adresse, $ville, $code_postal, $type, $surface, $loyer, $charges_incluses, $meuble, $id_proprietaire);
+    $stmt->bind_param("ssssssiiiii", $titre, $description, $adresse, $ville, $code_postal, $type, $surface, $loyer, $charges_incluses, $meuble, $id_proprietaire);
 
     if ($stmt->execute()) {
         echo "L'annonce a été publiée avec succès!";

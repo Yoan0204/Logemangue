@@ -51,7 +51,7 @@ class LogementModel {
         // Filtre de recherche par titre ou description
         if (!empty($filters['search'])) {
             $search = $this->conn->real_escape_string($filters['search']);
-            $sql .= " AND (titre LIKE '%$search%' OR description LIKE '%$search%')";
+            $sql .= " AND (titre LIKE '%$search%' OR description LIKE '%$search%' OR ville LIKE '%$search%')";
         }
         
         // Filtre par ville
