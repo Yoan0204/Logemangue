@@ -78,14 +78,16 @@
           logement parfait
         </p>
 
-        <div class="d-flex justify-content-center align-items-center mb-5">
+        <form action="logements.php" method="GET" class="d-flex justify-content-center align-items-center mb-5">
           <input
             type="text"
+            name="search"
             class="form-control search-input"
             placeholder="Ville, quartier, type de logement..."
           />
-          <button class="btn-search">Rechercher →</button>
-        </div>
+          <button type="submit" class="btn-search">Rechercher →</button>
+        </form>
+
 
         <!--
 <div class="d-flex justify-content-center gap-5 stats">

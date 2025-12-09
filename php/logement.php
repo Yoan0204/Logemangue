@@ -71,7 +71,6 @@
 </style>
 <?php
   require 'db2.php';
-
   if (isset($_POST['valider'])) {
       $nom = $_POST['nom'];
       $telephone = $_POST['telephone'];

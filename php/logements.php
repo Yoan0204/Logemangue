@@ -3,6 +3,7 @@ require 'db2.php';
 require 'controllers/LogementController.php';
 require 'models/LogementModel.php';
 
+
 // Initialiser le modèle et le contrôleur
 $model = new LogementModel($conn, $pdo);
 $controller = new LogementController($model, __DIR__ . '/views/');
@@ -27,8 +28,8 @@ if ($view === 'mesannonces') {
     $logements = $controller->getUserLogements($userId);
     $isAdmin = isset($user['is_admin']) ? $user['is_admin'] : 0;
 } else {
-    // Vue de recherche
-    $logements = $controller->getSearchLogements();
+    // Vue de recherche avec filtres
+    $logements = $controller->getFilteredSearchLogements();
     $isAdmin = isset($user['is_admin']) ? $user['is_admin'] : 0;
 }
 ?>
