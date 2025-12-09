@@ -144,13 +144,14 @@
     <div class="row">
         <!-- Grande image -->
         <div class="col-lg-9">
-            <img style="box-shadow: 4px 4px 0 #e1e1e1;" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1000&h=500&fit=crop" class="banner-img mb-3" alt="logement">
+            <img style="box-shadow: 4px 4px 0 #e1e1e1;" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1000&h=730&fit=crop" class="banner-img" alt="logement">
         </div>
 
         <!-- Miniatures -->
         <div class="col-lg-3 d-flex flex-column justify-content-between">
-            <img src="../png/Aberent.png?w=1000&h=500&fit=crop" class="thumb-img mb-3" alt="miniature">
-            <img src="../png/Aberent.png?w=1000&h=500&fit=crop" class="thumb-img" alt="miniature">
+            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2" class="thumb-img" alt="miniature">
+            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2" class="thumb-img" alt="miniature">
+            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2" class="thumb-img" alt="miniature">
         </div>
     </div>
 
@@ -158,34 +159,36 @@
     <div class="row mt-4">
         <!-- Bloc texte (onglets) -->
         <div class="col-lg-9">
-              <!-- BOUTONS D'ONGLETS -->
-              <div class="mb-3 tab-buttons">
-                  <button class="tab-btn active" data-bs-toggle="tab" data-bs-target="#tab-description">Description</button>
-                  <button class="tab-btn" data-bs-toggle="tab" data-bs-target="#tab-localisation">Localisation</button>
-                  <button class="tab-btn" data-bs-toggle="tab" data-bs-target="#tab-message">Message du propriétaire</button>
-                  <button class="tab-btn" data-bs-toggle="tab" data-bs-target="#tab-reviews">Avis</button>
+          <!-- BOUTONS D'ONGLETS -->
+          <div class="mb-3 tab-buttons">
+              <button class="tab-btn active" data-tab="description">Description</button>
+              <button class="tab-btn" data-tab="localisation">Localisation</button>
+              <button class="tab-btn" data-tab="message">Message du propriétaire</button>
+          </div>
+
+          <!-- CONTENU DES ONGLETS -->
+          <div class="tab-content">
+              <div class="tab-pane fade show active info-box" id="description">
+                  <ul>
+                      <li>À propos de ce logement</li>
+                      <li>Prix Loyer / Charges</li>
+                      <li>Date de disponibilité</li>
+                      <li>Caractéristiques</li>
+                  </ul>
               </div>
 
-            <!-- CONTENU DES ONGLETS -->
-            <div class="tab-content">
-                <div class="tab-pane fade show active info-box" id="tab-description">
-                    <ul>
-                        <li>À propos de ce logement</li>
-                        <li>Prix Loyer / Charges</li>
-                        <li>Date de disponibilité</li>
-                        <li>Caractéristiques</li>
-                    </ul>
-                </div>
+              <div class="tab-pane fade info-box" id="localisation">
+                  <p>📍 Adresse du logement</p>
+                  <p>Carte ou informations de localisation ici.</p>
+              </div>
 
-                <div class="tab-pane fade info-box" id="tab-localisation">
-                    <p>📍 Adresse du logement</p>
-                    <p>Carte ou informations de localisation ici.</p>
-                </div>
+              <div class="tab-pane fade info-box" id="message">
+                  <p>Message personnalisé du propriétaire ici.</p>
+              </div>
+          </div>
 
-                <div class="tab-pane fade info-box" id="tab-message">
-                    <p>Message personnalisé du propriétaire ici.</p>
-                </div>
-            </div>
+
+
         </div>
 
         <!-- Bloc boutons d’action -->
@@ -212,16 +215,26 @@ toggle.addEventListener("click", () => {
   sidebar.classList.toggle("active");
 });
   </script>
-  <script>
-    // Sélectionner tous les boutons d'onglet
+<script>
     const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
 
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
-            // Supprimer "active" de tous les boutons
+            const targetId = button.getAttribute('data-tab');
+
+            // 1️⃣ Activer le bouton cliqué
             tabButtons.forEach(btn => btn.classList.remove('active'));
-            // Ajouter "active" au bouton cliqué
             button.classList.add('active');
+
+            // 2️⃣ Afficher le contenu correspondant et cacher les autres
+            tabPanes.forEach(pane => {
+                if(pane.id === targetId){
+                    pane.classList.add('show', 'active');
+                } else {
+                    pane.classList.remove('show', 'active');
+                }
+            });
         });
     });
 </script>
