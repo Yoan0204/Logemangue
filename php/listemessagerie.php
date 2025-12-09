@@ -118,35 +118,13 @@
 
         <!-- Barre de recherche -->
         <div class="search-bar">
-            <input type="text" placeholder=" | Rechercher (Contact, Bien, ...)">
+            <input type="text" id="searchInput" placeholder=" | Rechercher (Contact, Bien, ...)" autocomplete="off">
         </div>
 
         <div class="separator-line"></div>
 
         <!-- Liste des conversations -->
-        <div class="container">
-        <?php
-        $query = "
-                    SELECT DISTINCT
-                        CASE
-                            WHEN id_expediteur = :userId THEN id_destinataire
-                            WHEN id_destinataire = :userId THEN id_expediteur
-                        END AS id_autre
-                    FROM message
-                    WHERE id_expediteur = :userId OR id_destinataire = :userId
-                ";
-
-                // Prépare et exécute la requête
-                $stmt = $pdo->prepare($query); // $pdo étant ton objet PDO
-                $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-                $stmt->execute();
-
-                // Affiche les résultats
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "ID trouvé : " . $row['id_autre'] . "<br>";
-                }
-        
-                ?>
+        <div class="container" id="conversationsContainer">
 
 <?php
 // Requête corrigée pour récupérer tous les utilisateurs en conversation + dernier message
@@ -197,6 +175,60 @@ foreach ($destinataires as $destinataire):
         </div>
 
     </div>
+
+    <script>
+        // Récupérer l'input de recherche et le conteneur
+        const searchInput = document.getElementById('searchInput');
+        const conversations = document.querySelectorAll('.conversation');
+
+        // Fonction de filtrage
+        function filterConversations() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+
+            conversations.forEach(conversation => {
+                // Récupérer le nom du contact et le dernier message
+                const contactName = conversation.querySelector('h4').textContent.toLowerCase();
+                const lastMessage = conversation.querySelector('p').textContent.toLowerCase();
+
+                // Vérifier si le texte de recherche correspond
+                const matches = contactName.includes(searchTerm) || lastMessage.includes(searchTerm) || searchTerm === '';
+
+                // Afficher ou masquer la conversation
+                conversation.parentElement.style.display = matches ? 'block' : 'none';
+            });
+        }
+
+        // Ajouter un événement d'écoute sur l'input
+        searchInput.addEventListener('input', filterConversations);
+        searchInput.addEventListener('keyup', filterConversations);
+
+        // Optionnel: afficher un message si aucun résultat
+        function updateEmptyMessage() {
+            const visibleConversations = Array.from(conversations).filter(
+                conv => conv.parentElement.style.display !== 'none'
+            );
+            
+            const container = document.getElementById('conversationsContainer');
+            let emptyMessage = container.querySelector('.empty-message');
+            
+            if (visibleConversations.length === 0 && searchInput.value.trim()) {
+                if (!emptyMessage) {
+                    emptyMessage = document.createElement('div');
+                    emptyMessage.className = 'empty-message text-center text-muted py-5';
+                    emptyMessage.textContent = 'Aucune conversation trouvée.';
+                    container.appendChild(emptyMessage);
+                }
+                emptyMessage.style.display = 'block';
+            } else if (emptyMessage) {
+                emptyMessage.style.display = 'none';
+            }
+        }
+
+        searchInput.addEventListener('input', () => {
+            filterConversations();
+            updateEmptyMessage();
+        });
+    </script>
 
 </body>
 </html>
