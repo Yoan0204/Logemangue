@@ -125,30 +125,63 @@
 
         <!-- Liste des conversations -->
         <div class="container">
+        <?php
+        $query = "
+                    SELECT DISTINCT
+                        CASE
+                            WHEN id_expediteur = :userId THEN id_destinataire
+                            WHEN id_destinataire = :userId THEN id_expediteur
+                        END AS id_autre
+                    FROM message
+                    WHERE id_expediteur = :userId OR id_destinataire = :userId
+                ";
 
-            <?php
-            // Requête améliorée pour récupérer aussi le dernier message
-            $stmt = $pdo->prepare("
-                SELECT DISTINCT u.id, u.nom, 
-                    (SELECT contenu 
-                        FROM message 
-                        WHERE (id_expediteur = ? AND id_destinataire = u.id) 
-                        OR (id_expediteur = u.id AND id_destinataire = ?)
-                        ORDER BY date_envoi DESC 
-                        LIMIT 1) as dernier_message
-                FROM message m
-                INNER JOIN users u ON m.id_destinataire = u.id
-                WHERE m.id_expediteur = ?
-                ORDER BY u.nom
-            ");
+                // Prépare et exécute la requête
+                $stmt = $pdo->prepare($query); // $pdo étant ton objet PDO
+                $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+                $stmt->execute();
 
-            $stmt->execute([$userId, $userId, $userId]);
-            $destinataires = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                // Affiche les résultats
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo "ID trouvé : " . $row['id_autre'] . "<br>";
+                }
+        
+                ?>
 
-            foreach ($destinataires as $destinataire): 
-                $initiale = strtoupper(substr($destinataire['nom'], 0, 1));
-                $dernierMessage = $destinataire['dernier_message'] ?? 'Aucun message';
-            ?>
+<?php
+// Requête corrigée pour récupérer tous les utilisateurs en conversation + dernier message
+$stmt = $pdo->prepare("
+    SELECT DISTINCT 
+        u.id,
+        u.nom,
+        (
+            SELECT contenu
+            FROM message 
+            WHERE 
+                (id_expediteur = :userId AND id_destinataire = u.id)
+                OR 
+                (id_expediteur = u.id AND id_destinataire = :userId)
+            ORDER BY date_envoi DESC 
+            LIMIT 1
+        ) AS dernier_message
+    FROM users u
+    INNER JOIN message m 
+        ON (m.id_expediteur = u.id OR m.id_destinataire = u.id)
+    WHERE :userId IN (m.id_expediteur, m.id_destinataire)
+    AND u.id != :userId
+    ORDER BY u.nom
+");
+
+// Exécution
+$stmt->execute(['userId' => $userId]);
+$destinataires = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Boucle d'affichage
+foreach ($destinataires as $destinataire):
+    $initiale = strtoupper(substr($destinataire['nom'], 0, 1));
+    $dernierMessage = $destinataire['dernier_message'] ?? 'Aucun message';
+?>
+
             <a href="messagerie.php?dest=<?php echo $destinataire['id']; ?>" style="text-decoration: none; color: inherit;">
                 <div class="conversation">
                     <div class="profile-circle"><?php echo htmlspecialchars($initiale); ?></div>

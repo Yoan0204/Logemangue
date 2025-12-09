@@ -3,6 +3,7 @@
 
 <?php include "db2.php"; ?>
 <?php
+echo $userId;
 // Traiter l'envoi de message en PREMIER
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message'])) {
   ob_clean(); // Nettoyer tout buffer
