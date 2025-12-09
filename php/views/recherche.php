@@ -131,7 +131,7 @@ $min_rating = $_GET['min_rating'] ?? '0';
                                 <?php echo $row['surface']; ?> m² - <?php echo $type; ?>
                             </p>
                             <p class="small text-muted">
-                                Note : <?php echo $row['rating'] ?? 'N/A'; ?> ★
+                                Note : <?php echo $row['note'] ?? 'N/A'; ?> ★
                             <?php
                             // Bouton visible seulement pour l'admin
                             if (isset($isAdmin) && $isAdmin == 1) {
