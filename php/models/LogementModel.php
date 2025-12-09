@@ -11,7 +11,13 @@ class LogementModel {
 
     //Récupère tous les logements approuvés
     public function getApprovedLogements() {
-        $sql = "SELECT * FROM logement WHERE status='Approved'";
+        $sql = "SELECT l.*,
+        (SELECT url_photo FROM photo 
+         WHERE photo.id_logement = l.ID 
+         ORDER BY id_photo ASC LIMIT 1) AS photo_url
+        FROM logement l
+        WHERE l.status='Approved'";
+
         $result = $this->conn->query($sql);
         return $result;
     }
@@ -46,7 +52,15 @@ class LogementModel {
 
     //Récupère les logements approuvés avec filtres avancés
     public function getFilteredLogements($filters = []) {
-        $sql = "SELECT * FROM logement WHERE status='Approved'";
+        $sql = "SELECT l.*,
+        (SELECT url_photo
+         FROM photo
+         WHERE photo.id_logement = l.ID
+         ORDER BY id_photo ASC
+         LIMIT 1) AS photo_url
+        FROM logement l
+        WHERE l.status='Approved'";
+
         
         // Filtre de recherche par titre ou description
         if (!empty($filters['search'])) {

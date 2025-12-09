@@ -1,5 +1,5 @@
 <?php
-require 'db2.php';
+require 'db2.php'; // connexion à la base
 
 if (
     isset($_POST['titre']) &&
@@ -13,7 +13,6 @@ if (
 ) {
     $titre = $_POST['titre'];
     $type = $_POST['type'];
-    echo $type;
     $adresse = $_POST['adresse'];
     $ville = $_POST['ville'];
     $code_postal = $_POST['code_postal'];
@@ -22,27 +21,52 @@ if (
     $charges_incluses = isset($_POST['charges_incluses']) ? 1 : 0;
     $meuble = isset($_POST['meuble']) ? 1 : 0;
     $description = $_POST['description'];
-    $id_proprietaire = $userId; // À remplacer par l'ID de l'utilisateur connecté
+    $id_proprietaire = $userId; // à remplacer par l'ID de l'utilisateur connecté
 
-    // Requête préparée pour éviter les injections SQL
+    // 1️⃣ Publier le logement
     $sql = "INSERT INTO logement (titre, description, adresse, ville, code_postal, TYPE, surface, loyer, charges_incluses, meuble, id_proprietaire)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssssiiiii", $titre, $description, $adresse, $ville, $code_postal, $type, $surface, $loyer, $charges_incluses, $meuble, $id_proprietaire);
 
     if ($stmt->execute()) {
-        echo "L'annonce a été publiée avec succès!";
+        $id_logement = $stmt->insert_id; // récupère l'id du logement créé
+        echo "✅ L'annonce a été publiée avec succès !<br>";
+
+        // 2️⃣ Upload des photos
+        if (isset($_FILES['photos'])) {
+            $targetDir = "../uploads/";
+
+            foreach ($_FILES['photos']['tmp_name'] as $key => $tmp_name) {
+                $fileName = basename($_FILES['photos']['name'][$key]);
+                $fileName = time() . "_" . $fileName; // éviter les doublons
+                $targetFile = $targetDir . $fileName;
+
+                if (move_uploaded_file($tmp_name, $targetFile)) {
+                    // Insertion dans la table photo
+                    $sqlPhoto = "INSERT INTO photo (url_photo, description, id_logement) VALUES (?, ?, ?)";
+                    $stmtPhoto = $conn->prepare($sqlPhoto);
+                    $descPhoto = ""; // tu peux récupérer une description spécifique si tu veux
+                    $stmtPhoto->bind_param("ssi", $targetFile, $descPhoto, $id_logement);
+                    $stmtPhoto->execute();
+                    $stmtPhoto->close();
+                } else {
+                    echo "⚠️ Erreur lors de l'upload de la photo : $fileName<br>";
+                }
+            }
+
+            echo "Toutes les photos ont été uploadées !";
+        } 
     } else {
         echo "Erreur: " . $stmt->error;
     }
 
     $stmt->close();
-} else {
 }
 
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">

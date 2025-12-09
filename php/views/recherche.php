@@ -1,4 +1,5 @@
 <?php
+
 $search = $_GET['search'] ?? '';
 $ville = $_GET['ville'] ?? '';
 $type = $_GET['type'] ?? '';
@@ -118,7 +119,9 @@ $min_rating = $_GET['min_rating'] ?? '0';
             <div class="col-md-4">
                 <a href="logement.php?id=<?php echo $row['ID']; ?>" class="logement-link">
                     <div class="logement-card">
-                        <img src="test.webp" alt="<?php echo $row['titre']; ?>">
+                        <img src="<?php echo $row['photo_url'] ?: 'placeholder.jpg'; ?>" 
+     alt="<?php echo $row['titre']; ?>">
+
                         <div class="info">
                             <h6 class="fw-bold mb-1"><?php echo $row['titre']; ?></h6>
                             <p class="text-muted mb-0"><?php echo $row['loyer']; ?> € / mois</p>
