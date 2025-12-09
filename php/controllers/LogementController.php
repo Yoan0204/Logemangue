@@ -9,25 +9,19 @@ class LogementController {
         $this->view = $view;
     }
 
-    /**
-     * Récupère les logements pour la page de recherche
-     */
+    //Récupère les logements pour la page de recherche
     public function getSearchLogements() {
         $logements = $this->model->getApprovedLogements();
         return $logements;
     }
 
-    /**
-     * Récupère les logements de l'utilisateur connecté
-     */
+    //Récupère les logements de l'utilisateur connecté
     public function getUserLogements($userId) {
         $logements = $this->model->getUserLogements($userId);
         return $logements;
     }
 
-    /**
-     * Traite la suppression d'un logement
-     */
+    //Traite la suppression d'un logement
     public function handleDelete() {
         if (isset($_POST['delete']) && isset($_POST['logement_id'])) {
             $logementId = $_POST['logement_id'];
@@ -37,9 +31,7 @@ class LogementController {
         return null;
     }
 
-    /**
-     * Affiche la vue appropriée (mes annonces ou recherche)
-     */
+    //Affiche la vue appropriée (mes annonces ou recherche)
     public function render($view, $data = []) {
         return require $this->view . $view . '.php';
     }
