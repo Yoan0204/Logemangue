@@ -90,9 +90,9 @@ $conn->close();
       <a class="nav-link" href="logements.php?view=mesannonces">Mes annonces</a>
 
       <a class="nav-link" href="listemessagerie.php">Ma messagerie</a>
-
+      <?php if ($isAdmin): ?>
       <a class="nav-link" href="admin.php">Admin ⚙️</a>
-
+      <?php endif; ?>
       <a class="nav-link" href="profil.php">Mon profil</a>
     </nav>
   </header>

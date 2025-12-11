@@ -35,13 +35,16 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header('Location: login.html');
     exit();
 }
+
 $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 $sql = "SELECT nom, telephone, genre, date_naissance,is_admin, type_utilisateur, biography FROM users WHERE id = $userId";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
+    
 } else {
     echo "Aucun utilisateur trouvé";
 }
+$isAdmin = isset($user['is_admin']) ? $user['is_admin'] : 0;
 ?>

@@ -48,7 +48,6 @@
   </style>
   <?php     
   require 'db2withoutlogin.php';
-  $isAdmin = isset($user['is_admin']) ? $user['is_admin'] : 0;
   ?>
    <header class="topbar">
     <a href="index.php" class="topbar-logo">

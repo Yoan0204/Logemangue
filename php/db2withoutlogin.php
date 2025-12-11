@@ -16,6 +16,8 @@ if (!isset($_SESSION['user_id'])) {
     session_start();
     if (isset($_SESSION['user_id'])) {
         $userId = $_SESSION['user_id'];
+
+
             $sql = "SELECT nom, telephone, genre, date_naissance,is_admin, type_utilisateur, biography FROM users WHERE id = $userId";
             $result = $conn->query($sql);
 
@@ -26,4 +28,6 @@ if (!isset($_SESSION['user_id'])) {
             }
     }
 }
+$isAdmin = isset($user['is_admin']) ? $user['is_admin'] : 0;
+
 ?>
