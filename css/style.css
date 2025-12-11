@@ -263,6 +263,23 @@
   transform: translateY(-2px);
 }
 
+.btn-filters-secondary {
+  background-color: var(--orange);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  height: 48px;
+  border-radius: 15px;
+  padding: 0 5px 0 5px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-filters-secondary:hover {
+  background-color: #5f2007;
+  transform: translateY(-2px);
+}
+
 /* Filtres */
 .filters {
   background: linear-gradient(90deg, var(--orange), var(--yellow));

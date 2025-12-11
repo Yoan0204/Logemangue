@@ -46,6 +46,10 @@
             transition: transform 1.2s ease-in-out;
         }
   </style>
+  <?php     
+  require 'db2withoutlogin.php';
+  $isAdmin = isset($user['is_admin']) ? $user['is_admin'] : 0;
+  ?>
    <header class="topbar">
     <a href="index.php" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
@@ -59,8 +63,9 @@
       <a class="nav-link" href="logements.php?view=mesannonces">Mes annonces</a>
 
       <a class="nav-link" href="listemessagerie.php">Ma messagerie</a>
-
-      <a class="nav-link" href="admin.php">Admin ⚙️</a>
+      <?php if ($isAdmin): ?> 
+          <a class="nav-link" href="admin.php">Admin ⚙️</a>
+      <?php endif; ?>
 
       <a class="nav-link " href="profil.php">Mon profil</a>
     </nav>

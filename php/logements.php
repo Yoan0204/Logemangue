@@ -1,5 +1,5 @@
 <?php
-require 'db2.php';
+require_once 'db2withoutlogin.php';
 require 'controllers/LogementController.php';
 require 'models/LogementModel.php';
 
@@ -22,7 +22,7 @@ if (!in_array($view, $allowed_views)) {
 if ($view === 'mesannonces') {
     // Vérifier que l'utilisateur est connecté
     if (!isset($userId)) {
-        header('Location: login.php');
+        header('Location: login.html');
         exit;
     }
     $logements = $controller->getUserLogements($userId);
@@ -57,7 +57,9 @@ if ($view === 'mesannonces') {
             <a class="nav-link" href="publish.php">Publier une annonce</a>
             <a class="nav-link <?php echo $view === 'mesannonces' ? 'active-link' : ''; ?>" href="logements.php?view=mesannonces">Mes annonces</a>
             <a class="nav-link" href="listemessagerie.php">Ma messagerie</a>
-            <a class="nav-link" href="admin.php">Admin ⚙️</a>
+            <?php if ($isAdmin): ?> 
+                <a class="nav-link" href="admin.php">Admin ⚙️</a>
+            <?php endif; ?>
             <a class="nav-link" href="profil.php">Mon profil</a>
         </nav>
     </header>

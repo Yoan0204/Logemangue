@@ -70,7 +70,7 @@
     }
 </style>
 <?php
-  require 'db2.php';
+  require 'db2withoutlogin.php';
   if (isset($_POST['valider'])) {
       $nom = $_POST['nom'];
       $telephone = $_POST['telephone'];

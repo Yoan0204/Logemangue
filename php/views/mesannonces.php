@@ -1,3 +1,4 @@
+
 <!-- Vue: Mes Annonces -->
 <div class="container py-4">
     <h1 class="text-center mb-4">Liste de vos Logements</h1>

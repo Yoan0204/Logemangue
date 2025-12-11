@@ -1,5 +1,4 @@
 <?php
-
 $search = $_GET['search'] ?? '';
 $ville = $_GET['ville'] ?? '';
 $type = $_GET['type'] ?? '';
@@ -96,10 +95,10 @@ $min_rating = $_GET['min_rating'] ?? '0';
                     <input type="hidden" name="min_rating" id="minRatingValue" value="<?php echo htmlspecialchars($min_rating); ?>">
                 </div>
                 <div class="col-md-4">
-                    <button type="submit" class="btn btn-success w-100">Appliquer les filtres</button>
+                    <button type="submit" class="btn btn-filters w-100">Appliquer les filtres</button>
                 </div>
                 <div class="col-md-4">
-                    <a href="logements.php?view=recherche" class="btn btn-secondary w-100">Réinitialiser</a>
+                    <button href="logements.php?view=recherche" class="btn btn-filters-secondary w-100">Réinitialiser</button>
                 </div>
             </div>
         </div>
