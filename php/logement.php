@@ -131,7 +131,7 @@
 
     <a class="nav-link" href="admin.php">Admin ⚙️</a>
 
-    <a class="nav-link active-link" href="profil.php">Mon profil</a>
+    <a class="nav-link " href="profil.php">Mon profil</a>
   </nav>
 </header>
 
