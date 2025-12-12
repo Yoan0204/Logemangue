@@ -1,5 +1,5 @@
 <?php
-require 'db2.php';
+require 'db2.php'; // connexion à la base
 
 if (
     isset($_POST['titre']) &&
@@ -21,27 +21,52 @@ if (
     $charges_incluses = isset($_POST['charges_incluses']) ? 1 : 0;
     $meuble = isset($_POST['meuble']) ? 1 : 0;
     $description = $_POST['description'];
-    $id_proprietaire = $userId; // À remplacer par l'ID de l'utilisateur connecté
+    $id_proprietaire = $userId; // à remplacer par l'ID de l'utilisateur connecté
 
-    // Requête préparée pour éviter les injections SQL
+    // 1️⃣ Publier le logement
     $sql = "INSERT INTO logement (titre, description, adresse, ville, code_postal, TYPE, surface, loyer, charges_incluses, meuble, id_proprietaire)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssdiiiii", $titre, $description, $adresse, $ville, $code_postal, $type, $surface, $loyer, $charges_incluses, $meuble, $id_proprietaire);
+    $stmt->bind_param("ssssssiiiii", $titre, $description, $adresse, $ville, $code_postal, $type, $surface, $loyer, $charges_incluses, $meuble, $id_proprietaire);
 
     if ($stmt->execute()) {
-        echo "L'annonce a été publiée avec succès!";
+        $id_logement = $stmt->insert_id; // récupère l'id du logement créé
+        echo "✅ L'annonce a été publiée avec succès !<br>";
+
+        // 2️⃣ Upload des photos
+        if (isset($_FILES['photos'])) {
+            $targetDir = "../uploads/";
+
+            foreach ($_FILES['photos']['tmp_name'] as $key => $tmp_name) {
+                $fileName = basename($_FILES['photos']['name'][$key]);
+                $fileName = time() . "_" . $fileName; // éviter les doublons
+                $targetFile = $targetDir . $fileName;
+
+                if (move_uploaded_file($tmp_name, $targetFile)) {
+                    // Insertion dans la table photo
+                    $sqlPhoto = "INSERT INTO photo (url_photo, description, id_logement) VALUES (?, ?, ?)";
+                    $stmtPhoto = $conn->prepare($sqlPhoto);
+                    $descPhoto = ""; // tu peux récupérer une description spécifique si tu veux
+                    $stmtPhoto->bind_param("ssi", $targetFile, $descPhoto, $id_logement);
+                    $stmtPhoto->execute();
+                    $stmtPhoto->close();
+                } else {
+                    echo "⚠️ Erreur lors de l'upload de la photo : $fileName<br>";
+                }
+            }
+
+            echo "Toutes les photos ont été uploadées !";
+        } 
     } else {
         echo "Erreur: " . $stmt->error;
     }
 
     $stmt->close();
-} else {
 }
 
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -59,15 +84,15 @@ $conn->close();
 
     <nav class="topbar-nav">
       <a class="nav-link " href="index.php">Accueil</a>
-      <a class="nav-link" href="recherche.html">Recherche</a>
+      <a class="nav-link" href="logements.php">Recherche</a>
 
       <a class="nav-link active-link" href="publish.php">Publier une annonce</a>
-      <a class="nav-link" href="mesannonces.php">Mes annonces</a>
+      <a class="nav-link" href="logements.php?view=mesannonces">Mes annonces</a>
 
       <a class="nav-link" href="listemessagerie.php">Ma messagerie</a>
-
+      <?php if ($isAdmin): ?>
       <a class="nav-link" href="admin.php">Admin ⚙️</a>
-
+      <?php endif; ?>
       <a class="nav-link" href="profil.php">Mon profil</a>
     </nav>
   </header>
@@ -141,6 +166,9 @@ $conn->close();
         </form>
       </div>
     </main>
+          <footer class="text-center py-3">
+        <?php include 'footer.php'; ?>
+      </footer>
   </div>
     <script>
     const toggle = document.getElementById("menu-toggle");

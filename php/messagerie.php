@@ -105,7 +105,7 @@ $nom_destinataire = $destinataire
   <title>Messagerie - Logemangue</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <style>/* ===== MESSAGERIE ===== */
 
@@ -195,33 +195,24 @@ $nom_destinataire = $destinataire
 </style>
   <header class="topbar">
     <a href="index.php" class="topbar-logo">
-      <img src="topbar.png" onresize="3000" alt="Logo" />
+      <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
 
     <nav class="topbar-nav">
       <a class="nav-link " href="index.php">Accueil</a>
-      <a class="nav-link" href="recherche.html">Recherche</a>
+      <a class="nav-link" href="logements.php">Recherche</a>
 
       <a class="nav-link" href="publish.php">Publier une annonce</a>
-      <a class="nav-link" href="mesannonces.php">Mes annonces</a>
+      <a class="nav-link" href="logements.php?view=mesannonces">Mes annonces</a>
 
-      <a class="nav-link active-link" href="messagerie.html">Ma messagerie</a>
+      <a class="nav-link active-link" href="listemessagerie.php">Ma messagerie</a>
 
       <a class="nav-link" href="admin.php">Admin ⚙️</a>
 
-      <a class="nav-link " href="profil.php">Mon profil</a>
+      <a class="nav-link" href="profil.php">Mon profil</a>
     </nav>
   </header>
 <body>
-
-<button id="menu-toggle" class="hamburger">☰</button>
-
-<div class="d-flex">
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-      <?php include 'sidebar.php'; ?>
-    </div>
-
   <!-- CONTENU PRINCIPAL -->
   <main class="flex-grow-1 p-4">
 

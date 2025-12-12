@@ -20,7 +20,14 @@ if (isset($_POST["approve"])) {
 
 
 // Requête pour récupérer tous les logements
-$sql = "SELECT * FROM logement WHERE status='Waiting'";
+$sql = "SELECT l.*,
+        (SELECT url_photo
+         FROM photo
+         WHERE photo.id_logement = l.ID
+         ORDER BY id_photo ASC
+         LIMIT 1) AS photo_url
+        FROM logement l
+        WHERE l.status='Waiting'";
 $result = $conn->query($sql);
 
 // 1. Compter les nouveaux utilisateurs des 7 derniers jours
@@ -268,7 +275,7 @@ foreach ($userTypes as $type) {
         </a>
         <nav class="nav flex-column">
           <a class="nav-link" href="index.php">Accueil</a>
-          <a class="nav-link" href="recherche.php">Recherche</a>
+          <a class="nav-link" href="logements.php">Recherche</a>
 
           <hr>
           <?php if (
@@ -283,9 +290,9 @@ foreach ($userTypes as $type) {
                   $user["type_utilisateur"] == "Proprietaire" or
               $user["type_utilisateur"] == "Organisme"
           ): ?>
-            <li><a class="nav-link" href="mesannonces.php">Mes annonces</a></li>
+            <li><a class="nav-link" href="logements.php?view=mesannonces">Mes annonces</a></li>
           <?php endif; ?>  
-          <a class="nav-link" href="#">Ma messagerie</a>
+          <a class="nav-link" href="listemessagerie.php">Ma messagerie</a>
 
           <hr>
           <a class="nav-link" href="#">FAQ</a>
@@ -376,9 +383,8 @@ foreach ($userTypes as $type) {
                         "ID"
                     ]; ?>" class="logement-link">                            
                       <div class="logement-card">                                
-                        <img src="https://media.admagazine.fr/photos/65300bdda7dee5dd8ac5e683/16:9/w_2560%2Cc_limit/18th%2520apartment%2520-%2520wiercinski-studio%252016.jpg" alt="<?php echo $row[
-                            "titre"
-                        ]; ?>">                                
+                        <img src="<?php echo $row['photo_url'] ?: 'placeholder.jpg'; ?>" 
+     alt="<?php echo $row['titre']; ?>">                                
                         <div class="info">                                    
                           <h6 class="fw-bold mb-1"><?php echo $row[
                               "titre"
