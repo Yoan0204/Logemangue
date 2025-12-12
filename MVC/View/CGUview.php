@@ -55,35 +55,91 @@ class CGUView {
 <main class="cgu-container">
 
     <p>
-        Bienvenue sur LogeMangue…
-    </p>
+        Bienvenue sur LogeMangue. En utilisant notre site, vous acceptez les
+        présentes Conditions Générales d'Utilisation. Veuillez les lire
+        attentivement.
+      </p>
 
-    <h2>1. Objet des CGU</h2>
-    <p>…</p>
+      <h2>1. Objet des CGU</h2>
+      <p>
+        Les présentes Conditions Générales d’Utilisation définissent les règles
+        d’utilisation du site LogeMangue. Le site facilite la mise en relation
+        entre étudiants à la recherche d’un logement et propriétaires ou
+        organismes proposant des offres à prix abordable. L’utilisation du site
+        implique l’acceptation sans réserve des présentes conditions.
+      </p>
 
-    <h2>2. Accès au site</h2>
-    <p>…</p>
+      <h2>2. Accès au site</h2>
+      <p>
+        L’accès à LogeMangue est gratuit. Certaines fonctionnalités comme la
+        publication d’annonces ou la réservation nécessitent un compte.
+        L’utilisateur doit disposer d’un matériel compatible et d’un accès
+        Internet.
+      </p>
 
-    <h2>3. Création et gestion du compte</h2>
-    <p>…</p>
+      <h2>3. Création et gestion du compte</h2>
+      <p>
+        L’utilisateur doit fournir des informations exactes et à jour. Il
+        s’engage à garder ses identifiants confidentiels et à ne pas usurper
+        l’identité d’autrui. La suppression du compte peut être demandée via la
+        page profil.
+      </p>
 
-    <h2>4. Fonctionnalités proposées</h2>
-    <p>…</p>
+      <h2>4. Fonctionnalités proposées</h2>
+      <p>Les utilisateurs peuvent :</p>
+      <ul>
+        <li>publier et consulter des annonces de logement,</li>
+        <li>rechercher selon différents critères,</li>
+        <li>déposer une candidature ou une réservation,</li>
+        <li>gérer leur profil,</li>
+        <li>contacter un annonceur ou un administrateur,</li>
+        <li>donner un avis sur un logement,</li>
+        <li>accéder à la FAQ.</li>
+      </ul>
+      <p>
+        Les administrateurs disposent de fonctionnalités avancées (modération,
+        gestion du contenu…).
+      </p>
 
-    <h2>5. Règles d’utilisation</h2>
-    <p>…</p>
+      <h2>5. Règles d’utilisation</h2>
+      <p>L’utilisateur s’engage à :</p>
+      <ul>
+        <li>utiliser le site uniquement à des fins personnelles et légales,</li>
+        <li>publier des informations exactes et respectueuses,</li>
+        <li>ne pas diffuser de contenu offensant ou illégal.</li>
+      </ul>
 
-    <h2>6. Responsabilités</h2>
-    <p>…</p>
+      <h2>6. Responsabilités</h2>
+      <p>
+        LogeMangue ne garantit pas l’exactitude des annonces ni la conclusion
+        d’une location. Chaque utilisateur est responsable des informations
+        publiées.
+      </p>
 
-    <h2>7. Données personnelles</h2>
-    <p>…</p>
+      <h2>7. Données personnelles</h2>
+      <p>
+        Les données collectées ne sont utilisées que pour le bon fonctionnement
+        du site. Conformément au RGPD, chaque utilisateur peut demander
+        modification ou suppression de ses données via la page contact.
+      </p>
 
-    <h2>8. Modifications des CGU</h2>
-    <p>…</p>
+      <h2>8. Propriété intellectuelle</h2>
+      <p>
+        Le contenu du site appartient à l’équipe ASTRAL. Toute reproduction non
+        autorisée est interdite.
+      </p>
 
-    <h2>9. Contact</h2>
-    <p>…</p>
+      <h2>9. Modifications des CGU</h2>
+      <p>
+        L’équipe se réserve le droit de modifier les CGU à tout moment. Une
+        notification sera affichée en cas de changement important.
+      </p>
+
+      <h2>10. Contact</h2>
+      <p>
+        Pour toute question concernant les CGU, veuillez nous contacter via
+        l’onglet “Contact”.
+      </p>
 
 </main>
 
