@@ -1,14 +1,14 @@
 <?php
 
 class CGUController {
-    private $cguModel;
+    private $model;
 
-    public function __construct($cguModel) {
-        $this->cguModel = $cguModel;
+    public function __construct($model) {
+        $this->model = $model;
     }
 
     public function showCGU() {
-        $cguContent = $this->cguModel->cgu();
+        $cguContent = $this->model->cgu();
         include 'MVC/View/CGUview.php';
     }
 }

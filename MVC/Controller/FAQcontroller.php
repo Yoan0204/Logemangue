@@ -1,14 +1,14 @@
 <?php
 
 class FAQController {
-    private $faqModel;
+    private $model;
 
-    public function __construct($faqModel) {
-        $this->faqModel = $faqModel;
+    public function __construct($model) {
+        $this->model = $model;
     }
 
     public function showFAQ() {
-        $faqContent = $this->faqModel->getFAQ();
+        $faqContent = $this->model->getFAQ();
         include 'MVC/View/FAQview.php';
     }
 }
