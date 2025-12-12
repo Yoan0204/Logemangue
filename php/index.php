@@ -1,3 +1,89 @@
+<?php
+session_start();
+require_once "config.php";
+
+$pdo = getPDO();
+
+spl_autoload_register(function ($class) {
+    if (file_exists("controllers/$class.php")) require_once "controllers/$class.php";
+    if (file_exists("models/$class.php")) require_once "models/$class.php";
+    if (file_exists("views/$class.php")) require_once "views/$class.php";
+});
+
+if (isset($_GET['action'])) {
+
+    switch ($_GET['action']) {
+
+        case "login":
+            $controller = new LoginController($pdo);
+            $controller->login();
+            exit;
+
+        case "register":
+            $controller = new RegisterController($pdo);
+            $controller->register();
+            exit;
+
+        case "logout":
+            session_destroy();
+            header("Location: index.php");
+            exit;
+
+        case "profil":
+            $controller = new ProfilController($pdo);
+            $controller->profil();
+            exit;
+
+        case "logements":
+            $controller = new LogementController($pdo);
+            $controller->list();
+            exit;
+
+        case "logement":
+            $controller = new LogementController($pdo);
+            $controller->detail($_GET['id']);
+            exit;
+
+        case "mes_annonces":
+            $controller = new AnnonceController($pdo);
+            $controller->mesAnnonces();
+            exit;
+
+        case "admin":
+            $controller = new AdminController($pdo);
+            $controller->dashboard();
+            exit;
+
+
+        case "faq":
+            $controller = new FAQController();
+            $controller->show();
+            exit;
+
+        case "cgu":
+            $controller = new CGUController();
+            $controller->show();
+            exit;
+
+        case "messages_list":
+            $controller = new MessagesController($pdo);
+            $controller->list();
+            exit;
+
+        case "conversation":
+            $controller = new MessagesController($pdo);
+            $controller->conversation($_GET['dest']);
+            exit;
+
+        case "send_message":
+            $controller = new MessagesController($pdo);
+            $controller->send();
+            exit;
+    }
+}
+
+?>
+
 <!doctype html>
 <html lang="fr">
   <!-- Formated by Astral v1 -->
