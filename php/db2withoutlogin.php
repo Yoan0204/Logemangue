@@ -28,6 +28,6 @@ if (!isset($_SESSION['user_id'])) {
             }
     }
 }
-$isAdmin = isset($user['is_admin']) ? $user['is_admin'] : 0;
+$isAdmin = isset($user['is_admin']) ? $user['is_admin'] : 0;    
 
 ?>
