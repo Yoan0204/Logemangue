@@ -132,6 +132,9 @@ if (isset($_GET['action'])) {
             transition: transform 1.2s ease-in-out;
         }
   </style>
+  <?php     
+  require 'db2withoutlogin.php';
+  ?>
    <header class="topbar">
     <a href="index.php" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
@@ -139,14 +142,15 @@ if (isset($_GET['action'])) {
 
     <nav class="topbar-nav">
       <a class="nav-link active-link" href="index.php">Accueil</a>
-      <a class="nav-link" href="recherche.php">Recherche</a>
+      <a class="nav-link" href="logements.php">Recherche</a>
 
       <a class="nav-link" href="publish.php">Publier une annonce</a>
-      <a class="nav-link" href="mesannonces.php">Mes annonces</a>
+      <a class="nav-link" href="logements.php?view=mesannonces">Mes annonces</a>
 
       <a class="nav-link" href="listemessagerie.php">Ma messagerie</a>
-
-      <a class="nav-link" href="admin.php">Admin ⚙️</a>
+      <?php if ($isAdmin): ?> 
+          <a class="nav-link" href="admin.php">Admin ⚙️</a>
+      <?php endif; ?>
 
       <a class="nav-link " href="profil.php">Mon profil</a>
     </nav>
@@ -164,14 +168,16 @@ if (isset($_GET['action'])) {
           logement parfait
         </p>
 
-        <div class="d-flex justify-content-center align-items-center mb-5">
+        <form action="logements.php" method="GET" class="d-flex justify-content-center align-items-center mb-5">
           <input
             type="text"
+            name="search"
             class="form-control search-input"
             placeholder="Ville, quartier, type de logement..."
           />
-          <button class="btn-search">Rechercher →</button>
-        </div>
+          <button type="submit" class="btn-search">Rechercher →</button>
+        </form>
+
 
         <!--
 <div class="d-flex justify-content-center gap-5 stats">
@@ -348,12 +354,7 @@ if (isset($_GET['action'])) {
       </section>
 
       <footer class="text-center py-3">
-        <a class="link text-muted" href="cgu.html">FAQ, CGU et Contact</a>
-        © <?php echo date("Y"); ?> Logemangue - Tous droits réservés
-        <br />
-        <small class="text-muted"
-          >Dernière mise à jour : <?php echo date( "d/m/Y à H:i" ); ?></small
-        >
+        <?php include 'footer.php'; ?>
       </footer>
     </div>
 
