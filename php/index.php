@@ -13,42 +13,11 @@
     />
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
   </head>
-  <style>
-            .carousel-container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .carousel-item img {
-            height: 500px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-        
-        .carousel-caption {
-            background: #feb200ff;
-            border-radius: 10px;
-            padding: 20px;
-        }
-        
-        .property-title {
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        
-        .property-info {
-            font-size: 1.1rem;
-        }
-        
-        /* Transition de défilement plus douce */
-        .carousel-item {
-            transition: transform 1.2s ease-in-out;
-        }
-  </style>
+
   <?php     
   require 'db2withoutlogin.php';
   ?>
+  
    <header class="topbar">
     <a href="index.php" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
