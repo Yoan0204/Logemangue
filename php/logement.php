@@ -8,7 +8,67 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
 </head>
+<style>
+    .banner-img {
+        width: 100%;
+        border-radius: 20px;
+        object-fit: cover;
+    }
 
+    .thumb-img {
+        border-radius: 15px;
+        object-fit: cover;
+        cursor: pointer;
+        box-shadow: 4px 4px 0 #e1e1e1;
+    }
+
+    .tab-btn {
+        border-radius: 15px;
+        padding: 10px 25px;
+        margin-right: 10px;
+        background: #f8c620;
+        color: black;
+        font-weight: 600;
+        border: none;
+        box-shadow: 2px 3px 0 #d2d2d2;
+        transition: 0.2s;
+    }
+
+    .tab-btn.active {
+        background: #e4843d;
+        color: white;
+    }
+
+    .info-box {
+        background: linear-gradient(90deg, #f7c622, #f18a45);
+        padding: 25px;
+        border-radius: 15px;
+        margin-top: 15px;
+        color: black;
+        box-shadow: 3px 3px 0 #e0e0e0;
+    }
+
+    .action-card {
+        background: linear-gradient(90deg, #f7c622, #f18a45);
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 4px 4px 0 #e1e1e1;
+    }
+
+    .action-btn {
+        background: white;
+        border: none;
+        border-radius: 12px;
+        padding: 12px 18px;
+        width: 100%;
+        text-align: left;
+        margin-bottom: 12px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+</style>
 <?php
   require 'db2withoutlogin.php';
   if (isset($_POST['valider'])) {
