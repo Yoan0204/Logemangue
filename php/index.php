@@ -17,7 +17,7 @@
   <?php     
   require 'db2withoutlogin.php';
   ?>
-  
+
    <header class="topbar">
     <a href="index.php" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
@@ -61,13 +61,6 @@
           <button type="submit" class="btn-search">Rechercher →</button>
         </form>
 
-
-        <!--
-<div class="d-flex justify-content-center gap-5 stats">
-<div><strong>15+</strong><br>Logements disponibles</div>
-<div><strong>100%</strong><br>Annonces vérifiées</div>
-<div><strong>24/7</strong><br>Support étudiant</div>
-</div>-->
         <div class="container carousel-container" style="margin-bottom: 0px">
           <div
             id="carouselLogements"
