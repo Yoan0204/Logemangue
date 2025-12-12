@@ -7,8 +7,10 @@ class MessagerieController {
         $this->model = $model;
     }
 
-    public function showMessagerie() {
-        $messages = $this->model->getMessages();
-        include 'MVC/View/ListeMessagerie.php';
+    public function showMessagerie($userId = null) {
+        $messages = $this->model->getMessages($userId);
+        require_once __DIR__ . '/../View/ListeMessagerie.php';
+        $view = new ListeMessagerie();
+        $view->render($messages);
     }
 }

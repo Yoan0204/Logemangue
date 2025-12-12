@@ -1,7 +1,8 @@
 <?php
 
 class FAQView {
-    public function __construct() {
+    public function renderFAQ($faqContent = null) {
+        ?>
        <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -124,5 +125,7 @@ class FAQView {
 
 </body>
 </html>
+<?php
     }
 }
+?>
