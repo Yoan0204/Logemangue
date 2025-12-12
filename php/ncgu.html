@@ -3,44 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ – LogeMangue</title>
+    <title>CGU – LogeMangue</title>
     <link rel="stylesheet" href="../css/style.css">
 
     <style>
-        .faq-header {
+        .cgu-header {
             background: linear-gradient(90deg, #ffb300, #ff7a00);
             color: white;
             padding: 40px 20px;
             text-align: center;
-            font-family: "Poppins", sans-serif;
             border-radius: 0 0 20px 20px;
+            font-family: "Poppins", sans-serif;
         }
 
-        .faq-container {
+        .cgu-container {
             max-width: 850px;
             margin: 40px auto;
-            padding: 20px;
+            padding: 0 20px;
             font-family: "Poppins", sans-serif;
+            line-height: 1.7;
         }
 
-        .faq-item {
-            background: #fff7e6;
-            border-left: 4px solid #ff7a00;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            padding: 15px 20px;
-            cursor: pointer;
+        .cgu-container h2 {
+            margin-top: 30px;
+            color: #ff7a00;
+            font-weight: 700;
         }
 
-        .faq-question {
-            font-weight: 600;
-            font-size: 18px;
-        }
-
-        .faq-answer {
-            display: none;
-            padding-top: 10px;
-            color: #444;
+        .cgu-container ul {
+            margin-top: 10px;
+            padding-left: 20px;
         }
 
         footer {
@@ -49,6 +41,7 @@
             background: #f3f3f3;
             text-align: center;
             border-top: 1px solid #ddd;
+            font-size: 14px;
         }
 
         footer a {
@@ -60,63 +53,105 @@
 </head>
 
 <body>
-
-    <header class="faq-header">
-        <h1>Foire Aux Questions</h1>
-        <p>Les réponses aux questions les plus fréquentes 📌</p>
+    <header class="cgu-header">
+        <h1>Conditions Générales d'Utilisation</h1>
+        <p>Dernière mise à jour : <?php echo date("d/m/Y"); ?></p>
     </header>
 
-    <main class="faq-container">
+    <main class="cgu-container">
 
-        <div class="faq-item">
-            <div class="faq-question">Comment créer un compte ?</div>
-            <div class="faq-answer">
-                <p>En cliquant sur “Inscription”, puis en remplissant vos informations personnelles.</p>
-            </div>
-        </div>
+        <p>
+        Bienvenue sur LogeMangue. En utilisant notre site, vous acceptez les
+        présentes Conditions Générales d'Utilisation. Veuillez les lire
+        attentivement.
+      </p>
 
-        <div class="faq-item">
-            <div class="faq-question">Comment rechercher un logement ?</div>
-            <div class="faq-answer">
-                <p>Découvrir les annonces via la page ”Recherche” avec nos filtres avancés.</p>
-            </div>
-        </div>
+      <h2>1. Objet des CGU</h2>
+      <p>
+        Les présentes Conditions Générales d’Utilisation définissent les règles
+        d’utilisation du site LogeMangue. Le site facilite la mise en relation
+        entre étudiants à la recherche d’un logement et propriétaires ou
+        organismes proposant des offres à prix abordable. L’utilisation du site
+        implique l’acceptation sans réserve des présentes conditions.
+      </p>
 
-        <div class="faq-item">
-            <div class="faq-question">Comment réserver un logement ?</div>
-            <div class="faq-answer">
-                <p>Depuis la page du logement, cliquez sur “Réserver”.</p>
-            </div>
-        </div>
+      <h2>2. Accès au site</h2>
+      <p>
+        L’accès à LogeMangue est gratuit. Certaines fonctionnalités comme la
+        publication d’annonces ou la réservation nécessitent un compte.
+        L’utilisateur doit disposer d’un matériel compatible et d’un accès
+        Internet.
+      </p>
 
-        <div class="faq-item">
-            <div class="faq-question">J’ai perdu mon mot de passe</div>
-            <div class="faq-answer">
-                <p>Utilisez le lien “Mot de passe oublié” sur la page de connexion.</p>
-            </div>
-        </div>
+      <h2>3. Création et gestion du compte</h2>
+      <p>
+        L’utilisateur doit fournir des informations exactes et à jour. Il
+        s’engage à garder ses identifiants confidentiels et à ne pas usurper
+        l’identité d’autrui. La suppression du compte peut être demandée via la
+        page profil.
+      </p>
 
-        <div class="faq-item">
-            <div class="faq-question">Comment contacter l’équipe ASTRAL ?</div>
-            <div class="faq-answer">
-                <p>Via l’onglet Contact ou la messagerie interne.</p>
-            </div>
-        </div>
+      <h2>4. Fonctionnalités proposées</h2>
+      <p>Les utilisateurs peuvent :</p>
+      <ul>
+        <li>publier et consulter des annonces de logement,</li>
+        <li>rechercher selon différents critères,</li>
+        <li>déposer une candidature ou une réservation,</li>
+        <li>gérer leur profil,</li>
+        <li>contacter un annonceur ou un administrateur,</li>
+        <li>donner un avis sur un logement,</li>
+        <li>accéder à la FAQ.</li>
+      </ul>
+      <p>
+        Les administrateurs disposent de fonctionnalités avancées (modération,
+        gestion du contenu…).
+      </p>
+
+      <h2>5. Règles d’utilisation</h2>
+      <p>L’utilisateur s’engage à :</p>
+      <ul>
+        <li>utiliser le site uniquement à des fins personnelles et légales,</li>
+        <li>publier des informations exactes et respectueuses,</li>
+        <li>ne pas diffuser de contenu offensant ou illégal.</li>
+      </ul>
+
+      <h2>6. Responsabilités</h2>
+      <p>
+        LogeMangue ne garantit pas l’exactitude des annonces ni la conclusion
+        d’une location. Chaque utilisateur est responsable des informations
+        publiées.
+      </p>
+
+      <h2>7. Données personnelles</h2>
+      <p>
+        Les données collectées ne sont utilisées que pour le bon fonctionnement
+        du site. Conformément au RGPD, chaque utilisateur peut demander
+        modification ou suppression de ses données via la page contact.
+      </p>
+
+      <h2>8. Propriété intellectuelle</h2>
+      <p>
+        Le contenu du site appartient à l’équipe ASTRAL. Toute reproduction non
+        autorisée est interdite.
+      </p>
+
+      <h2>9. Modifications des CGU</h2>
+      <p>
+        L’équipe se réserve le droit de modifier les CGU à tout moment. Une
+        notification sera affichée en cas de changement important.
+      </p>
+
+      <h2>10. Contact</h2>
+      <p>
+        Pour toute question concernant les CGU, veuillez nous contacter via
+        l’onglet “Contact”.
+      </p>
 
     </main>
 
     <footer>
         <a href="index.php">Retour à l’accueil</a>
     </footer>
-
-    <script>
-        document.querySelectorAll(".faq-item").forEach(item => {
-            item.addEventListener("click", () => {
-                let answer = item.querySelector(".faq-answer");
-                answer.style.display = answer.style.display === "block" ? "none" : "block";
-            });
-        });
-    </script>
 
 </body>
 </html>
