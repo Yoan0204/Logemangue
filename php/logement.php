@@ -12,6 +12,8 @@
     .banner-img {
         width: 100%;
         border-radius: 20px;
+        width: 975px;
+        height: 730px;
         object-fit: cover;
     }
 
@@ -71,50 +73,25 @@
 </style>
 <?php
   require 'db2withoutlogin.php';
-  if (isset($_POST['valider'])) {
-      $nom = $_POST['nom'];
-      $telephone = $_POST['telephone'];
-      $genre = $_POST['genre'];
-      $date_naissance = $_POST['date_naissance'];
-      $type_utilisateur = $_POST['type_utilisateur'];
-      $biography=$_POST['biography'];
 
-      // Validation du numéro de téléphone
-      if (!preg_match("/^[0-9]{10}$/", $telephone)) {
-          echo "<p>Le numéro de téléphone doit contenir exactement 10 chiffres.</p>";
-      }
-      // Validation de la date de naissance
-      else if (empty($date_naissance)) {
-          echo "<p>La date de naissance est requise.</p>";
-      }
-      // Validation du type d'utilisateur
-      else if (empty($type_utilisateur)) {
-          echo "<p>Le type d'utilisateur est requis.</p>";
-      }
-      else {
-          // Mettre à jour les champs de l'utilisateur
-          $updateSql = "UPDATE users SET nom=?, telephone=?, genre=?, date_naissance=?, type_utilisateur=?,biography=? WHERE id=?";
-          $stmt = $conn->prepare($updateSql);
-          $stmt->bind_param("ssssssi", $nom, $telephone, $genre, $date_naissance, $type_utilisateur,$biography, $userId);
+  $logementId = $_GET['id'] ?? null;
+    if (!$logementId) {
+        echo "Logement non spécifié.";
+        exit;
+    }
+    $stmt = $pdo->prepare("SELECT * FROM logement WHERE id = :id");
+    $stmt->execute([':id' => $logementId]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$row) {
+        echo "Logement non trouvé.";
+        exit;
+    }
 
-          if ($stmt->execute()) {
-              header("Location: profil.php?update=success");
-          } else {
-              echo "<p>Erreur lors de la mise à jour des informations.</p>";
-          }
-      }
-  } 
-  if (isset($_GET['update']) && $_GET['update'] == 'success') {
-      echo "
-      <script>
-          document.addEventListener('DOMContentLoaded', function() {
-              var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
-              myModal.show();
-          });
-      </script>
-      ";
-  }
-?>
+    $stmt = $pdo->prepare("SELECT url_photo FROM photo WHERE id_logement = :id_logement ORDER BY id_photo ASC LIMIT 1");
+    $stmt->execute([':id_logement' => $logementId]);
+    $photo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  ?>
    <header class="topbar">
     <a href="index.php" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
@@ -144,7 +121,8 @@
     <div class="row">
         <!-- Grande image -->
         <div class="col-lg-9">
-            <img style="box-shadow: 4px 4px 0 #e1e1e1;" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1000&h=730&fit=crop" class="banner-img" alt="logement">
+
+            <img style="box-shadow: 4px 4px 0 #e1e1e1; " src="<?php echo $photo["url_photo"] ?: 'placeholder.jpg'; ?>" class="banner-img" alt="logement">
         </div>
 
         <!-- Miniatures -->
