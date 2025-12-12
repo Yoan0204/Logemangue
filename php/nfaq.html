@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ – LogeMangue</title>
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        .faq-header {
+            background: linear-gradient(90deg, #ffb300, #ff7a00);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            font-family: "Poppins", sans-serif;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .faq-container {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 20px;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .faq-item {
+            background: #fff7e6;
+            border-left: 4px solid #ff7a00;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            padding: 15px 20px;
+            cursor: pointer;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .faq-answer {
+            display: none;
+            padding-top: 10px;
+            color: #444;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            background: #f3f3f3;
+            text-align: center;
+            border-top: 1px solid #ddd;
+        }
+
+        footer a {
+            color: #ff7a00;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="faq-header">
+        <h1>Foire Aux Questions</h1>
+        <p>Les réponses aux questions les plus fréquentes 📌</p>
+    </header>
+
+    <main class="faq-container">
+
+        <div class="faq-item">
+            <div class="faq-question">Comment créer un compte ?</div>
+            <div class="faq-answer">
+                <p>En cliquant sur “Inscription”, puis en remplissant vos informations personnelles.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Comment rechercher un logement ?</div>
+            <div class="faq-answer">
+                <p>Découvrir les annonces via la page ”Recherche” avec nos filtres avancés.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Comment réserver un logement ?</div>
+            <div class="faq-answer">
+                <p>Depuis la page du logement, cliquez sur “Réserver”.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">J’ai perdu mon mot de passe</div>
+            <div class="faq-answer">
+                <p>Utilisez le lien “Mot de passe oublié” sur la page de connexion.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Comment contacter l’équipe ASTRAL ?</div>
+            <div class="faq-answer">
+                <p>Via l’onglet Contact ou la messagerie interne.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <a href="index.php">Retour à l’accueil</a>
+    </footer>
+
+    <script>
+        document.querySelectorAll(".faq-item").forEach(item => {
+            item.addEventListener("click", () => {
+                let answer = item.querySelector(".faq-answer");
+                answer.style.display = answer.style.display === "block" ? "none" : "block";
+            });
+        });
+    </script>
+
+</body>
+</html>

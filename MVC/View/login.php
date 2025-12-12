@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logemangue - Connexion/Inscription</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/css.css">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #ffd700, #ffa500);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .container {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 350px;
+        text-align: center;
+      }
+
+      .logo {
+        color: #f5a623;
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+
+      .tabs {
+        display: flex;
+        margin-bottom: 20px;
+      }
+
+      .tab {
+        flex: 1;
+        padding: 10px;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        color: #666;
+      }
+
+      .tab.active {
+        color: #f5a623;
+        border-bottom-color: #f5a623;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: #666;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+
+      .btn {
+        background-color: #f5a623;
+        color: white;
+        border: none;
+        padding: 12px;
+        width: 100%;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-bottom: 10px;
+        box-shadow: var(--shadow);
+        transition: 0.3s ease;
+      }
+      .btn:hover {
+        background-color: var(--orange);
+        color: black;
+        transform: translateY(-2px);
+      }
+
+      .link {
+        color: #f5a623;
+        text-decoration: none;
+        font-size: 14px;
+      }
+
+      .link:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo bold">Logemangue</div>
+      <div class="subtitle">Votre espace étudiant logement</div>
+
+      <div class="tabs">
+        <div class="tab active" id="login-tab">Connexion</div>
+        <div class="tab" id="register-tab">Créer un compte</div>
+      </div>
+
+      <!-- Formulaire de connexion -->
+      <form id="login-form" action="login.php" method="post">
+        <div class="form-group">
+          <label for="login-email">Adresse email</label>
+          <input type="email" id="login-email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="login-password">Mot de passe</label>
+          <input type="password" id="login-password" name="password" required />
+        </div>
+        <div class="form-group">
+          <a href="#" class="link">Mot de passe oublié ?</a>
+        </div>
+        <button type="submit" class="btn">Se connecter</button>
+      </form>
+
+      <!-- Formulaire d'inscription -->
+      <form
+        id="register-form"
+        action="register.php"
+        method="post"
+        style="display: none"
+      >
+        <div class="form-group">
+          <label for="register-email">Adresse email</label>
+          <input type="email" id="register-email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="register-password">Mot de passe</label>
+          <input
+            type="password"
+            id="register-password"
+            name="password"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="register-confirm-password"
+            >Confirmer le mot de passe</label
+          >
+          <input
+            type="password"
+            id="register-confirm-password"
+            name="confirm_password"
+            required
+          />
+        </div>
+        <button type="submit" class="btn">S'inscrire</button>
+      </form>
+      <a href="vitrine.php" class="link"
+        >→ Je veux simplement voir les logements</a
+      >
+    </div>
+
+    <script>
+      const loginTab = document.getElementById("login-tab");
+      const registerTab = document.getElementById("register-tab");
+      const loginForm = document.getElementById("login-form");
+      const registerForm = document.getElementById("register-form");
+
+      loginTab.addEventListener("click", () => {
+        loginTab.classList.add("active");
+        registerTab.classList.remove("active");
+        loginForm.style.display = "block";
+        registerForm.style.display = "none";
+      });
+
+      registerTab.addEventListener("click", () => {
+        registerTab.classList.add("active");
+        loginTab.classList.remove("active");
+        registerForm.style.display = "block";
+        loginForm.style.display = "none";
+      });
+    </script>
+  </body>
+</html>
