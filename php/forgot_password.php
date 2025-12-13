@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 // Connexion à la base
 require_once 'db2.php'; 
 
@@ -56,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     padding: 30px;
     border-radius: 18px;
     box-shadow: 5px 5px 0px #F5EEDC;
-    border: 3px solid #FFB74D; /* bordeau orange clair */
+    border: 3px solid #FFB74D;
     font-family: "Arial", sans-serif;
 }
 
@@ -76,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 .forgot-container label {
     font-weight: bold;
-    color: #2E7D32;  /* vert mango */
+    color: #2E7D32;
     margin-bottom: 6px;
     display: block;
 }
