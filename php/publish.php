@@ -6,7 +6,7 @@ if (
     isset($_POST['type']) &&
     isset($_POST['adresse']) &&
     isset($_POST['ville']) &&
-    isset($_POST['code_postal']) &&
+    isset($_POST['code']) &&
     isset($_POST['surface']) &&
     isset($_POST['loyer']) &&
     isset($_POST['description'])
@@ -15,7 +15,7 @@ if (
     $type = $_POST['type'];
     $adresse = $_POST['adresse'];
     $ville = $_POST['ville'];
-    $code_postal = $_POST['code_postal'];
+    $code_postal = $_POST['code'];
     $surface = $_POST['surface'];
     $loyer = $_POST['loyer'];
     $charges_incluses = isset($_POST['charges_incluses']) ? 1 : 0;
@@ -131,8 +131,14 @@ $conn->close();
             </div>
             <div class="col-md-4">
               <label class="form-label fw-semibold">Code postal</label>
-              <input type="text" class="form-control form-field" placeholder="75004" id="code_postal" name="code_postal" required>
+              <input type="text" class="form-control form-field" placeholder="75004" id="code" name="code" required>
             </div>
+            <ul class="list-group">
+              <li class="list-group-item" style="background: linear-gradient(135deg, var(--yellow), var(--green)); border-radius: 15px; margin-bottom: 2px;" data-vicopo="#ville, #code" data-vicopo-click='{"#code": "code", "#ville": "ville"}'>
+                <strong data-vicopo-code-postal></strong>
+                <span data-vicopo-ville></span>
+              </li>
+            </ul>
 
             <div class="col-md-3">
               <label class="form-label fw-semibold">Surface (m²)</label>
@@ -170,6 +176,7 @@ $conn->close();
         <?php include 'footer.php'; ?>
       </footer>
   </div>
+  <script src="../js/vicopo-vanilla.js"></script>
     <script>
     const toggle = document.getElementById("menu-toggle");
 const sidebar = document.getElementById("sidebar");
