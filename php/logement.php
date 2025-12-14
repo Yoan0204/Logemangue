@@ -168,7 +168,13 @@ $photo = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <!-- CONTENU DES ONGLETS -->
           <div class="tab-content">
               <div class="tab-pane fade show active info-box" id="description">
-                    <h2><?php echo htmlspecialchars($row["titre"]); ?></h3>
+                    <h2>
+                        <?php echo htmlspecialchars($row["titre"]); ?> 
+                        <img src="../png/verified.png" 
+                            alt="Certifié" 
+                            title="Ce contenu est certifié et vérifié par les administrateurs de Logemangue."
+                            style="width: 20px; height: 20px; vertical-align: middle; margin-left: 5px; margin-bottom:5px; cursor: pointer;">
+                    </h2> 
                     <h3 class=""><strong><?php echo htmlspecialchars(
                         $row["loyer"]
                     ); ?> € / mois</strong></h2> <br>
@@ -184,6 +190,19 @@ $photo = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <p><strong>Surface :</strong> <?php echo htmlspecialchars(
                         $row["surface"]
                     ); ?> m²</p>
+                    <p><strong>Meublé :</strong> <?php echo $row[
+                        "meuble"
+                    ] ? "Oui" : "Non"; ?></p>
+                    <p><strong>Statut de l'annonce :</strong> <?php echo htmlspecialchars(
+                        $row["status"]
+                    ); ?></p>   
+                    <p><strong>Charges incluses :</strong> <?php echo $row[
+                        "charges_incluses"
+                    ] ? "Oui" : "Non"; ?></p>
+                    <p><strong>Note :</strong> <?php echo htmlspecialchars(
+                        $row["note"]
+                    ); ?>/5</p>
+                    
               </div>
 
               <div class="tab-pane fade info-box" id="localisation">
