@@ -95,7 +95,7 @@ $stmt->execute([":id_logement" => $logementId]);
 $owner = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $stmt = $pdo->prepare(
-    "SELECT url_photo FROM photo WHERE id_logement = :id_logement ORDER BY id_photo DESC"
+    "SELECT url_photo FROM photo WHERE id_logement = :id_logement ORDER BY id_photo ASC"
 );
 $stmt->execute([":id_logement" => $logementId]);
 $photo = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -128,32 +128,31 @@ $photo = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="row">
         <!-- Grande image -->
         <div class="col-lg-9">
-
-            <img style="box-shadow: 4px 4px 0 #e1e1e1; " src="<?php echo $photo[0][
-                "url_photo"
-            ] ?:
-                "placeholder.jpg"; ?>" class="banner-img" alt="logement">
+            <img id="mainImage" style="box-shadow: 4px 4px 0 #e1e1e1;" 
+                src="<?php echo $photo[0]['url_photo'] ?: 'placeholder.jpg'; ?>" 
+                class="banner-img" alt="logement">
         </div>
-
         <!-- Miniatures -->
         <div class="col-lg-3 d-flex flex-column justify-content-between">
             <?php if (isset($photo[1])) { ?>
-                <img src=<?php echo $photo[1][
-                    "url_photo"
-                ]; ?> class="thumb-img" alt="miniature">
+                <img src="<?php echo $photo[1]['url_photo']; ?>" 
+                    class="thumb-img" alt="miniature" 
+                    onclick="swapImages(this)" style="cursor: pointer;">
             <?php } ?>
             <?php if (isset($photo[2])) { ?>
-                <img src=<?php echo $photo[2][
-                    "url_photo"
-                ]; ?> class="thumb-img" alt="miniature">
+                <img src="<?php echo $photo[2]['url_photo']; ?>" 
+                    class="thumb-img" alt="miniature" 
+                    onclick="swapImages(this)" style="cursor: pointer;">
             <?php } ?>
             <?php if (isset($photo[3])) { ?>
-                <img src=<?php echo $photo[3][
-                    "url_photo"
-                ]; ?> class="thumb-img" alt="miniature">
+                <img src="<?php echo $photo[3]['url_photo']; ?>" 
+                    class="thumb-img" alt="miniature" 
+                    onclick="swapImages(this)" style="cursor: pointer;">
             <?php } ?>            
         </div>
     </div>
+
+
 
     <!-- ===== TEXTE + BOUTONS ACTION CÔTE À CÔTE ===== -->
     <div class="row mt-4">
@@ -286,6 +285,16 @@ toggle.addEventListener("click", () => {
         
         // Afficher un message pour l'utilisateur (optionnel)
         alert("URL copiée dans le presse-papier !");
+    }
+</script>
+<script>
+    function swapImages(clickedThumb) {
+        const mainImage = document.getElementById('mainImage');
+        const tempSrc = mainImage.src;
+        
+        // Échange les sources
+        mainImage.src = clickedThumb.src;
+        clickedThumb.src = tempSrc;
     }
 </script>
 </body>

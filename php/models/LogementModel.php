@@ -24,7 +24,13 @@ class LogementModel {
 
     //Récupère les logements de l'utilisateur connecté
     public function getUserLogements($userId) {
-        $sql = "SELECT * FROM logement WHERE id_proprietaire = " . intval($userId);
+        $sql = "SELECT l.*,
+        (SELECT url_photo
+         FROM photo
+         WHERE photo.id_logement = l.ID
+         ORDER BY id_photo ASC
+         LIMIT 1) AS photo_url
+        FROM logement l WHERE id_proprietaire = " . intval($userId);
         $result = $this->conn->query($sql);
         return $result;
     }
