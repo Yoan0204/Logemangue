@@ -21,6 +21,8 @@
         border-radius: 15px;
         object-fit: cover;
         cursor: pointer;
+        width: 305px;
+        height: 225px;
         box-shadow: 4px 4px 0 #e1e1e1;
     }
 
@@ -86,10 +88,15 @@
         echo "Logement non trouvé.";
         exit;
     }
-
-    $stmt = $pdo->prepare("SELECT url_photo FROM photo WHERE id_logement = :id_logement ORDER BY id_photo ASC LIMIT 1");
+    $stmt = $pdo->prepare("SELECT user.nom, user.email, user.telephone FROM users user JOIN logement loge ON user.id = loge.id_proprietaire WHERE loge.id = :id_logement");
     $stmt->execute([':id_logement' => $logementId]);
-    $photo = $stmt->fetch(PDO::FETCH_ASSOC);
+    $owner = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+    $stmt = $pdo->prepare("SELECT url_photo FROM photo WHERE id_logement = :id_logement ORDER BY id_photo DESC");
+    $stmt->execute([':id_logement' => $logementId]);
+    $photo = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
   ?>
    <header class="topbar">
@@ -122,14 +129,20 @@
         <!-- Grande image -->
         <div class="col-lg-9">
 
-            <img style="box-shadow: 4px 4px 0 #e1e1e1; " src="<?php echo $photo["url_photo"] ?: 'placeholder.jpg'; ?>" class="banner-img" alt="logement">
+            <img style="box-shadow: 4px 4px 0 #e1e1e1; " src="<?php echo $photo[0]["url_photo"] ?: 'placeholder.jpg'; ?>" class="banner-img" alt="logement">
         </div>
 
         <!-- Miniatures -->
         <div class="col-lg-3 d-flex flex-column justify-content-between">
-            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2" class="thumb-img" alt="miniature">
-            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2" class="thumb-img" alt="miniature">
-            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2" class="thumb-img" alt="miniature">
+            <?php if (isset($photo[1])) {?>
+                <img src=<?php echo $photo[1]["url_photo"];?> class="thumb-img" alt="miniature">
+            <?php } ?>
+            <?php if (isset($photo[2])) {?>
+                <img src=<?php echo $photo[2]["url_photo"];?> class="thumb-img" alt="miniature">
+            <?php } ?>
+            <?php if (isset($photo[3])) {?>
+                <img src=<?php echo $photo[3]["url_photo"];?> class="thumb-img" alt="miniature">
+            <?php } ?>            
         </div>
     </div>
 
@@ -141,28 +154,32 @@
           <div class="mb-3 tab-buttons">
               <button class="tab-btn active" data-tab="description">Description</button>
               <button class="tab-btn" data-tab="localisation">Localisation</button>
-              <button class="tab-btn" data-tab="message">Message du propriétaire</button>
+              <button class="tab-btn" data-tab="message">Propriétaire</button>
           </div>
 
           <!-- CONTENU DES ONGLETS -->
           <div class="tab-content">
               <div class="tab-pane fade show active info-box" id="description">
-                  <ul>
-                      <li>À propos de ce logement</li>
-                      <li>Prix Loyer / Charges</li>
-                      <li>Date de disponibilité</li>
-                      <li>Caractéristiques</li>
-                  </ul>
+                    <h3><?php echo htmlspecialchars($row['titre']); ?></h3>
+                    <p><?php echo nl2br(htmlspecialchars($row['description'])); ?></p>
+                    <p><strong>Adresse :</strong> <?php echo htmlspecialchars($row['adresse']); ?></p>
+                    <p><strong>Prix :</strong> <?php echo htmlspecialchars($row['loyer']); ?> € par mois</p>
+                    <p><strong>Type de logement :</strong> <?php echo htmlspecialchars($row['TYPE']); ?></p>
+                    <p><strong>Surface :</strong> <?php echo htmlspecialchars($row['surface']); ?> m²</p>
               </div>
 
               <div class="tab-pane fade info-box" id="localisation">
-                  <p>📍 Adresse du logement</p>
-                  <p>Carte ou informations de localisation ici.</p>
+                    <p><strong>Adresse :</strong> <?php echo htmlspecialchars($row['adresse']); ?></p>
+                
                       <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2086.8370832268038!2d2.2432445618470607!3d48.777118574786144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sfr!2sfr!4v1765278973850!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
               </div>
 
               <div class="tab-pane fade info-box" id="message">
-                  <p>Message personnalisé du propriétaire ici.</p>
+                    <h4>Propriétaire du logement</h4> <br>
+                    <p><strong>Nom :</strong> <?php echo htmlspecialchars($owner['nom']); ?></p>
+                    <p><strong>Email :</strong> <?php echo htmlspecialchars($owner['email']); ?></p>
+                    <p><strong>Téléphone :</strong> <?php echo htmlspecialchars($owner['telephone']); ?></p>
+
               </div>
           </div>
 
@@ -173,13 +190,15 @@
         <!-- Bloc boutons d’action -->
         <div class="col-lg-3">
             <div class="action-card">
-                <button class="action-btn">🏢 Organisme</button>
+                <button class="action-btn">🏢 Organisme</button> 
                 <button class="action-btn">✉️ Contact</button>
-                <button class="action-btn">📄 Candidater</button>
+                <button href="google.com" class="action-btn">📄 Candidater</button>
                 <button class="action-btn">⭐ Favoris</button>
+                <a href="messagerie.php?dest=<?php echo $row['id_proprietaire']; ?>" class="action-btn link-offset-2 link-underline link-underline-opacity-0">💬 Envoyer un message</a>
                 <button class="action-btn">📤 Partager</button>
             </div>
         </div>
+        
     </div>
 
 </div>
@@ -202,11 +221,11 @@ toggle.addEventListener("click", () => {
         button.addEventListener('click', () => {
             const targetId = button.getAttribute('data-tab');
 
-            // 1️⃣ Activer le bouton cliqué
+            // Activer le bouton cliqué
             tabButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
 
-            // 2️⃣ Afficher le contenu correspondant et cacher les autres
+            // Afficher le contenu correspondant et cacher les autres
             tabPanes.forEach(pane => {
                 if(pane.id === targetId){
                     pane.classList.add('show', 'active');
