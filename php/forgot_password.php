@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         );
         $stmt->execute([$token, $expires, $email]);
 
-        $link = "http://localhost/Logemangue/php/reset_password.php?token=$token";
+        $link = "http://localhost/PROJET-LOGEMANGUE/Logemangue/php/reset_password.php?token=$token";
 
         
         $message = "Lien de réinitialisation : <br><a href='$link'>$link</a>";
