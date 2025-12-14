@@ -190,12 +190,10 @@
         <!-- Bloc boutons d’action -->
         <div class="col-lg-3">
             <div class="action-card">
-                <button class="action-btn">🏢 Organisme</button> 
-                <button class="action-btn">✉️ Contact</button>
                 <button href="google.com" class="action-btn">📄 Candidater</button>
                 <button class="action-btn">⭐ Favoris</button>
                 <a href="messagerie.php?dest=<?php echo $row['id_proprietaire']; ?>" class="action-btn link-offset-2 link-underline link-underline-opacity-0">💬 Envoyer un message</a>
-                <button class="action-btn">📤 Partager</button>
+                <button class="action-btn" onclick="copyUrl()">📤 Partager</button>
             </div>
         </div>
         
@@ -235,6 +233,31 @@ toggle.addEventListener("click", () => {
             });
         });
     });
+</script>
+<script>
+    function copyUrl() {
+        // Créer un élément textarea temporaire
+        var tempInput = document.createElement("textarea");
+        
+        // Récupérer l'URL de la page actuelle
+        tempInput.value = window.location.href;
+        
+        // Ajouter cet élément au DOM
+        document.body.appendChild(tempInput);
+        
+        // Sélectionner le contenu de l'élément textarea
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999); // Pour les appareils mobiles
+        
+        // Copier le texte sélectionné dans le presse-papier
+        document.execCommand("copy");
+        
+        // Retirer l'élément textarea du DOM
+        document.body.removeChild(tempInput);
+        
+        // Afficher un message pour l'utilisateur (optionnel)
+        alert("URL copiée dans le presse-papier !");
+    }
 </script>
 </body>
 
