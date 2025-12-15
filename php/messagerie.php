@@ -202,12 +202,16 @@ $nom_destinataire = $destinataire
       <a class="nav-link " href="index.php">Accueil</a>
       <a class="nav-link" href="logements.php">Recherche</a>
 
+      <?php if (!$isEtudiant): ?>
       <a class="nav-link" href="publish.php">Publier une annonce</a>
+      <?php endif; ?>
       <a class="nav-link" href="logements.php?view=mesannonces">Mes annonces</a>
 
       <a class="nav-link active-link" href="listemessagerie.php">Ma messagerie</a>
 
-      <a class="nav-link" href="admin.php">Admin ⚙️</a>
+      <?php if ($isAdmin): ?> 
+          <a class="nav-link" href="admin.php">Admin ⚙️</a>
+      <?php endif; ?>
 
       <a class="nav-link" href="profil.php">Mon profil</a>
     </nav>
