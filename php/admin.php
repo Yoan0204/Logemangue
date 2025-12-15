@@ -83,186 +83,9 @@ foreach ($userTypes as $type) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recherche de logements - Logemangue</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../css/admin.css">
   <link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
-<style>
-  /* --- SIDEBAR --- */
-  .sidebar {
-    width: 230px;
-    height: 100vh;
-    min-width: 230px;
-    background-color: #fff;
-    border-right: 1px solid #eee;
-    overflow-y: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    padding: 2rem 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: center;
-    position: fixed;
-    left: 0;
-    top: 0;
-    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.03);
-    z-index: 999;
-  }
-
-  .sidebar::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Hamburger (mobile) */
-  .hamburger {
-    display: none;
-    font-size: 2rem;
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 1100;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--green);
-  }
-
-  .flex-grow-1 {
-    margin-left: 230px;
-  }
-
-
-  /* Navigation links */
-  .sidebar .nav-link {
-    color: #000;
-    font-weight: 500;
-    text-decoration: none;
-    margin-bottom: 0.8rem;
-    padding: 1rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    position: relative;
-  }
-
-  .sidebar .nav-link::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, var(--yellow), var(--orange));
-    opacity: 0;
-    border-radius: 8px;
-    transition: opacity 0.3s ease;
-    z-index: -1;
-  }
-
-  .sidebar .nav-link:hover::before {
-    opacity: 0.15;
-  }
-
-  .sidebar .nav-link:hover {
-    color: var(--orange);
-    transform: translateX(4px);
-  }
-
-  /* Separator lines */
-  .sidebar hr {
-    width: 60%;
-    border: 1px solid var(--green);
-    margin: 1rem 0;
-    align-self: center;
-  }
-
-  /* Logo */
-  .sidebar-logo {
-    display: block;
-    width: 150px;
-    height: auto;
-    margin: -25px auto 20px;
-    object-fit: contain;
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
-
-  .sidebar-logo:hover {
-    transform: scale(1.05);
-  }
-
-  /* Active link */
-  .sidebar .active-link,
-  .sidebar .active-profile {
-    background: linear-gradient(90deg, var(--yellow), var(--orange));
-    color: black !important;
-    font-weight: 600;
-    border-radius: 8px;
-    box-shadow: var(--shadow);
-  }
-
-  .sidebar .active-link:hover::before,
-  .sidebar .active-profile:hover::before {
-    opacity: 0;
-  }
-
-            .dashboard-container {
-              padding: 30px;
-          }
-          
-          .header {
-              background: linear-gradient(135deg, #f97720ff 0%, #ffeb13ff 100%);
-              color: white;
-              padding: 25px;
-              border-radius: 15px;
-              margin-bottom: 30px;  
-              box-shadow: 0 10px 10px rgba(0,0,0,0.1);
-          }
-          
-          .stat-card {
-              background: white;
-              border-radius: 15px;
-              padding: 25px;
-              margin-bottom: 25px;
-              box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-              transition: transform 0.3s ease;
-          }
-          
-          .stat-card:hover {
-              transform: translateY(-5px);
-              box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-          }
-          
-          .stat-number {
-              font-size: 2.5rem;
-              font-weight: bold;
-              background: linear-gradient(135deg, #f97720ff 0%, #ffeb13ff 100%);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-              background-clip: text;
-          }
-          
-          .stat-label {
-              color: #666;
-              font-size: 1rem;
-              margin-top: 10px;
-          }
-          
-          .chart-card {
-              background: white;
-              border-radius: 15px;
-              padding: 30px;
-              box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-          }
-          
-          .icon-box {
-              width: 60px;
-              height: 60px;
-              border-radius: 12px;
-              background: linear-gradient(135deg, #f97720ff 0%, #ffeb13ff 100%);
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              font-size: 24px;
-              color: white;
-              margin-bottom: 15px;
-          }
-</style>
 <body>
 <button id="menu-toggle" class="hamburger">☰</button>
 
@@ -562,5 +385,185 @@ toggle.addEventListener("click", () => {
         }
     </script>
 </body>
+<style>
+  /* --- SIDEBAR --- */
+  .sidebar {
+    width: 230px;
+    height: 100vh;
+    min-width: 230px;
+    background-color: #fff;
+    border-right: 1px solid #eee;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.03);
+    z-index: 999;
+  }
 
+  .sidebar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hamburger (mobile) */
+  .hamburger {
+    display: none;
+    font-size: 2rem;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1100;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--green);
+  }
+
+  .flex-grow-1 {
+    margin-left: 230px;
+  }
+
+
+  /* Navigation links */
+  .sidebar .nav-link {
+    color: #000;
+    font-weight: 500;
+    text-decoration: none;
+    margin-bottom: 0.8rem;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .sidebar .nav-link::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--yellow), var(--orange));
+    opacity: 0;
+    border-radius: 8px;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+
+  .sidebar .nav-link:hover::before {
+    opacity: 0.15;
+  }
+
+  .sidebar .nav-link:hover {
+    color: var(--orange);
+    transform: translateX(4px);
+  }
+
+  /* Separator lines */
+  .sidebar hr {
+    width: 60%;
+    border: 1px solid var(--green);
+    margin: 1rem 0;
+    align-self: center;
+  }
+
+  /* Logo */
+  .sidebar-logo {
+    display: block;
+    width: 150px;
+    height: auto;
+    margin: -25px auto 20px;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .sidebar-logo:hover {
+    transform: scale(1.05);
+  }
+
+  /* Active link */
+  .sidebar .active-link,
+  .sidebar .active-profile {
+    background: linear-gradient(90deg, var(--yellow), var(--orange));
+    color: black !important;
+    font-weight: 600;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+  }
+
+  .sidebar .active-link:hover::before,
+  .sidebar .active-profile:hover::before {
+    opacity: 0;
+  }
+
+            .dashboard-container {
+              padding: 30px;
+          }
+          
+          .header {
+              background: linear-gradient(135deg, #f97720ff 0%, #ffeb13ff 100%);
+              color: white;
+              padding: 25px;
+              border-radius: 15px;
+              margin-bottom: 30px;  
+              box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+          }
+          
+          .stat-card {
+              background: white;
+              border-radius: 15px;
+              padding: 25px;
+              margin-bottom: 25px;
+              box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+              transition: transform 0.3s ease;
+          }
+          
+          .stat-card:hover {
+              transform: translateY(-5px);
+              box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+          }
+          
+          .stat-number {
+              font-size: 2.5rem;
+              font-weight: bold;
+              background: linear-gradient(135deg, #f97720ff 0%, #ffeb13ff 100%);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+          }
+          
+          .stat-label {
+              color: #666;
+              font-size: 1rem;
+              margin-top: 10px;
+          }
+          
+          .chart-card {
+              background: white;
+              border-radius: 15px;
+              padding: 30px;
+              box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+          }
+          
+          .icon-box {
+              width: 60px;
+              height: 60px;
+              border-radius: 12px;
+              background: linear-gradient(135deg, #f97720ff 0%, #ffeb13ff 100%);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 24px;
+              color: white;
+              margin-bottom: 15px;
+          }
+
+<style>
 </html>
+
+
