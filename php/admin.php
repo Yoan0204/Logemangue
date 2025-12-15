@@ -84,6 +84,7 @@ foreach ($userTypes as $type) {
   <title>Recherche de logements - Logemangue</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="../css/admin.css">
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
 <body>
 <button id="menu-toggle" class="hamburger">☰</button>
