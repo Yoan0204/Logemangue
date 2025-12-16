@@ -256,25 +256,35 @@ foreach ($userTypes as $type) {
                                 <?php // Afficher les résultats
                                 if (count($logements) > 0) {
                                         foreach ($logements as $row) { ?>                    
-                                    <div class="col-md-4 mb-4">                        
-                                        <div class="logement-card">                                
-                                            <a href="logement.php?id=<?php echo (int)$row['ID']; ?>" class="logement-link">
-                                                <img src="<?php echo htmlspecialchars($row['photo_url'] ?: 'placeholder.jpg'); ?>" alt="<?php echo htmlspecialchars($row['titre']); ?>">
-                                            </a>
-                                            <div class="info">                                    
-                                                <h6 class="fw-bold mb-1"><?php echo htmlspecialchars($row['titre']); ?></h6>                                    
-                                                <p class="text-muted mb-0"><?php echo htmlspecialchars($row['loyer']); ?> € / mois</p>                                    
-                                                <p class="small text-muted">Disponible : <?php echo $row['disponible'] == 1 ? 'Oui' : 'Non'; ?></p>
-                                                <div class="mt-2">
-                                                    <form method="post" class="d-inline">
-                                                        <input type="hidden" name="logement_id" value="<?php echo (int)$row['ID']; ?>">
-                                                        <button type="submit" class="btn-approved btn btn-sm btn-success" name="approve">Approuver</button>
-                                                    </form>
-                                                    <a href="logement.php?id=<?php echo (int)$row['ID']; ?>" class="btn btn-sm btn-outline-secondary ms-2">Voir</a>
-                                                </div>
-                                            </div>                           
-                                        </div>                        
-                                    </div>                    
+                                    <div class="col-md-4">                        
+                    <a href="logement.php?id=<?php echo $row[
+                        "ID"
+                    ]; ?>" class="logement-link">                            
+                      <div class="logement-card">                                
+                        <img src="<?php echo $row['photo_url'] ?: 'placeholder.jpg'; ?>" 
+     alt="<?php echo $row['titre']; ?>">                                
+                        <div class="info">                                    
+                          <h6 class="fw-bold mb-1"><?php echo $row[
+                              "titre"
+                          ]; ?></h6>                                    
+                          <p class="text-muted mb-0"><?php echo $row[
+                              "loyer"
+                          ]; ?> € / mois</p>                                    
+                          <p class="small text-muted">                                        
+                            Disponible : <?php echo $row["disponible"] == 1
+                                ? "Oui"
+                                : "Non"; ?>                                    
+                          </p>     
+                        <form method="post">
+                          <input type="hidden" name="logement_id" value=<?php echo $row[
+                              "ID"
+                          ]; ?>> <!-- Remplace 1 par l'ID du logement -->
+                          <button type="submit" class="btn-approved" name="approve">Approuver</button>
+                        </form>                                                      
+                        </div>                           
+                      </div>                        
+                    </a>                    
+                  </div>                  
                                     <?php }
                                 } else {
                                         echo "<div class='col-12'><p class='text-center'>Aucun logement trouvé.</p></div>";
