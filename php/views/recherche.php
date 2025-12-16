@@ -27,6 +27,8 @@ $min_rating = $_GET['min_rating'] ?? '0';
                     <option value="Studio" <?php echo $type === 'Studio' ? 'selected' : ''; ?>>Studio</option>
                     <option value="T1" <?php echo $type === 'T1' ? 'selected' : ''; ?>>T1</option>
                     <option value="T2" <?php echo $type === 'T2' ? 'selected' : ''; ?>>T2</option>
+                    <option value="T3" <?php echo $type === 'T3' ? 'selected' : ''; ?>>T3</option>
+                    <option value="T4+" <?php echo $type === 'T4+' ? 'selected' : ''; ?>>T4+</option>                    
                     <option value="Colocation" <?php echo $type === 'Colocation' ? 'selected' : ''; ?>>Colocation</option>
                 </select>
                 <button type="button" id="toggleFilters" class="btn btn-filters">Plus de filtres non? ⚙️</button>
@@ -38,12 +40,12 @@ $min_rating = $_GET['min_rating'] ?? '0';
             <div class="row g-3 align-items-center">
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Budget max (€)</label>
-                    <input type="range" name="budget_max" class="form-range custom-range" min="0" max="2000" step="50" 
+                    <input type="range" name="budget_max" class="form-range custom-range" min="0" max="5000" step="25" 
                         id="rangeBudget" value="<?php echo htmlspecialchars($budget_max); ?>">
                     <div class="d-flex justify-content-between small fw-semibold">
                         <span>0€</span>
                         <span id="budgetValue"><?php echo htmlspecialchars($budget_max); ?>€</span>
-                        <span>2000€</span>
+                        <span>5000€</span>
                     </div>
                 </div>
                 <div class="col-md-3">
