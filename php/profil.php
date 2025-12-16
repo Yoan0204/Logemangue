@@ -7,6 +7,7 @@
   <title>Mon profil - Logemangue</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/profil.css">
   <style>
     /* Style spécifique à la page profil */
     .profile-header {
