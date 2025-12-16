@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteBase /GitHub/logemangue/
+RewriteBase /GitHube/logemangue/
 
 # Ne pas réécrire les fichiers et dossiers existants
 RewriteCond %{REQUEST_FILENAME} !-d
