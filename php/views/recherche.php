@@ -162,7 +162,7 @@ $min_rating = $_GET['min_rating'] ?? '0';
     <!-- Pagination / Voir plus -->
     <?php
     // Défauts si les variables ne sont pas fournies
-    $limit = isset($limit) ? intval($limit) : 6;
+    $limit = isset($limit) ? intval($limit) : 10;
     $offset = isset($offset) ? intval($offset) : 0;
     $total = isset($total) ? intval($total) : 0;
 
