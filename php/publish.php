@@ -6,7 +6,7 @@ if (
     isset($_POST['type']) &&
     isset($_POST['adresse']) &&
     isset($_POST['ville']) &&
-    isset($_POST['code_postal']) &&
+    isset($_POST['code']) &&
     isset($_POST['surface']) &&
     isset($_POST['loyer']) &&
     isset($_POST['description'])
@@ -15,7 +15,7 @@ if (
     $type = $_POST['type'];
     $adresse = $_POST['adresse'];
     $ville = $_POST['ville'];
-    $code_postal = $_POST['code_postal'];
+    $code_postal = $_POST['code'];
     $surface = $_POST['surface'];
     $loyer = $_POST['loyer'];
     $charges_incluses = isset($_POST['charges_incluses']) ? 1 : 0;
@@ -31,8 +31,8 @@ if (
 
     if ($stmt->execute()) {
         $id_logement = $stmt->insert_id; // récupère l'id du logement créé
-        echo "✅ L'annonce a été publiée avec succès !<br>";
-
+        header("Location: index.php?publish=success");
+        
         // 2️⃣ Upload des photos
         if (isset($_FILES['photos'])) {
             $targetDir = "../uploads/";
@@ -54,8 +54,7 @@ if (
                     echo "⚠️ Erreur lors de l'upload de la photo : $fileName<br>";
                 }
             }
-
-            echo "Toutes les photos ont été uploadées !";
+            
         } 
     } else {
         echo "Erreur: " . $stmt->error;
@@ -78,22 +77,22 @@ $conn->close();
   <link rel="stylesheet" href="../css/Style.css">
 </head>
   <header class="topbar">
-    <a href="index.php" class="topbar-logo">
+    <a href="index" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
 
     <nav class="topbar-nav">
-      <a class="nav-link " href="index.php">Accueil</a>
-      <a class="nav-link" href="logements.php">Recherche</a>
+      <a class="nav-link " href="index">Accueil</a>
+      <a class="nav-link" href="logements">Recherche</a>
 
-      <a class="nav-link active-link" href="publish.php">Publier une annonce</a>
-      <a class="nav-link" href="logements.php?view=mesannonces">Mes annonces</a>
+      <a class="nav-link active-link" href="publish">Publier une annonce</a>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>
 
-      <a class="nav-link" href="listemessagerie.php">Ma messagerie</a>
+      <a class="nav-link" href="listemessagerie">Ma messagerie</a>
       <?php if ($isAdmin): ?>
-      <a class="nav-link" href="admin.php">Admin ⚙️</a>
+      <a class="nav-link" href="admin">Admin ⚙️</a>
       <?php endif; ?>
-      <a class="nav-link" href="profil.php">Mon profil</a>
+      <a class="nav-link" href="profil">Mon profil</a>
     </nav>
   </header>
 <body>
@@ -131,8 +130,14 @@ $conn->close();
             </div>
             <div class="col-md-4">
               <label class="form-label fw-semibold">Code postal</label>
-              <input type="text" class="form-control form-field" placeholder="75004" id="code_postal" name="code_postal" required>
+              <input type="text" class="form-control form-field" placeholder="75004" id="code" name="code" required>
             </div>
+            <ul class="list-group">
+              <li class="list-group-item" style="background: linear-gradient(135deg, var(--yellow), var(--green)); border-radius: 15px; margin-bottom: 2px;" data-vicopo="#ville, #code" data-vicopo-click='{"#code": "code", "#ville": "ville"}'>
+                <strong data-vicopo-code-postal></strong>
+                <span data-vicopo-ville></span>
+              </li>
+            </ul>
 
             <div class="col-md-3">
               <label class="form-label fw-semibold">Surface (m²)</label>
@@ -170,6 +175,7 @@ $conn->close();
         <?php include 'footer.php'; ?>
       </footer>
   </div>
+  <script src="../js/vicopo-vanilla.js"></script>
     <script>
     const toggle = document.getElementById("menu-toggle");
 const sidebar = document.getElementById("sidebar");
@@ -178,5 +184,7 @@ toggle.addEventListener("click", () => {
   sidebar.classList.toggle("active");
 });
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

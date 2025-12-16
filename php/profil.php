@@ -7,6 +7,7 @@
   <title>Mon profil - Logemangue</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/profil.css">
   <style>
     /* Style spécifique à la page profil */
     .profile-header {
@@ -130,22 +131,24 @@ if (isset($_GET['update']) && $_GET['update'] == 'success') {
 }
 ?>
    <header class="topbar">
-    <a href="index.php" class="topbar-logo">
+    <a href="index" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
 
     <nav class="topbar-nav">
-      <a class="nav-link" href="index.php">Accueil</a>
-      <a class="nav-link" href="logements.php">Recherche</a>
+      <a class="nav-link" href="index">Accueil</a>
+      <a class="nav-link" href="logements">Recherche</a>
 
-      <a class="nav-link" href="publish.php">Publier une annonce</a>
-      <a class="nav-link" href="logements.php?view=mesannonces">Mes annonces</a>
-
-      <a class="nav-link" href="listemessagerie.php">Ma messagerie</a>
-      <?php if ($isAdmin): ?>
-      <a class="nav-link" href="admin.php">Admin ⚙️</a>
+      <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="publish">Publier une annonce</a>
       <?php endif; ?>
-      <a class="nav-link active-link" href="profil.php">Mon profil</a>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>
+
+      <a class="nav-link" href="listemessagerie">Ma messagerie</a>
+      <?php if ($isAdmin): ?>
+      <a class="nav-link" href="admin">Admin ⚙️</a>
+      <?php endif; ?>
+      <a class="nav-link active-link" href="profil">Mon profil</a>
     </nav>
   </header>
 

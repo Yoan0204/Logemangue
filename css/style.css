@@ -4,6 +4,7 @@
   --light-bg: #fffdfb;
   --shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   --green: #2b7a0b;
+  --bs-primary: #ff7a00;
 }
 
 /* --- TOPBAR --- */
@@ -502,4 +503,4 @@
 .btn-unapproved:hover {
   background-color: rgb(84, 2, 2);
   transform: translateY(-2px);
-}
+} 

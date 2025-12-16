@@ -1,61 +1,66 @@
 <?php
-
+if (isset($_GET["publish"]) && $_GET["publish"] === "success") {?>
+            <div style="margin: 20px; margin-top: 20px;" class="alert alert-success alert-dismissible fade show" role="alert">
+                    Le logement a été publié avec succès !                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+<?php
+};
 // Simple router: use ?page=cgu or ?page=faq to view MVC pages
-$page = isset($_GET['page']) ? $_GET['page'] : 'home';
-if ($page === 'cgu') {
-  require_once __DIR__ . '/../MVC/Model/CGUmodel.php';
-  require_once __DIR__ . '/../MVC/Controller/CGUcontroller.php';
-  $model = new CGUModel();
-  $controller = new CGUController($model);
-  $controller->showCGU();
-  exit;
+$page = isset($_GET["page"]) ? $_GET["page"] : "home";
+if ($page === "cgu") {
+    require_once __DIR__ . "/../MVC/Model/CGUmodel.php";
+    require_once __DIR__ . "/../MVC/Controller/CGUcontroller.php";
+    $model = new CGUModel();
+    $controller = new CGUController($model);
+    $controller->showCGU();
+    exit();
 }
-if ($page === 'faq') {
-  require_once __DIR__ . '/../MVC/Model/FAQmodel.php';
-  require_once __DIR__ . '/../MVC/Controller/FAQcontroller.php';
-  $model = new FAQModel();
-  $controller = new FAQController($model);
-  $controller->showFAQ();
-  exit;
-}
-
-if ($page === 'login') {
-  require_once __DIR__ . '/../MVC/View/Loginview.php';
-  $view = new LoginView();
-  $view->render();
-  exit;
+if ($page === "faq") {
+    require_once __DIR__ . "/../MVC/Model/FAQmodel.php";
+    require_once __DIR__ . "/../MVC/Controller/FAQcontroller.php";
+    $model = new FAQModel();
+    $controller = new FAQController($model);
+    $controller->showFAQ();
+    exit();
 }
 
-if ($page === 'register') {
-  require_once __DIR__ . '/../MVC/View/Loginview.php';
-  $view = new RegisterView();
-  $view->render();
-  exit;
+if ($page === "login") {
+    require_once __DIR__ . "/../MVC/View/Loginview.php";
+    $view = new LoginView();
+    $view->render();
+    exit();
 }
 
-if ($page === 'messagerie' || $page === 'listemessagerie') {
-  require_once __DIR__ . '/db.php';
-  $userId = $_SESSION['user_id'] ?? 1;
-  require_once __DIR__ . '/../MVC/Model/Messageriemodel.php';
-  require_once __DIR__ . '/../MVC/Controller/Messageriecontroller.php';
-  $model = new MessagerieModel($pdo);
-  $controller = new MessagerieController($model);
-  $controller->showMessagerie($userId);
-  exit;
+if ($page === "register") {
+    require_once __DIR__ . "/../MVC/View/Loginview.php";
+    $view = new RegisterView();
+    $view->render();
+    exit();
 }
 
-if ($page === 'profil') {
-  require_once __DIR__ . '/db.php';
-  $userId = $_SESSION['user_id'] ?? 1;
-  require_once __DIR__ . '/../MVC/Model/Profilmodel.php';
-  require_once __DIR__ . '/../MVC/Controller/Profilcontroller.php';
-  $model = new Profilmodel($pdo);
-  $controller = new Profilcontroller($model);
-  $profile = $controller->viewProfile($userId);
-  require_once __DIR__ . '/../MVC/View/Profilview.php';
-  $view = new Profilview();
-  $view->renderProfile($profile);
-  exit;
+if ($page === "messagerie" || $page === "listemessagerie") {
+    require_once __DIR__ . "/db.php";
+    $userId = $_SESSION["user_id"] ?? 1;
+    require_once __DIR__ . "/../MVC/Model/Messageriemodel.php";
+    require_once __DIR__ . "/../MVC/Controller/Messageriecontroller.php";
+    $model = new MessagerieModel($pdo);
+    $controller = new MessagerieController($model);
+    $controller->showMessagerie($userId);
+    exit();
+}
+
+if ($page === "profil") {
+    require_once __DIR__ . "/db.php";
+    $userId = $_SESSION["user_id"] ?? 1;
+    require_once __DIR__ . "/../MVC/Model/Profilmodel.php";
+    require_once __DIR__ . "/../MVC/Controller/Profilcontroller.php";
+    $model = new Profilmodel($pdo);
+    $controller = new Profilcontroller($model);
+    $profile = $controller->viewProfile($userId);
+    require_once __DIR__ . "/../MVC/View/Profilview.php";
+    $view = new Profilview();
+    $view->renderProfile($profile);
+    exit();
 }
 
 // default: render home HTML below
@@ -76,28 +81,27 @@ if ($page === 'profil') {
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
   </head>
 
-  <?php     
-  require 'db2withoutlogin.php';
-  ?>
+  <?php require "db2withoutlogin.php"; ?>
 
    <header class="topbar">
-    <a href="index.php" class="topbar-logo">
+    <a href="index" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
 
     <nav class="topbar-nav">
-      <a class="nav-link active-link" href="index.php">Accueil</a>
-      <a class="nav-link" href="logements.php">Recherche</a>
+      <a class="nav-link active-link" href="index">Accueil</a>
+      <a class="nav-link" href="logements">Recherche</a>
+      <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="publish">Publier une annonce</a>
+      <?php endif; ?>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>
 
-      <a class="nav-link" href="publish.php">Publier une annonce</a>
-      <a class="nav-link" href="logements.php?view=mesannonces">Mes annonces</a>
-
-      <a class="nav-link" href="listemessagerie.php">Ma messagerie</a>
+      <a class="nav-link" href="listemessagerie">Ma messagerie</a>
       <?php if ($isAdmin): ?> 
-          <a class="nav-link" href="admin.php">Admin ⚙️</a>
+          <a class="nav-link" href="admin">Admin ⚙️</a>
       <?php endif; ?>
 
-      <a class="nav-link " href="profil.php">Mon profil</a>
+      <a class="nav-link " href="profil">Mon profil</a>
     </nav>
   </header>
 
@@ -292,7 +296,7 @@ if ($page === 'profil') {
       </section>
 
       <footer class="text-center py-3">
-        <?php include 'footer.php'; ?>
+        <?php include "footer.php"; ?>
       </footer>
     </div>
 

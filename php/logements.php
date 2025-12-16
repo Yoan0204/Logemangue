@@ -25,11 +25,20 @@ if ($view === 'mesannonces') {
         header('Location: login.html');
         exit;
     }
-    $logements = $controller->getUserLogements($userId);
+    // Pagination for "mes annonces"
+    $searchResult = $controller->getUserLogementsPaginated($userId);
+    $logements = $searchResult['logements'];
+    $limit = $searchResult['limit'];
+    $offset = $searchResult['offset'];
+    $total = $searchResult['total'];
     $isAdmin = isset($user['is_admin']) ? $user['is_admin'] : 0;
 } else {
-    // Vue de recherche avec filtres
-    $logements = $controller->getFilteredSearchLogements();
+    // Vue de recherche avec filtres + pagination
+    $searchResult = $controller->getFilteredSearchLogements();
+    $logements = $searchResult['logements'];
+    $limit = $searchResult['limit'];
+    $offset = $searchResult['offset'];
+    $total = $searchResult['total'];
     $isAdmin = isset($user['is_admin']) ? $user['is_admin'] : 0;
 }
 ?>
@@ -47,20 +56,22 @@ if ($view === 'mesannonces') {
 
 <body>
     <header class="topbar">
-        <a href="index.php" class="topbar-logo">
+        <a href="index" class="topbar-logo">
             <img src="../png/topbar.png" onresize="3000" alt="Logo" />
         </a>
 
         <nav class="topbar-nav">
-            <a class="nav-link " href="index.php">Accueil</a>
-            <a class="nav-link <?php echo $view === 'recherche' ? 'active-link' : ''; ?>" href="logements.php?view=recherche">Recherche</a>
-            <a class="nav-link" href="publish.php">Publier une annonce</a>
-            <a class="nav-link <?php echo $view === 'mesannonces' ? 'active-link' : ''; ?>" href="logements.php?view=mesannonces">Mes annonces</a>
-            <a class="nav-link" href="listemessagerie.php">Ma messagerie</a>
-            <?php if ($isAdmin): ?> 
-                <a class="nav-link" href="admin.php">Admin ⚙️</a>
+            <a class="nav-link " href="index">Accueil</a>
+            <a class="nav-link <?php echo $view === 'recherche' ? 'active-link' : ''; ?>" href="logements?view=recherche">Recherche</a>
+            <?php if (!$isEtudiant): ?>
+            <a class="nav-link" href="publish">Publier une annonce</a>
             <?php endif; ?>
-            <a class="nav-link" href="profil.php">Mon profil</a>
+            <a class="nav-link <?php echo $view === 'mesannonces' ? 'active-link' : ''; ?>" href="logements?view=mesannonces">Mes annonces</a>
+            <a class="nav-link" href="listemessagerie">Ma messagerie</a>
+            <?php if ($isAdmin): ?> 
+                <a class="nav-link" href="admin">Admin ⚙️</a>
+            <?php endif; ?>
+            <a class="nav-link" href="profil">Mon profil</a>
         </nav>
     </header>
 
