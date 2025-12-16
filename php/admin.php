@@ -139,12 +139,12 @@ foreach ($userTypes as $type) {
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
       <div>
-        <a href="index.php">
+        <a href="index">
           <img class="sidebar-logo" src="../png/Aberent.png" alt="Logo">
         </a>
         <nav class="nav flex-column">
-          <a class="nav-link" href="index.php">Accueil</a>
-          <a class="nav-link" href="logements.php">Recherche</a>
+          <a class="nav-link" href="index">Accueil</a>
+          <a class="nav-link" href="logements">Recherche</a>
 
           <hr>
           <?php if (
@@ -152,16 +152,16 @@ foreach ($userTypes as $type) {
                   $user["type_utilisateur"] == "Proprietaire" or
               $user["type_utilisateur"] == "Organisme"
           ): ?>
-            <li><a class="nav-link" href="publish.php">Publier une annonce</a></li>
+            <li><a class="nav-link" href="publish">Publier une annonce</a></li>
           <?php endif; ?>  
           <?php if (
               isset($user["type_utilisateur"]) &&
                   $user["type_utilisateur"] == "Proprietaire" or
               $user["type_utilisateur"] == "Organisme"
           ): ?>
-            <li><a class="nav-link" href="logements.php?view=mesannonces">Mes annonces</a></li>
+            <li><a class="nav-link" href="logements?view=mesannonces">Mes annonces</a></li>
           <?php endif; ?>  
-          <a class="nav-link" href="listemessagerie.php">Ma messagerie</a>
+          <a class="nav-link" href="listemessagerie">Ma messagerie</a>
 
           <hr>
           <a class="nav-link" href="#">FAQ</a>
@@ -169,9 +169,9 @@ foreach ($userTypes as $type) {
 
           <hr>
           <?php if (isset($user["is_admin"]) && $user["is_admin"] == 1): ?>
-            <li><a class="nav-link active-link " href="admin.php">Admin ⚙️</a></li>
+            <li><a class="nav-link active-link " href="admin">Admin ⚙️</a></li>
           <?php endif; ?> 
-          <a class="nav-link " href="profil.php">Mon profil</a>
+          <a class="nav-link " href="profil">Mon profil</a>
           <a class="nav-link" href="login.html">Connexion</a>
         </nav>
       </div>
