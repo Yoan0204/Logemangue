@@ -134,7 +134,52 @@ foreach ($userTypes as $type) {
 </head>
 <body>
 <button id="menu-toggle" class="hamburger">☰</button>
+<style>
+    /* Liens pagination */
+.pagination .page-link {
+  color: #fd7e14;
+  border-color: #fd7e14;
+  background-color: #fff;
+}
 
+/* Hover */
+.pagination .page-link:hover {
+  color: #fff;
+  background: linear-gradient(135deg, #ffc107, #fd7e14);
+  border-color: #fd7e14;
+}
+
+/* Page active */
+.pagination .page-item.active .page-link {
+  color: #fff;
+  background: linear-gradient(135deg, #ffc107, #fd7e14);
+  border-color: #fd7e14;
+}
+
+/* Focus (accessibilité) */
+.pagination .page-link:focus {
+  box-shadow: 0 0 0 0.25rem rgba(253, 126, 20, 0.4);
+}
+
+/* Désactivé */
+.pagination .page-item.disabled .page-link {
+  color: #adb5bd;
+  background-color: #fff;
+  border-color: #dee2e6;
+}
+
+.btn-outline-primary {
+    color: var(--orange);
+    border-color: var(--orange);
+}
+
+.btn-outline-primary:hover {
+    color: #fff;
+    background: linear-gradient(135deg, #ffc107, #fd7e14);
+    border-color: var(--orange);
+}
+
+</style>
 <div class="d-flex">
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
