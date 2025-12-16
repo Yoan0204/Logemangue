@@ -34,7 +34,7 @@ class LogementController {
         $filters['disponible'] = isset($_GET['disponible']) ? $_GET['disponible'] : '';
         
         // Pagination: récupère limit et offset depuis les paramètres GET
-        $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 3;
+        $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10;
         $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
 
         $logements = $this->model->getFilteredLogements($filters, $limit, $offset);
@@ -57,7 +57,7 @@ class LogementController {
 
     // Récupère les logements de l'utilisateur avec pagination
     public function getUserLogementsPaginated($userId) {
-        $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 6;
+        $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10;
         $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
 
         $logements = $this->model->getUserLogementsPaginated($userId, $limit, $offset);
