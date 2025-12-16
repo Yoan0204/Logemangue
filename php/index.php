@@ -1,5 +1,10 @@
 <?php
-
+if (isset($_GET["publish"]) && $_GET["publish"] === "success") {?>
+            <div style="margin: 20px; margin-top: 20px;" class="alert alert-success alert-dismissible fade show" role="alert">
+                    Le logement a été publié avec succès !                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+<?php
+};
 // Simple router: use ?page=cgu or ?page=faq to view MVC pages
 $page = isset($_GET["page"]) ? $_GET["page"] : "home";
 if ($page === "cgu") {

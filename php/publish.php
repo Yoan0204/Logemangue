@@ -31,8 +31,8 @@ if (
 
     if ($stmt->execute()) {
         $id_logement = $stmt->insert_id; // récupère l'id du logement créé
-        echo "✅ L'annonce a été publiée avec succès !<br>";
-
+        header("Location: index.php?publish=success");
+        
         // 2️⃣ Upload des photos
         if (isset($_FILES['photos'])) {
             $targetDir = "../uploads/";
@@ -54,8 +54,7 @@ if (
                     echo "⚠️ Erreur lors de l'upload de la photo : $fileName<br>";
                 }
             }
-
-            echo "Toutes les photos ont été uploadées !";
+            
         } 
     } else {
         echo "Erreur: " . $stmt->error;
@@ -185,5 +184,7 @@ toggle.addEventListener("click", () => {
   sidebar.classList.toggle("active");
 });
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
