@@ -33,14 +33,58 @@ class LogementController {
         $filters['min_rating'] = isset($_GET['min_rating']) ? intval($_GET['min_rating']) : '';
         $filters['disponible'] = isset($_GET['disponible']) ? $_GET['disponible'] : '';
         
-        $logements = $this->model->getFilteredLogements($filters);
-        return $logements;
+        // Pagination: récupère limit et offset depuis les paramètres GET
+        $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 3;
+        $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
+
+        $logements = $this->model->getFilteredLogements($filters, $limit, $offset);
+        $total = $this->model->countFilteredLogements($filters);
+
+        // Retourner un tableau contenant le jeu de résultats et les infos de pagination
+        return [
+            'logements' => $logements,
+            'limit' => $limit,
+            'offset' => $offset,
+            'total' => $total
+        ];
     }
 
     //Récupère les logements de l'utilisateur connecté
     public function getUserLogements($userId) {
         $logements = $this->model->getUserLogements($userId);
         return $logements;
+    }
+
+    // Récupère les logements de l'utilisateur avec pagination
+    public function getUserLogementsPaginated($userId) {
+        $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 6;
+        $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
+
+        $logements = $this->model->getUserLogementsPaginated($userId, $limit, $offset);
+        $total = $this->model->countUserLogements($userId);
+
+        return [
+            'logements' => $logements,
+            'limit' => $limit,
+            'offset' => $offset,
+            'total' => $total
+        ];
+    }
+
+    // Récupère les logements en attente (admin) avec pagination
+    public function getWaitingLogementsPaginated() {
+        $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 6;
+        $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
+
+        $logements = $this->model->getWaitingLogements($limit, $offset);
+        $total = $this->model->countWaitingLogements();
+
+        return [
+            'logements' => $logements,
+            'limit' => $limit,
+            'offset' => $offset,
+            'total' => $total
+        ];
     }
 
     //Traite la suppression d'un logement
