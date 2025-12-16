@@ -6,20 +6,59 @@ if (!isset($user["is_admin"]) && $user["is_admin"] != 1) {
     exit();
 }
 
+// Traitement de l'approbation d'un logement
 if (isset($_POST["approve"])) {
-    $id = $_POST["logement_id"];
+    $id = (int)$_POST["logement_id"];
 
-    $sql =
-        "UPDATE logement SET status = 'Approved' WHERE id = :id AND status = 'Waiting'";
+    $sql = "UPDATE logement SET status = 'Approved' WHERE id = :id AND status = 'Waiting'";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(":id", $id, PDO::PARAM_INT);
     $stmt->execute();
 
-    echo "Le logement a été approuvé !";
+    // Redirection pour éviter la resoumission du formulaire et conserver la recherche/pagination
+    $redirect = 'admin.php';
+    $params = [];
+    if (!empty($_GET['q'])) {
+        $params['q'] = $_GET['q'];
+    }
+    if (!empty($_GET['page'])) {
+        $params['page'] = (int)$_GET['page'];
+    }
+    // Indiquer le succès pour pouvoir afficher un message après redirection
+    $params['message'] = 'approved';
+    if (!empty($params)) {
+        $redirect .= '?' . http_build_query($params);
+    }
+    header('Location: ' . $redirect);
+    exit();
 }
 
 
-// Requête pour récupérer tous les logements
+// Recherche et pagination pour les logements à approuver
+$q = isset($_GET['q']) ? trim((string)$_GET['q']) : '';
+$page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+$perPage = 6; // Nombre de logements par page
+$offset = ($page - 1) * $perPage;
+
+// Préparer la clause de filtre
+$searchClause = '';
+$params = [];
+if ($q !== '') {
+    $searchClause = " AND (l.titre LIKE :q OR l.description LIKE :q OR l.adresse LIKE :q)";
+    $params[':q'] = "%$q%";
+}
+
+// Compter le nombre total pour la pagination
+$countSql = "SELECT COUNT(*) as total FROM logement l WHERE l.status = 'Waiting'" . $searchClause;
+$countStmt = $pdo->prepare($countSql);
+foreach ($params as $k => $v) {
+    $countStmt->bindValue($k, $v, PDO::PARAM_STR);
+}
+$countStmt->execute();
+$totalRows = (int)$countStmt->fetch(PDO::FETCH_ASSOC)['total'];
+$totalPages = (int)ceil($totalRows / $perPage);
+
+// Récupérer les logements de la page courante
 $sql = "SELECT l.*,
         (SELECT url_photo
          FROM photo
@@ -27,8 +66,15 @@ $sql = "SELECT l.*,
          ORDER BY id_photo ASC
          LIMIT 1) AS photo_url
         FROM logement l
-        WHERE l.status='Waiting'";
-$result = $conn->query($sql);
+        WHERE l.status = 'Waiting'" . $searchClause . " ORDER BY l.ID DESC LIMIT :limit OFFSET :offset";
+$stmt = $pdo->prepare($sql);
+foreach ($params as $k => $v) {
+    $stmt->bindValue($k, $v, PDO::PARAM_STR);
+}
+$stmt->bindValue(':limit', $perPage, PDO::PARAM_INT);
+$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+$stmt->execute();
+$logements = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // 1. Compter les nouveaux utilisateurs des 7 derniers jours
 $stmt = $pdo->prepare("
@@ -194,46 +240,95 @@ foreach ($userTypes as $type) {
         <div class="container-fluid" style="max-width: 2500px;">        
           <div class="row g-4">              
             <div class="container py-4">        
-              <h1 class="text-center mb-4">Liste des Logements à approuver</h1>        
-              <div class="row justify-content-center">            
-                <?php // Afficher les résultats
-                if ($result->num_rows > 0) {
-                    while (
-                        $row = $result->fetch_assoc()
-                    ) { ?>                    
-                  <div class="col-md-4">                        
-                    <a href="logement.php?id=<?php echo $row[
-                        "ID"
-                    ]; ?>" class="logement-link">                            
-                      <div class="logement-card">                                
-                        <img src="<?php echo $row['photo_url'] ?: 'placeholder.jpg'; ?>" 
-     alt="<?php echo $row['titre']; ?>">                                
-                        <div class="info">                                    
-                          <h6 class="fw-bold mb-1"><?php echo $row[
-                              "titre"
-                          ]; ?></h6>                                    
-                          <p class="text-muted mb-0"><?php echo $row[
-                              "loyer"
-                          ]; ?> € / mois</p>                                    
-                          <p class="small text-muted">                                        
-                            Disponible : <?php echo $row["disponible"] == 1
-                                ? "Oui"
-                                : "Non"; ?>                                    
-                          </p>     
-                        <form method="post">
-                          <input type="hidden" name="logement_id" value=<?php echo $row[
-                              "ID"
-                          ]; ?>> <!-- Remplace 1 par l'ID du logement -->
-                          <button type="submit" class="btn-approved" name="approve">Approuver</button>
-                        </form>                                                      
-                        </div>                           
-                      </div>                        
-                    </a>                    
-                  </div>                    
-                  <?php }
-                } else {
-                    echo "<div class='col-12'><p class='text-center'>Aucun logement trouvé.</p></div>";
-                } ?>        
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h1 class="text-center mb-0">Liste des Logements à approuver</h1>
+                                <form method="get" class="d-flex" role="search">
+                                    <input class="form-control me-2" type="search" name="q" placeholder="Recherche (titre, adresse...)" aria-label="Search" value="<?php echo htmlspecialchars($q); ?>">
+                                    <button class="btn btn-outline-primary" type="submit">Rechercher</button>
+                                </form>
+                            </div>
+
+                            <?php if (isset($_GET['message']) && $_GET['message'] === 'approved'): ?>
+                                <div class="alert alert-success" role="alert">Le logement a été approuvé avec succès.</div>
+                            <?php endif; ?>
+
+                            <div class="row justify-content-center">            
+                                <?php // Afficher les résultats
+                                if (count($logements) > 0) {
+                                        foreach ($logements as $row) { ?>                    
+                                    <div class="col-md-4 mb-4">                        
+                                        <div class="logement-card">                                
+                                            <a href="logement.php?id=<?php echo (int)$row['ID']; ?>" class="logement-link">
+                                                <img src="<?php echo htmlspecialchars($row['photo_url'] ?: 'placeholder.jpg'); ?>" alt="<?php echo htmlspecialchars($row['titre']); ?>">
+                                            </a>
+                                            <div class="info">                                    
+                                                <h6 class="fw-bold mb-1"><?php echo htmlspecialchars($row['titre']); ?></h6>                                    
+                                                <p class="text-muted mb-0"><?php echo htmlspecialchars($row['loyer']); ?> € / mois</p>                                    
+                                                <p class="small text-muted">Disponible : <?php echo $row['disponible'] == 1 ? 'Oui' : 'Non'; ?></p>
+                                                <div class="mt-2">
+                                                    <form method="post" class="d-inline">
+                                                        <input type="hidden" name="logement_id" value="<?php echo (int)$row['ID']; ?>">
+                                                        <button type="submit" class="btn-approved btn btn-sm btn-success" name="approve">Approuver</button>
+                                                    </form>
+                                                    <a href="logement.php?id=<?php echo (int)$row['ID']; ?>" class="btn btn-sm btn-outline-secondary ms-2">Voir</a>
+                                                </div>
+                                            </div>                           
+                                        </div>                        
+                                    </div>                    
+                                    <?php }
+                                } else {
+                                        echo "<div class='col-12'><p class='text-center'>Aucun logement trouvé.</p></div>";
+                                } ?>        
+                    </div>
+
+                    <!-- Pagination -->
+                    <?php if ($totalPages > 1): ?>
+                        <nav aria-label="Pagination">
+                            <ul class="pagination justify-content-center">
+                                <?php
+                                $baseParams = [];
+                                if ($q !== '') {
+                                        $baseParams['q'] = $q;
+                                }
+                                // Previous
+                                $prevPage = max(1, $page - 1);
+                                $prevDisabled = $page <= 1 ? ' disabled' : '';
+                                $params = array_merge($baseParams, ['page' => $prevPage]);
+                                ?>
+                                <li class="page-item<?php echo $prevDisabled; ?>">
+                                    <a class="page-link" href="<?php echo 'admin.php?' . http_build_query($params); ?>">&laquo; Préc</a>
+                                </li>
+
+                                <?php
+                                $start = max(1, $page - 2);
+                                $end = min($totalPages, $page + 2);
+                                if ($start > 1) {
+                                        $p = 1; $params = array_merge($baseParams, ['page' => $p]);
+                                        echo '<li class="page-item"><a class="page-link" href="admin.php?' . http_build_query($params) . '">1</a></li>';
+                                        if ($start > 2) echo '<li class="page-item disabled"><span class="page-link">&hellip;</span></li>';
+                                }
+                                for ($i = $start; $i <= $end; $i++) {
+                                        $params = array_merge($baseParams, ['page' => $i]);
+                                        $active = $i === $page ? ' active' : '';
+                                        echo '<li class="page-item' . $active . '"><a class="page-link" href="admin.php?' . http_build_query($params) . '">' . $i . '</a></li>';
+                                }
+                                if ($end < $totalPages) {
+                                        if ($end < $totalPages - 1) echo '<li class="page-item disabled"><span class="page-link">&hellip;</span></li>';
+                                        $p = $totalPages; $params = array_merge($baseParams, ['page' => $p]);
+                                        echo '<li class="page-item"><a class="page-link" href="admin.php?' . http_build_query($params) . '">' . $p . '</a></li>';
+                                }
+
+                                // Next
+                                $nextPage = min($totalPages, $page + 1);
+                                $nextDisabled = $page >= $totalPages ? ' disabled' : '';
+                                $params = array_merge($baseParams, ['page' => $nextPage]);
+                                ?>
+                                <li class="page-item<?php echo $nextDisabled; ?>">
+                                    <a class="page-link" href="<?php echo 'admin.php?' . http_build_query($params); ?>">Suiv &raquo;</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    <?php endif; ?>
           </div>    
         </div>        
       </div>      
