@@ -149,6 +149,8 @@ if ($page === "profil") {
             id="carouselLogements"
             class="carousel slide"
             data-bs-ride="carousel"
+            data-bs-interval="3500"  
+            data-bs-pause="hover"    
           >
             <!-- Indicateurs -->
             <div class="carousel-indicators">
