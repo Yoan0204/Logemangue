@@ -25,11 +25,20 @@ if ($view === 'mesannonces') {
         header('Location: login.html');
         exit;
     }
-    $logements = $controller->getUserLogements($userId);
+    // Pagination for "mes annonces"
+    $searchResult = $controller->getUserLogementsPaginated($userId);
+    $logements = $searchResult['logements'];
+    $limit = $searchResult['limit'];
+    $offset = $searchResult['offset'];
+    $total = $searchResult['total'];
     $isAdmin = isset($user['is_admin']) ? $user['is_admin'] : 0;
 } else {
-    // Vue de recherche avec filtres
-    $logements = $controller->getFilteredSearchLogements();
+    // Vue de recherche avec filtres + pagination
+    $searchResult = $controller->getFilteredSearchLogements();
+    $logements = $searchResult['logements'];
+    $limit = $searchResult['limit'];
+    $offset = $searchResult['offset'];
+    $total = $searchResult['total'];
     $isAdmin = isset($user['is_admin']) ? $user['is_admin'] : 0;
 }
 ?>
