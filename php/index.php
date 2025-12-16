@@ -81,7 +81,24 @@ if ($page === "profil") {
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
   </head>
 
-  <?php require "db2withoutlogin.php"; ?>
+    <?php require "db2withoutlogin.php"; ?>
+
+    <?php
+      // Charger logements pour le carrousel — ne garder que ceux qui ont une photo
+      require_once __DIR__ . '/models/LogementModel.php';
+      $logementModel = new LogementModel($conn, $pdo);
+      // On récupère plus de résultats et on filtrera côté PHP pour garantir d'avoir 4 logements AVEC photo
+      $carouselResult = $logementModel->getFilteredLogements([], 20, 0);
+      $carouselLogements = [];
+      if ($carouselResult && $carouselResult->num_rows > 0) {
+        while ($row = $carouselResult->fetch_assoc()) {
+          if (!empty(trim((string)($row['photo_url'] ?? '')))) {
+            $carouselLogements[] = $row;
+          }
+          if (count($carouselLogements) >= 4) break;
+        }
+      }
+    ?>
 
    <header class="topbar">
     <a href="index" class="topbar-logo">
@@ -135,92 +152,72 @@ if ($page === "profil") {
           >
             <!-- Indicateurs -->
             <div class="carousel-indicators">
-              <button
-                type="button"
-                data-bs-target="#carouselLogements"
-                data-bs-slide-to="0"
-                class="active"
-              ></button>
-              <button
-                type="button"
-                data-bs-target="#carouselLogements"
-                data-bs-slide-to="1"
-              ></button>
-              <button
-                type="button"
-                data-bs-target="#carouselLogements"
-                data-bs-slide-to="2"
-              ></button>
-              <button
-                type="button"
-                data-bs-target="#carouselLogements"
-                data-bs-slide-to="3"
-              ></button>
+              <?php if (!empty($carouselLogements)): ?>
+                <?php foreach ($carouselLogements as $i => $lg): ?>
+                  <button type="button" data-bs-target="#carouselLogements" data-bs-slide-to="<?php echo $i; ?>" <?php echo $i === 0 ? 'class="active"' : ''; ?>></button>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <!-- Fallback: 4 indicateurs statiques -->
+                <button type="button" data-bs-target="#carouselLogements" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#carouselLogements" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#carouselLogements" data-bs-slide-to="2"></button>
+                <button type="button" data-bs-target="#carouselLogements" data-bs-slide-to="3"></button>
+              <?php endif; ?>
             </div>
 
             <!-- Images du carousel -->
             <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img
-                  src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1000&h=500&fit=crop"
-                  class="d-block w-100"
-                  alt="Appartement moderne"
-                />
-                <div class="carousel-caption">
-                  <h5 class="property-title">
-                    Appartement Moderne - Centre Ville
-                  </h5>
-                  <p class="property-info">
-                    3 chambres • 2 salles de bain • 95m² • 1 200€/mois
-                  </p>
+              <?php if (!empty($carouselLogements)): ?>
+                <?php foreach ($carouselLogements as $i => $lg): ?>
+                  <div class="carousel-item <?php echo $i === 0 ? 'active' : ''; ?>">
+                    <a href="logement.php?id=<?php echo intval($lg['ID']); ?>" title="<?php echo htmlspecialchars($lg['titre'] ?: 'Voir le logement'); ?>" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
+                      <img src="<?php echo htmlspecialchars($lg['photo_url'] ?: 'https://via.placeholder.com/1000x500?text=No+Photo'); ?>" class="d-block w-100" alt="<?php echo htmlspecialchars($lg['titre'] ?: 'Logement'); ?>" />
+                      <div class="carousel-caption">
+                        <h5 class="property-title"><?php echo htmlspecialchars($lg['titre'] ?: 'Titre'); ?></h5>
+                        <p class="property-info"><?php echo htmlspecialchars($lg['ville'] ?? ''); ?> • <?php echo htmlspecialchars($lg['surface'] ?? ''); ?>m² • <?php echo htmlspecialchars($lg['loyer'] ?? ''); ?>€/mois</p>
+                      </div>
+                    </a>
+                  </div>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <!-- Fallback static items if DB empty -->
+                <div class="carousel-item active">
+                  <a href="logements.php" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1000&h=500&fit=crop" class="d-block w-100" alt="Appartement moderne" />
+                    <div class="carousel-caption">
+                      <h5 class="property-title">Appartement Moderne - Centre Ville</h5>
+                      <p class="property-info">3 chambres • 2 salles de bain • 95m² • 1 200€/mois</p>
+                    </div>
+                  </a>
                 </div>
-              </div>
-
-              <div class="carousel-item">
-                <img
-                  src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1000&h=500&fit=crop"
-                  class="d-block w-100"
-                  alt="Maison avec jardin"
-                />
-                <div class="carousel-caption">
-                  <h5 class="property-title">Maison avec Jardin - Banlieue</h5>
-                  <p class="property-info">
-                    4 chambres • 3 salles de bain • 150m² • 1 800€/mois
-                  </p>
+                <div class="carousel-item">
+                  <a href="logements.php" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1000&h=500&fit=crop" class="d-block w-100" alt="Maison avec jardin" />
+                    <div class="carousel-caption">
+                      <h5 class="property-title">Maison avec Jardin - Banlieue</h5>
+                      <p class="property-info">4 chambres • 3 salles de bain • 150m² • 1 800€/mois</p>
+                    </div>
+                  </a>
                 </div>
-              </div>
-
-              <div class="carousel-item">
-                <img
-                  src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1000&h=500&fit=crop"
-                  class="d-block w-100"
-                  alt="Studio lumineux"
-                />
-                <div class="carousel-caption">
-                  <h5 class="property-title">
-                    Studio Lumineux - Quartier Résidentiel
-                  </h5>
-                  <p class="property-info">
-                    1 chambre • 1 salle de bain • 35m² • 650€/mois
-                  </p>
+                <div class="carousel-item">
+                  <a href="logements.php" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
+                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1000&h=500&fit=crop" class="d-block w-100" alt="Studio lumineux" />
+                    <div class="carousel-caption">
+                      <h5 class="property-title">Studio Lumineux - Quartier Résidentiel</h5>
+                      <p class="property-info">1 chambre • 1 salle de bain • 35m² • 650€/mois</p>
+                    </div>
+                  </a>
                 </div>
-              </div>
-
-              <div class="carousel-item">
-                <img
-                  src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&h=500&fit=crop"
-                  class="d-block w-100"
-                  alt="Loft contemporain"
-                />
-                <div class="carousel-caption">
-                  <h5 class="property-title">
-                    Loft Contemporain - Zone Artistique
-                  </h5>
-                  <p class="property-info">
-                    2 chambres • 2 salles de bain • 110m² • 1 500€/mois
-                  </p>
+                <div class="carousel-item">
+                  <a href="logements.php" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
+                    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&h=500&fit=crop" class="d-block w-100" alt="Loft contemporain" />
+                    <div class="carousel-caption">
+                      <h5 class="property-title">Loft Contemporain - Zone Artistique</h5>
+                      <p class="property-info">2 chambres • 2 salles de bain • 110m² • 1 500€/mois</p>
+                    </div>
+                  </a>
                 </div>
-              </div>
+              <?php endif; ?>
             </div>
 
             <!-- Contrôles précédent/suivant -->
