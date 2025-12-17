@@ -1,5 +1,9 @@
-# Logemangue
-
-Projet DevWeb LogeMangue par Astral.
-Ce site a pour objectif de proposer des logements étudiants à bas prix et simplement. 
-Aucune transaction, y compris entre particuliers ne prend place sur le site.
+```text
+      .o.                    .                      oooo  
+     .888.                 .o8                      `888  
+    .8"888.      .oooo.o .o888oo oooo d8b  .oooo.    888  
+   .8' `888.    d88(  "8   888   `888""8P `P  )88b   888  
+  .88ooo8888.   `"Y88b.    888    888      .oP"888   888  
+ .8'     `888.  o.  )88b   888 .  888     d8(  888   888  
+o88o     o8888o 8""888P'   "888" d888b    `Y888""8o o888o 
+```
