@@ -79,6 +79,11 @@ if (isset($_GET['error'])) {
                 Candidature envoyée avec succès !
               </div>';
     }
+    elseif ($success === 'candidature_deleted') {
+        echo '<div style="margin: 20px;" class="alert alert-success" role="alert">
+                Candidature supprimée avec succès !
+              </div>';
+    }
 }
 ?>
 <div class="container py-4">
@@ -201,7 +206,13 @@ if (isset($_GET['error'])) {
                                     <p><strong>Nom :</strong> <?php echo htmlspecialchars($candidature["nom"]); ?></p>
                                     <p><strong>Email :</strong> <?php echo htmlspecialchars($candidature["email"]); ?></p>
                                     <p><strong>Téléphone :</strong> <?php echo htmlspecialchars($candidature["telephone"]); ?></p>
-                                    <a href="messagerie.php?dest=<?php echo $candidature["ID"]; ?>" class="btn btn-login">Contacter</a>
+                                    <a style="display: inline-flex; align-items: center; justify-content: center;" href="messagerie.php?dest=<?php echo $candidature["ID"]; ?>" class="btn btn-approved">Contacter</a>
+                                    <form method="POST" action="supprimercandidature.php" style="display: inline;">
+                                        <input type="hidden" name="etudiant_id" value="<?php echo $candidature["ID"]; ?>">
+                                        <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
+                                        <button type="submit" style="height: 40px; align-itself: right;" class="btn btn-unapproved">Supprimer la candidature</button>
+                                    </form>
+
                                 </div>
                         <?php
                             endforeach;
