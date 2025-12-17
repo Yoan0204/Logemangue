@@ -116,7 +116,7 @@ $photo = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         $row["loyer"]
                     ); ?> € / mois</strong></h2> <br>
                     <p><?php echo nl2br(
-                        htmlspecialchars($row["description"])
+                        htmlspecialchars($row["description"])   
                     ); ?></p>
                     <p><strong>Adresse :</strong> <?php echo htmlspecialchars(
                         $row["adresse"]
@@ -161,7 +161,34 @@ $photo = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <p><strong>Téléphone :</strong> <?php echo htmlspecialchars(
                         $owner["telephone"]
                     ); ?></p>
-
+                <?php if ($row["id_proprietaire"] == $userId): ?>
+                    <div class="alert alert-info mt-3" role="alert">
+                        <h3 class="alert-heading">Liste des candidatures reçues :</h3>
+                        <?php
+                        $stmt = $pdo->prepare(  
+                            "SELECT r.ID, u.nom, u.email, u.telephone
+                             FROM reservation r 
+                             JOIN users u ON r.id_etudiant = u.ID
+                             WHERE r.id_logement = :id_logement"
+                        );
+                        $stmt->execute([":id_logement" => $logementId]);
+                        $candidatures = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        if (count($candidatures) > 0):
+                            foreach ($candidatures as $candidature):
+                        ?>
+                                <div class="candidature-item mb-3 p-3 border rounded">
+                                    <p><strong>Nom :</strong> <?php echo htmlspecialchars($candidature["nom"]); ?></p>
+                                    <p><strong>Email :</strong> <?php echo htmlspecialchars($candidature["email"]); ?></p>
+                                    <p><strong>Téléphone :</strong> <?php echo htmlspecialchars($candidature["telephone"]); ?></p>
+                                </div>
+                        <?php
+                            endforeach;
+                        else:
+                            echo "<p>Aucune candidature reçue pour le moment.</p>";
+                        endif;
+                        ?>
+                    </div>
+                <?php endif; ?>
               </div>
           </div>
 

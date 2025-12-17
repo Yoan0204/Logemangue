@@ -504,3 +504,12 @@
   background-color: rgb(84, 2, 2);
   transform: translateY(-2px);
 } 
+
+.candidature-item {
+  background-color: #fffdf8;
+  border: 2px solid #d3cfc6;
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: var(--shadow);
+}
