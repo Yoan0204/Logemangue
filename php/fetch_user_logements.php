@@ -40,7 +40,14 @@ if ($logements && $logements->num_rows > 0) {
         $html .= '<p class="text-muted mb-0">' . $loyer . ' € / mois</p>';
         $html .= '<p class="small text-muted mb-0">Disponible : ' . $disponible . '</p>';
         $html .= '<p class="small text-muted mb-0">' . $surface . ' m² - ' . $type . '</p>';
-        $html .= '<p class="small text-muted">Status : ' . $status . '</p>';
+        $colorClass = 'text-muted';
+        if ($status === 'Approved') {
+            $colorClass = 'text-success';
+        } elseif ($status === 'Waiting') {
+            $colorClass = 'text-warning';
+        }
+
+        $html .= '<p class="small text-muted">Status : <span class="' . $colorClass . ' fw-bold">' . $status . '</span></p>';
         $html .= '<form method="post">';
         $html .= '<input type="hidden" name="logement_id" value="' . intval($row['ID']) . '">';
         $html .= '<button type="submit" class="btn-unapproved" name="delete">Supprimer</button>';
