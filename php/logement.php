@@ -60,6 +60,27 @@ $photo = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <body>
 <!-- ====== BLOC PRINCIPAL ====== -->
+<?php 
+if (isset($_GET['error'])) {
+    $error = $_GET['error'];
+    if ($error === 'candidature_exists') {
+        echo '<div class="alert alert-danger" style="margin: 20px;" role="alert">
+                Vous avez déjà une candidature en cours pour ce logement.
+              </div>';
+    } elseif ($error === 'missing_logement_id') {
+        echo '<div style="margin: 20px;" class="alert alert-danger" role="alert">
+                ID de logement manquant.
+              </div>';
+    }
+} elseif (isset($_GET['success'])) {
+    $success = $_GET['success'];
+    if ($success === 'candidature_submitted') {
+        echo '<div style="margin: 20px;" class="alert alert-success" role="alert">
+                Candidature envoyée avec succès !
+              </div>';
+    }
+}
+?>
 <div class="container py-4">
 
     <div class="row">
@@ -163,10 +184,10 @@ $photo = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     ); ?></p>
                 <?php if ($row["id_proprietaire"] == $userId): ?>
                     <div class="alert alert-info mt-3" role="alert">
-                        <h3 class="alert-heading">Liste des candidatures reçues :</h3>
+                        <h3 class="alert-heading">Liste des candidatures reçues :</h3> <br>
                         <?php
                         $stmt = $pdo->prepare(  
-                            "SELECT r.ID, u.nom, u.email, u.telephone
+                            "SELECT u.ID, u.nom, u.email, u.telephone
                              FROM reservation r 
                              JOIN users u ON r.id_etudiant = u.ID
                              WHERE r.id_logement = :id_logement"
@@ -180,6 +201,7 @@ $photo = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <p><strong>Nom :</strong> <?php echo htmlspecialchars($candidature["nom"]); ?></p>
                                     <p><strong>Email :</strong> <?php echo htmlspecialchars($candidature["email"]); ?></p>
                                     <p><strong>Téléphone :</strong> <?php echo htmlspecialchars($candidature["telephone"]); ?></p>
+                                    <a href="messagerie.php?dest=<?php echo $candidature["ID"]; ?>" class="btn btn-login">Contacter</a>
                                 </div>
                         <?php
                             endforeach;
@@ -199,7 +221,10 @@ $photo = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <!-- Bloc boutons d’action -->
         <div class="col-lg-3">
             <div class="action-card">
-                <button href="google.com" class="action-btn">📄 Candidater</button>
+                <form method="POST" action="candidater.php">
+                    <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
+                <button type="submit" class="action-btn">📄 Candidater</button>
+
                 <button class="action-btn">⭐ Favoris</button>
                 <a href="messagerie.php?dest=<?php echo $row[
                     "id_proprietaire"
