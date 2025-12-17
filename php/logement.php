@@ -187,7 +187,7 @@ if (isset($_GET['error'])) {
                     <p><strong>Téléphone :</strong> <?php echo htmlspecialchars(
                         $owner["telephone"]
                     ); ?></p>
-                <?php if ($row["id_proprietaire"] == $userId): ?>
+                <?php if (isset($userId) && $row["id_proprietaire"] == $userId): ?>
                     <div class="alert alert-info mt-3" role="alert">
                         <h3 class="alert-heading">Liste des candidatures reçues :</h3> <br>
                         <?php
