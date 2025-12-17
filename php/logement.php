@@ -45,8 +45,9 @@ $photo = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <nav class="topbar-nav">
       <a class="nav-link" href="index">Accueil</a>
       <a class="nav-link" href="logements">Recherche</a>
-
+        <?php if (!$isEtudiant): ?>
       <a class="nav-link" href="publish">Publier une annonce</a>
+        <?php endif; ?>
       <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>
 
       <a class="nav-link" href="listemessagerie">Ma messagerie</a>
