@@ -72,7 +72,13 @@ if (isset($_GET['error'])) {
         echo '<div style="margin: 20px;" class="alert alert-danger" role="alert">
                 ID de logement manquant.
               </div>';
+    }    elseif ($error === 'not_student') {
+        echo '<div style="margin: 20px;" class="alert alert-danger" role="alert">
+                Seuls les étudiants peuvent candidater pour un logement.
+              </div>';
     }
+
+    
 } elseif (isset($_GET['success'])) {
     $success = $_GET['success'];
     if ($success === 'candidature_submitted') {
@@ -84,7 +90,8 @@ if (isset($_GET['error'])) {
         echo '<div style="margin: 20px;" class="alert alert-success" role="alert">
                 Candidature supprimée avec succès !
               </div>';
-    }
+    } 
+
 }
 ?>
 <div class="container py-4">
