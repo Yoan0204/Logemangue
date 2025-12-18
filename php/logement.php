@@ -147,7 +147,10 @@ if (isset($_GET['error'])) {
                     ); ?></p>
                     <p><strong>Adresse :</strong> <?php echo htmlspecialchars(
                         $row["adresse"]
-                    ); ?></p>
+                    ); ?> - 
+                    <?php echo htmlspecialchars(
+                        $row["ville"]
+                    ); ?> </p>
                     <p><strong>Type de logement :</strong> <?php echo htmlspecialchars(
                         $row["TYPE"]
                     ); ?></p>
