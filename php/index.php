@@ -301,6 +301,87 @@ if ($page === "profil") {
         </div>
       </section>
 
+      <!-- Derniers Logements -->
+      <section class="latest-logements text-center">
+        <h2 class="fw-bold mb-4">Dernières annonces publiées</h2>
+        <p class="text-muted mb-5">
+          Découvrez les dernières annonces de logements disponibles sur
+          Logemangue
+        </p>
+        <div class="container">
+          <div class="row g-4" id="latest-logements-container">
+            <?php
+              $latestResult = $logementModel->getFilteredLogements([], 6, 0);
+              if ($latestResult && $latestResult->num_rows > 0) {
+                while ($row = $latestResult->fetch_assoc()) {
+                  $photoUrl = !empty(trim((string)($row['photo_url'] ?? ''))) ? $row['photo_url'] : 'https://via.placeholder.com/400x300?text=No+Photo';
+                  ?>
+                  <div class="col-md-4">
+                    <a href="logement.php?id=<?php echo intval($row['ID']); ?>" class="logement-link">
+                      <div class="logement-card">
+                        <img src="<?php echo htmlspecialchars($photoUrl); ?>" alt="<?php echo htmlspecialchars($row['titre'] ?? 'Logement'); ?>" />
+                        <div class="info">
+                          <h6 class="fw-bold mb-1"><?php echo htmlspecialchars($row['titre'] ?? 'Titre'); ?></h6>
+                          <p class="text-muted mb-0"><?php echo htmlspecialchars($row['loyer'] ?? 'Loyer'); ?> € / mois</p>
+                          <p class="small text-muted mb-0">Disponible : <?php echo (isset($row['disponible']) && $row['disponible'] == 1) ? 'Oui' : 'Non'; ?></p>
+                          <p class="small text-muted mb-0"><?php echo htmlspecialchars($row['surface'] ?? 'Surface'); ?> m² - <?php echo htmlspecialchars($row['TYPE'] ?? 'Type'); ?></p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  <?php
+                }
+              } else {
+                echo '<p class="text-muted">Aucune annonce disponible pour le moment.</p>';
+              }
+            ?>
+          </div>
+        </div>
+      </section>
+      <!-- Avis des utilisateurs -->
+      <section class="user-reviews text-center">
+        <h2 class="fw-bold mb-4">Ce que disent nos utilisateurs</h2>
+        <p class="text-muted-white mb-5 ">
+          Des témoignages authentiques de nos utilisateurs satisfaits
+        </p>
+        <div class="container">
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="p-4 review-card">
+                <p class="mb-3">
+                  "Logemangue m'a aidé à trouver un appartement parfait près de
+                  mon université en un rien de temps !"
+                </p>
+                <h6 class="fw-bold">Marie D.</h6>
+                <p class="text-muted">Étudiante en droit</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-4 review-card">
+                <p class="mb-3">
+                  "En tant que propriétaire, j'apprécie la simplicité de
+                  publier mes annonces sur Logemangue et de trouver des
+                  locataires fiables."
+                </p>
+                <h6 class="fw-bold">Jean P.</h6>
+                <p class="text-muted">Propriétaire</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-4 review-card">
+                <p class="mb-3">
+                  "La fonctionnalité de colocation m'a permis de trouver des
+                  colocataires géniaux et de partager les coûts du logement."
+                </p>
+                <h6 class="fw-bold">Sophie L.</h6>
+                <p class="text-muted">Étudiante en médecine</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       <footer class="text-center py-3">
         <?php include "footer.php"; ?>
       </footer>
