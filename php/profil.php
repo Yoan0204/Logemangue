@@ -7,6 +7,7 @@
   <title>Mon profil - Logemangue</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/profil.css">
   <style>
     /* Style spécifique à la page profil */
     .profile-header {
@@ -83,33 +84,57 @@
   </style>
 </head>
 <?php
-require 'db2.php';
+require "db2.php";
 
-if (isset($_POST['valider'])) {
-    $nom = $_POST['nom'];
-    $telephone = $_POST['telephone'];
-    $genre = $_POST['genre'];
-    $date_naissance = $_POST['date_naissance'];
-    $type_utilisateur = $_POST['type_utilisateur'];
-    $biography=$_POST['biography'];
+if (isset($_POST["logout"])) {
+    // Démarrer la session
+    session_start();
+
+    // Supprimer toutes les variables de session
+    $_SESSION = array();
+
+    // Détruire la session
+    session_destroy();
+
+    // Rediriger vers la page de connexion
+    header('Location: login.html');
+    exit();
+}
+
+if (isset($_POST["valider"])) {
+    $nom = $_POST["nom"];
+    $telephone = $_POST["telephone"];
+    $genre = $_POST["genre"];
+    $date_naissance = $_POST["date_naissance"];
+    $type_utilisateur = $_POST["type_utilisateur"];
+    $biography = $_POST["biography"];
 
     // Validation du numéro de téléphone
     if (!preg_match("/^[0-9]{10}$/", $telephone)) {
         echo "<p>Le numéro de téléphone doit contenir exactement 10 chiffres.</p>";
     }
     // Validation de la date de naissance
-    else if (empty($date_naissance)) {
+    elseif (empty($date_naissance)) {
         echo "<p>La date de naissance est requise.</p>";
     }
     // Validation du type d'utilisateur
-    else if (empty($type_utilisateur)) {
+    elseif (empty($type_utilisateur)) {
         echo "<p>Le type d'utilisateur est requis.</p>";
-    }
-    else {
+    } else {
         // Mettre à jour les champs de l'utilisateur
-        $updateSql = "UPDATE users SET nom=?, telephone=?, genre=?, date_naissance=?, type_utilisateur=?,biography=? WHERE id=?";
+        $updateSql =
+            "UPDATE users SET nom=?, telephone=?, genre=?, date_naissance=?, type_utilisateur=?,biography=? WHERE id=?";
         $stmt = $conn->prepare($updateSql);
-        $stmt->bind_param("ssssssi", $nom, $telephone, $genre, $date_naissance, $type_utilisateur,$biography, $userId);
+        $stmt->bind_param(
+            "ssssssi",
+            $nom,
+            $telephone,
+            $genre,
+            $date_naissance,
+            $type_utilisateur,
+            $biography,
+            $userId
+        );
 
         if ($stmt->execute()) {
             header("Location: profil.php?update=success");
@@ -117,8 +142,8 @@ if (isset($_POST['valider'])) {
             echo "<p>Erreur lors de la mise à jour des informations.</p>";
         }
     }
-} 
-if (isset($_GET['update']) && $_GET['update'] == 'success') {
+}
+if (isset($_GET["update"]) && $_GET["update"] == "success") {
     echo "
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -130,22 +155,24 @@ if (isset($_GET['update']) && $_GET['update'] == 'success') {
 }
 ?>
    <header class="topbar">
-    <a href="index.php" class="topbar-logo">
+    <a href="index" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
 
     <nav class="topbar-nav">
-      <a class="nav-link" href="index.php">Accueil</a>
-      <a class="nav-link" href="logements.php">Recherche</a>
+      <a class="nav-link" href="index">Accueil</a>
+      <a class="nav-link" href="logements">Recherche</a>
 
-      <a class="nav-link" href="publish.php">Publier une annonce</a>
-      <a class="nav-link" href="logements.php?view=mesannonces">Mes annonces</a>
-
-      <a class="nav-link" href="listemessagerie.php">Ma messagerie</a>
-      <?php if ($isAdmin): ?>
-      <a class="nav-link" href="admin.php">Admin ⚙️</a>
+      <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="publish">Publier une annonce</a>
       <?php endif; ?>
-      <a class="nav-link active-link" href="profil.php">Mon profil</a>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>
+
+      <a class="nav-link" href="listemessagerie">Ma messagerie</a>
+      <?php if ($isAdmin): ?>
+      <a class="nav-link" href="admin">Admin ⚙️</a>
+      <?php endif; ?>
+      <a class="nav-link active-link" href="profil">Mon profil</a>
     </nav>
   </header>
 
@@ -157,52 +184,88 @@ if (isset($_GET['update']) && $_GET['update'] == 'success') {
       <div class="container">
         <div class="profile-header">
           <div class="avatar">C</div>
-          <div><?php echo $user['nom']; ?></div>
+          <div><?php echo $user["nom"]; ?></div>
         </div>
 
-        <div class="info-box">
-          <div class="info-title text-center">Mes informations</div>
+            <div class="info-box">
+              <div class="info-title text-center">Mes informations</div>
 
-          <form method="post" action="">
-            <div class="row g-3 mb-3">
-              <div class="col-md-6">
-                <input type="text" name="nom" class="form-control" placeholder="Nom" value="<?php echo $user['nom']; ?>" required>
-              </div>
-              <div class="col-md-6">
-                <input type="text" name="telephone" class="form-control" placeholder="Numéro de téléphone" value="<?php echo $user['telephone']; ?>" required>
-              </div>
-            </div>
+              <form method="post" action="">
+                <div class="row g-3 mb-3">
+                  <div class="col-md-6">
+                    <input type="text" name="nom" class="form-control" placeholder="Nom" value="<?php echo $user[
+                        "nom"
+                    ]; ?>" required>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" name="telephone" class="form-control" placeholder="Numéro de téléphone" value="<?php echo $user[
+                        "telephone"
+                    ]; ?>" required>
+                  </div>
+                </div>
 
-            <div class="row g-3 mb-3">
-              <div class="col-md-6">
-                <select name="genre" class="form-select" required>
-                    <option value="">Sélectionnez un genre</option>
-                    <option value="Homme" <?php if ($user['genre'] == 'Homme') echo 'selected'; ?>>Homme</option>
-                    <option value="Femme" <?php if ($user['genre'] == 'Femme') echo 'selected'; ?>>Femme</option>
-                    <option value="Autre" <?php if ($user['genre'] == 'Autre') echo 'selected'; ?>>Autre</option>
-                </select>
-              </div>
-              <div class="col-md-6">
-                <input type="date" name="date_naissance" class="form-control" placeholder="Date de naissance" value="<?php echo $user['date_naissance']; ?>" required>
-              </div>
+                <div class="row g-3 mb-3">
+                  <div class="col-md-6">
+                    <select name="genre" class="form-select" required>
+                        <option value="">Sélectionnez un genre</option>
+                        <option value="Homme" <?php if (
+                            $user["genre"] == "Homme"
+                        ) {
+                            echo "selected";
+                        } ?>>Homme</option>
+                        <option value="Femme" <?php if (
+                            $user["genre"] == "Femme"
+                        ) {
+                            echo "selected";
+                        } ?>>Femme</option>
+                        <option value="Autre" <?php if (
+                            $user["genre"] == "Autre"
+                        ) {
+                            echo "selected";
+                        } ?>>Autre</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="date" name="date_naissance" class="form-control" placeholder="Date de naissance" value="<?php echo $user[
+                        "date_naissance"
+                    ]; ?>" required>
+                  </div>
+                </div>
+                <div class="row g-3 mb-3">
+                  <div class="col-md-6">
+                    <select name="type_utilisateur" class="form-select" required>
+                        <option value="">Sélectionnez un type</option>
+                        <option value="Etudiant" <?php if (
+                            $user["type_utilisateur"] == "Etudiant"
+                        ) {
+                            echo "selected";
+                        } ?>>Étudiant</option>
+                        <option value="Proprietaire" <?php if (
+                            $user["type_utilisateur"] == "Proprietaire"
+                        ) {
+                            echo "selected";
+                        } ?>>Propriétaire</option>
+                        <option value="Organisme" <?php if (
+                            $user["type_utilisateur"] == "Organisme"
+                        ) {
+                            echo "selected";
+                        } ?>>Organisme</option>
+                    </select>
+                  </div>
+                </div>
+                <textarea class="form-control text-center mb-3" name="biography" placeholder="<?php echo $user[
+                    "biography"
+                ]; ?>"></textarea> 
+                
+                <div class="d-flex justify-content-between align-items-center">
+                  <button type="submit" class="btn-login" name="valider">Valider</button> 
+                  <button class="btn-login" type="submit" name="logout">Se déconnecter</button>
+              </form>
+                </div>
+              
+              
+          
             </div>
-            <div class="row g-3 mb-3">
-              <div class="col-md-6">
-                <select name="type_utilisateur" class="form-select" required>
-                    <option value="">Sélectionnez un type</option>
-                    <option value="Etudiant" <?php if ($user['type_utilisateur'] == 'Etudiant') echo 'selected'; ?>>Étudiant</option>
-                    <option value="Proprietaire" <?php if ($user['type_utilisateur'] == 'Proprietaire') echo 'selected'; ?>>Propriétaire</option>
-                    <option value="Organisme" <?php if ($user['type_utilisateur'] == 'Organisme') echo 'selected'; ?>>Organisme</option>
-                </select>
-              </div>
-            </div>
-            <textarea class="form-control text-center" name="biography" placeholder="<?php echo $user['biography']; ?>"></textarea> 
-           <button type="submit" class="btn-login" name="valider">Valider</button>
-          </form>
-        </div>
-          <form action="logout.php" method="post">
-            <button class="btn-login text-center" type="submit" name="logout">Se déconnecter</button>
-          </form>
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content custom-modal">
@@ -234,6 +297,6 @@ toggle.addEventListener("click", () => {
   </script>
 </body>
 <footer class="text-center py-3">
-  <?php include 'footer.php'; ?>
+  <?php include "footer.php"; ?>
 </footer>
 </html>

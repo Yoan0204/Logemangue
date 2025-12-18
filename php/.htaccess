@@ -1,2 +1,12 @@
 RewriteEngine On
+<<<<<<< HEAD
 RewriteRule ^(.*)$ index.php [QSA,L]
+=======
+
+# Si le fichier ou dossier existe, on ne touche pas
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+
+# Réécriture
+RewriteRule ^(.+)$ $1.php [L]
+>>>>>>> b9e7d2509fc7c4b8828362bca33beba991aac4f0

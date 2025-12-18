@@ -1,4 +1,5 @@
-<a class="link text-muted" href="cgu.html">FAQ, CGU et Contact</a>
+<a class="link text-muted" href="index.php?page=faq">FAQ</a>
+<a class="link text-muted" href="index.php?page=cgu">CGU</a>
 © <?php echo date("Y"); ?> Logemangue - Tous droits réservés
 <br />
 <small class="text-muted"

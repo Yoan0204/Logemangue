@@ -106,110 +106,30 @@ $nom_destinataire = $destinataire
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/messagerie.css">
 </head>
-<style>/* ===== MESSAGERIE ===== */
 
-  .messagerie-header {
-    background: linear-gradient(to right, #ffd53d, #ff9c42);
-    box-shadow: 3px 3px 6px rgba(0,0,0,0.15);
-  }
-
-  .messagerie-avatar {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: #fff;
-    color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 20px;
-    border: 2px solid #ffe08a;
-  }
-
-  .conversation-box {
-    background: #fbf9ef;
-    border: 2px solid #d5d1c8;
-    min-height: 350px;
-    box-shadow: 3px 3px 6px rgba(0,0,0,0.15);
-    position: relative;
-  }
-
-  /* Messages */
-  .message {
-    max-width: 40%;
-    padding: 15px;
-    border-radius: 15px;
-    font-size: 15px;
-    line-height: 1.4;
-    color: #000;
-    box-shadow: 3px 3px 6px rgba(0,0,0,0.15);
-  }
-
-  .message-left {
-    background: linear-gradient(to right, #d77a4c, #c46d45);
-    margin-right: auto;
-  }
-
-  .message-right {
-    background: linear-gradient(to right, #ffd531, #ff9a3a);
-    margin-left: auto;
-  }
-
-  /* Barre d’envoi */
-  .send-bar {
-    background: linear-gradient(to right, #ffd53d, #ff9c42);
-    box-shadow: 3px 3px 6px rgba(0,0,0,0.2);
-  }
-
-  .send-input {
-    border-radius: 12px;
-    border: none;
-    padding: 10px;
-    font-size: 15px;
-    background: #ffffff;
-  }
-
-  .send-input:focus {
-    outline: none;
-    box-shadow: 0 0 5px rgba(255,136,0,0.6);
-  }
-
-  .send-button {
-    border: none;
-    background: #d97841;
-    color: white;
-    font-weight: bold;
-    font-size: 22px;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-    cursor: pointer;
-  }
-
-  .send-button:hover {
-    transform: scale(1.05);
-  }
-</style>
   <header class="topbar">
-    <a href="index.php" class="topbar-logo">
+    <a href="index" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
 
     <nav class="topbar-nav">
-      <a class="nav-link " href="index.php">Accueil</a>
-      <a class="nav-link" href="logements.php">Recherche</a>
+      <a class="nav-link " href="index">Accueil</a>
+      <a class="nav-link" href="logements">Recherche</a>
 
-      <a class="nav-link" href="publish.php">Publier une annonce</a>
-      <a class="nav-link" href="logements.php?view=mesannonces">Mes annonces</a>
+      <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="publish">Publier une annonce</a>
+      <?php endif; ?>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>
 
-      <a class="nav-link active-link" href="listemessagerie.php">Ma messagerie</a>
+      <a class="nav-link active-link" href="listemessagerie">Ma messagerie</a>
 
-      <a class="nav-link" href="admin.php">Admin ⚙️</a>
+      <?php if ($isAdmin): ?> 
+          <a class="nav-link" href="admin">Admin ⚙️</a>
+      <?php endif; ?>
 
-      <a class="nav-link" href="profil.php">Mon profil</a>
+      <a class="nav-link" href="profil">Mon profil</a>
     </nav>
   </header>
 <body>

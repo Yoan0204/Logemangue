@@ -9,6 +9,8 @@ class CGUController {
 
     public function showCGU() {
         $cguContent = $this->model->cgu();
-        include 'MVC/View/CGUview.php';
+        require_once __DIR__ . '/../View/CGUview.php';
+        $view = new CGUView();
+        $view->renderCGU($cguContent);
     }
 }

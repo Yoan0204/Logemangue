@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Météo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="vicopo-vanilla.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .weather-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .suggestion-item:hover {
+            background-color: #eff6ff;
+        }
+    </style>
+</head>
+<input id="ville" placeholder="Entrez un code postal ou une ville">
+<ul>
+  <li data-vicopo="#ville">
+    <strong data-vicopo-code-postal></strong>
+    <span data-vicopo-ville></span>
+  </li>
+</ul>
+<script src="../js/vicopo-vanilla.js"></script>
+</body>
+</html>

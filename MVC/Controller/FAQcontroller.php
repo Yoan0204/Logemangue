@@ -9,6 +9,8 @@ class FAQController {
 
     public function showFAQ() {
         $faqContent = $this->model->getFAQ();
-        include 'MVC/View/FAQview.php';
+        require_once __DIR__ . '/../View/FAQview.php';
+        $view = new FAQView();
+        $view->renderFAQ($faqContent);
     }
 }

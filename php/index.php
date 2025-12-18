@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 require_once "config.php";
 
 $pdo = getPDO();
@@ -141,6 +142,81 @@ switch ($page) {
 
 ?>
 
+=======
+if (isset($_GET["publish"]) && $_GET["publish"] === "success") {?>
+            <div style="margin: 20px; margin-top: 20px;" class="alert alert-success alert-dismissible fade show" role="alert">
+                    Le logement a été publié avec succès !                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+<?php
+};
+
+if (isset($_GET["registered"]) && $_GET["registered"] === "1") {?>
+            <div style="margin: 20px; margin-top: 20px;" class="alert alert-success alert-dismissible fade show" role="alert">
+                    Inscription réussie ! Vous pouvez maintenant vous <a href="login.html">connecter</a>.                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+<?php
+};
+// Simple router: use ?page=cgu or ?page=faq to view MVC pages
+$page = isset($_GET["page"]) ? $_GET["page"] : "home";
+if ($page === "cgu") {
+    require_once __DIR__ . "/../MVC/Model/CGUmodel.php";
+    require_once __DIR__ . "/../MVC/Controller/CGUcontroller.php";
+    $model = new CGUModel();
+    $controller = new CGUController($model);
+    $controller->showCGU();
+    exit();
+}
+if ($page === "faq") {
+    require_once __DIR__ . "/../MVC/Model/FAQmodel.php";
+    require_once __DIR__ . "/../MVC/Controller/FAQcontroller.php";
+    $model = new FAQModel();
+    $controller = new FAQController($model);
+    $controller->showFAQ();
+    exit();
+}
+
+if ($page === "login") {
+    require_once __DIR__ . "/../MVC/View/Loginview.php";
+    $view = new LoginView();
+    $view->render();
+    exit();
+}
+
+if ($page === "register") {
+    require_once __DIR__ . "/../MVC/View/Loginview.php";
+    $view = new RegisterView();
+    $view->render();
+    exit();
+}
+
+if ($page === "messagerie" || $page === "listemessagerie") {
+    require_once __DIR__ . "/db.php";
+    $userId = $_SESSION["user_id"] ?? 1;
+    require_once __DIR__ . "/../MVC/Model/Messageriemodel.php";
+    require_once __DIR__ . "/../MVC/Controller/Messageriecontroller.php";
+    $model = new MessagerieModel($pdo);
+    $controller = new MessagerieController($model);
+    $controller->showMessagerie($userId);
+    exit();
+}
+
+if ($page === "profil") {
+    require_once __DIR__ . "/db.php";
+    $userId = $_SESSION["user_id"] ?? 1;
+    require_once __DIR__ . "/../MVC/Model/Profilmodel.php";
+    require_once __DIR__ . "/../MVC/Controller/Profilcontroller.php";
+    $model = new Profilmodel($pdo);
+    $controller = new Profilcontroller($model);
+    $profile = $controller->viewProfile($userId);
+    require_once __DIR__ . "/../MVC/View/Profilview.php";
+    $view = new Profilview();
+    $view->renderProfile($profile);
+    exit();
+}
+
+// default: render home HTML below
+?>
+>>>>>>> b9e7d2509fc7c4b8828362bca33beba991aac4f0
 <!doctype html>
 <html lang="fr">
   <!-- Formated by Astral v1 -->
@@ -156,48 +232,33 @@ switch ($page) {
     />
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
   </head>
-  <style>
-            .carousel-container {
-            max-width: 1000px;
-            margin: 0 auto;
+
+    <?php require "db2withoutlogin.php"; ?>
+
+    <?php
+      // Charger logements pour le carrousel — ne garder que ceux qui ont une photo
+      require_once __DIR__ . '/models/LogementModel.php';
+      $logementModel = new LogementModel($conn, $pdo);
+      // On récupère plus de résultats et on filtrera côté PHP pour garantir d'avoir 4 logements AVEC photo
+      $carouselResult = $logementModel->getFilteredLogements([], 20, 0);
+      $carouselLogements = [];
+      if ($carouselResult && $carouselResult->num_rows > 0) {
+        while ($row = $carouselResult->fetch_assoc()) {
+          if (!empty(trim((string)($row['photo_url'] ?? '')))) {
+            $carouselLogements[] = $row;
+          }
+          if (count($carouselLogements) >= 4) break;
         }
-        
-        .carousel-item img {
-            height: 500px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-        
-        .carousel-caption {
-            background: #feb200ff;
-            border-radius: 10px;
-            padding: 20px;
-        }
-        
-        .property-title {
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        
-        .property-info {
-            font-size: 1.1rem;
-        }
-        
-        /* Transition de défilement plus douce */
-        .carousel-item {
-            transition: transform 1.2s ease-in-out;
-        }
-  </style>
-  <?php     
-  require 'db2withoutlogin.php';
-  ?>
+      }
+    ?>
+
    <header class="topbar">
-    <a href="index.php" class="topbar-logo">
+    <a href="index" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
 
     <nav class="topbar-nav">
+<<<<<<< HEAD
       <a class="nav-link active-link" href="/">Accueil</a>
       <a class="nav-link" href="/recherche">Recherche</a>
 
@@ -210,6 +271,21 @@ switch ($page) {
       <?php endif; ?>
 
       <a class="nav-link " href="/profil">Mon profil</a>
+=======
+      <a class="nav-link active-link" href="index">Accueil</a>
+      <a class="nav-link" href="logements">Recherche</a>
+      <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="publish">Publier une annonce</a>
+      <?php endif; ?>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>
+
+      <a class="nav-link" href="listemessagerie">Ma messagerie</a>
+      <?php if ($isAdmin): ?> 
+          <a class="nav-link" href="admin">Admin ⚙️</a>
+      <?php endif; ?>
+
+      <a class="nav-link " href="profil">Mon profil</a>
+>>>>>>> b9e7d2509fc7c4b8828362bca33beba991aac4f0
     </nav>
   </header>
 
@@ -235,107 +311,82 @@ switch ($page) {
           <button type="submit" class="btn-search">Rechercher →</button>
         </form>
 
-
-        <!--
-<div class="d-flex justify-content-center gap-5 stats">
-<div><strong>15+</strong><br>Logements disponibles</div>
-<div><strong>100%</strong><br>Annonces vérifiées</div>
-<div><strong>24/7</strong><br>Support étudiant</div>
-</div>-->
         <div class="container carousel-container" style="margin-bottom: 0px">
           <div
             id="carouselLogements"
             class="carousel slide"
             data-bs-ride="carousel"
+            data-bs-interval="3500"  
+            data-bs-pause="hover"    
           >
             <!-- Indicateurs -->
             <div class="carousel-indicators">
-              <button
-                type="button"
-                data-bs-target="#carouselLogements"
-                data-bs-slide-to="0"
-                class="active"
-              ></button>
-              <button
-                type="button"
-                data-bs-target="#carouselLogements"
-                data-bs-slide-to="1"
-              ></button>
-              <button
-                type="button"
-                data-bs-target="#carouselLogements"
-                data-bs-slide-to="2"
-              ></button>
-              <button
-                type="button"
-                data-bs-target="#carouselLogements"
-                data-bs-slide-to="3"
-              ></button>
+              <?php if (!empty($carouselLogements)): ?>
+                <?php foreach ($carouselLogements as $i => $lg): ?>
+                  <button type="button" data-bs-target="#carouselLogements" data-bs-slide-to="<?php echo $i; ?>" <?php echo $i === 0 ? 'class="active"' : ''; ?>></button>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <!-- Fallback: 4 indicateurs statiques -->
+                <button type="button" data-bs-target="#carouselLogements" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#carouselLogements" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#carouselLogements" data-bs-slide-to="2"></button>
+                <button type="button" data-bs-target="#carouselLogements" data-bs-slide-to="3"></button>
+              <?php endif; ?>
             </div>
 
             <!-- Images du carousel -->
             <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img
-                  src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1000&h=500&fit=crop"
-                  class="d-block w-100"
-                  alt="Appartement moderne"
-                />
-                <div class="carousel-caption">
-                  <h5 class="property-title">
-                    Appartement Moderne - Centre Ville
-                  </h5>
-                  <p class="property-info">
-                    3 chambres • 2 salles de bain • 95m² • 1 200€/mois
-                  </p>
+              <?php if (!empty($carouselLogements)): ?>
+                <?php foreach ($carouselLogements as $i => $lg): ?>
+                  <div class="carousel-item <?php echo $i === 0 ? 'active' : ''; ?>">
+                    <a href="logement.php?id=<?php echo intval($lg['ID']); ?>" title="<?php echo htmlspecialchars($lg['titre'] ?: 'Voir le logement'); ?>" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
+                      <img src="<?php echo htmlspecialchars($lg['photo_url'] ?: 'https://via.placeholder.com/1000x500?text=No+Photo'); ?>" class="d-block w-100" alt="<?php echo htmlspecialchars($lg['titre'] ?: 'Logement'); ?>" />
+                      <div class="carousel-caption">
+                        <h5 class="property-title"><?php echo htmlspecialchars($lg['titre'] ?: 'Titre'); ?></h5>
+                        <p class="property-info"><?php echo htmlspecialchars($lg['ville'] ?? ''); ?> • <?php echo htmlspecialchars($lg['surface'] ?? ''); ?>m² • <?php echo htmlspecialchars($lg['loyer'] ?? ''); ?>€/mois</p>
+                      </div>
+                    </a>
+                  </div>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <!-- Fallback static items if DB empty -->
+                <div class="carousel-item active">
+                  <a href="logements.php" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1000&h=500&fit=crop" class="d-block w-100" alt="Appartement moderne" />
+                    <div class="carousel-caption">
+                      <h5 class="property-title">Appartement Moderne - Centre Ville</h5>
+                      <p class="property-info">3 chambres • 2 salles de bain • 95m² • 1 200€/mois</p>
+                    </div>
+                  </a>
                 </div>
-              </div>
-
-              <div class="carousel-item">
-                <img
-                  src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1000&h=500&fit=crop"
-                  class="d-block w-100"
-                  alt="Maison avec jardin"
-                />
-                <div class="carousel-caption">
-                  <h5 class="property-title">Maison avec Jardin - Banlieue</h5>
-                  <p class="property-info">
-                    4 chambres • 3 salles de bain • 150m² • 1 800€/mois
-                  </p>
+                <div class="carousel-item">
+                  <a href="logements.php" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1000&h=500&fit=crop" class="d-block w-100" alt="Maison avec jardin" />
+                    <div class="carousel-caption">
+                      <h5 class="property-title">Maison avec Jardin - Banlieue</h5>
+                      <p class="property-info">4 chambres • 3 salles de bain • 150m² • 1 800€/mois</p>
+                    </div>
+                  </a>
                 </div>
-              </div>
-
-              <div class="carousel-item">
-                <img
-                  src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1000&h=500&fit=crop"
-                  class="d-block w-100"
-                  alt="Studio lumineux"
-                />
-                <div class="carousel-caption">
-                  <h5 class="property-title">
-                    Studio Lumineux - Quartier Résidentiel
-                  </h5>
-                  <p class="property-info">
-                    1 chambre • 1 salle de bain • 35m² • 650€/mois
-                  </p>
+                <div class="carousel-item">
+                  <a href="logements.php" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
+                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1000&h=500&fit=crop" class="d-block w-100" alt="Studio lumineux" />
+                    <div class="carousel-caption">
+                      <h5 class="property-title">Studio Lumineux - Quartier Résidentiel</h5>
+                      <p class="property-info">1 chambre • 1 salle de bain • 35m² • 650€/mois</p>
+                    </div>
+                  </a>
                 </div>
-              </div>
-
-              <div class="carousel-item">
-                <img
-                  src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&h=500&fit=crop"
-                  class="d-block w-100"
-                  alt="Loft contemporain"
-                />
-                <div class="carousel-caption">
-                  <h5 class="property-title">
-                    Loft Contemporain - Zone Artistique
-                  </h5>
-                  <p class="property-info">
-                    2 chambres • 2 salles de bain • 110m² • 1 500€/mois
-                  </p>
+                <div class="carousel-item">
+                  <a href="logements.php" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
+                    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&h=500&fit=crop" class="d-block w-100" alt="Loft contemporain" />
+                    <div class="carousel-caption">
+                      <h5 class="property-title">Loft Contemporain - Zone Artistique</h5>
+                      <p class="property-info">2 chambres • 2 salles de bain • 110m² • 1 500€/mois</p>
+                    </div>
+                  </a>
                 </div>
-              </div>
+              <?php endif; ?>
             </div>
 
             <!-- Contrôles précédent/suivant -->
@@ -410,8 +461,89 @@ switch ($page) {
         </div>
       </section>
 
+      <!-- Derniers Logements -->
+      <section class="latest-logements text-center">
+        <h2 class="fw-bold mb-4">Dernières annonces publiées</h2>
+        <p class="text-muted mb-5">
+          Découvrez les dernières annonces de logements disponibles sur
+          Logemangue
+        </p>
+        <div class="container">
+          <div class="row g-4" id="latest-logements-container">
+            <?php
+              $latestResult = $logementModel->getFilteredLogements([], 6, 0);
+              if ($latestResult && $latestResult->num_rows > 0) {
+                while ($row = $latestResult->fetch_assoc()) {
+                  $photoUrl = !empty(trim((string)($row['photo_url'] ?? ''))) ? $row['photo_url'] : 'https://via.placeholder.com/400x300?text=No+Photo';
+                  ?>
+                  <div class="col-md-4">
+                    <a href="logement.php?id=<?php echo intval($row['ID']); ?>" class="logement-link">
+                      <div class="logement-card">
+                        <img src="<?php echo htmlspecialchars($photoUrl); ?>" alt="<?php echo htmlspecialchars($row['titre'] ?? 'Logement'); ?>" />
+                        <div class="info">
+                          <h6 class="fw-bold mb-1"><?php echo htmlspecialchars($row['titre'] ?? 'Titre'); ?></h6>
+                          <p class="text-muted mb-0"><?php echo htmlspecialchars($row['loyer'] ?? 'Loyer'); ?> € / mois</p>
+                          <p class="small text-muted mb-0">Disponible : <?php echo (isset($row['disponible']) && $row['disponible'] == 1) ? 'Oui' : 'Non'; ?></p>
+                          <p class="small text-muted mb-0"><?php echo htmlspecialchars($row['surface'] ?? 'Surface'); ?> m² - <?php echo htmlspecialchars($row['TYPE'] ?? 'Type'); ?></p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  <?php
+                }
+              } else {
+                echo '<p class="text-muted">Aucune annonce disponible pour le moment.</p>';
+              }
+            ?>
+          </div>
+        </div>
+      </section>
+      <!-- Avis des utilisateurs -->
+      <section class="user-reviews text-center">
+        <h2 class="fw-bold mb-4">Ce que disent nos utilisateurs</h2>
+        <p class="text-muted-white mb-5 ">
+          Des témoignages authentiques de nos utilisateurs satisfaits
+        </p>
+        <div class="container">
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="p-4 review-card">
+                <p class="mb-3">
+                  "Logemangue m'a aidé à trouver un appartement parfait près de
+                  mon université en un rien de temps !"
+                </p>
+                <h6 class="fw-bold">Marie D.</h6>
+                <p class="text-muted">Étudiante en droit</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-4 review-card">
+                <p class="mb-3">
+                  "En tant que propriétaire, j'apprécie la simplicité de
+                  publier mes annonces sur Logemangue et de trouver des
+                  locataires fiables."
+                </p>
+                <h6 class="fw-bold">Jean P.</h6>
+                <p class="text-muted">Propriétaire</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-4 review-card">
+                <p class="mb-3">
+                  "La fonctionnalité de colocation m'a permis de trouver des
+                  colocataires géniaux et de partager les coûts du logement."
+                </p>
+                <h6 class="fw-bold">Sophie L.</h6>
+                <p class="text-muted">Étudiante en médecine</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       <footer class="text-center py-3">
-        <?php include 'footer.php'; ?>
+        <?php include "footer.php"; ?>
       </footer>
     </div>
 
