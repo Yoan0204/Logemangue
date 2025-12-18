@@ -92,22 +92,20 @@ class MessagerieView {
     </style>
   </head>
   <header class="topbar">
-    <a href="index.html" class="topbar-logo">
+    <a href="/" class="topbar-logo">
       <img src="topbar.png" onresize="3000" alt="Logo" />
     </a>
 
     <nav class="topbar-nav">
-      <a class="nav-link" href="index.html">Accueil</a>
-      <a class="nav-link" href="recherche.html">Recherche</a>
+      <a class="nav-link" href="/">Accueil</a>
+      <a class="nav-link" href="/recherche">Recherche</a>
 
-      <a class="nav-link" href="publish.php">Publier une annonce</a>
-      <a class="nav-link" href="mesannonces.php">Mes annonces</a>
+      <a class="nav-link" href="/publier">Publier une annonce</a>
+      <a class="nav-link" href="/mes_annonces">Mes annonces</a>
+      <a class="nav-link active-link" href="/messagerie">Ma messagerie</a>
 
-      <a class="nav-link active-link" href="messagerie.html">Ma messagerie</a>
-
-      <a class="nav-link" href="admin.php">Admin ⚙️</a>
-
-      <a class="nav-link" href="profil.html">Mon profil</a>
+      <a class="nav-link" href="/admin">Admin ⚙️</a>
+      <a class="nav-link" href="/profil">Mon profil</a>
     </nav>
   </header>
   <body>
@@ -127,7 +125,7 @@ class MessagerieView {
       <!-- Liste des conversations -->
       <div class="container">
         <a
-          href="messagerie.php?dest=<?php echo $destinataire['id']; ?>"
+          href="/messagerie/<?php echo $destinataire['id']; ?>"
           style="text-decoration: none; color: inherit"
         >
           <div class="conversation">

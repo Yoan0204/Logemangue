@@ -95,7 +95,7 @@ class ListeMessagerie {
     </style>
 </head>
   <header class="topbar">
-    <a href="index.php" class="topbar-logo">
+    <a href="/" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
 
@@ -154,7 +154,7 @@ class ListeMessagerie {
                 $initiale = strtoupper(substr($destinataire['nom'], 0, 1));
                 $dernierMessage = $destinataire['dernier_message'] ?? 'Aucun message';
             ?>
-            <a href="messagerie.php?dest=<?php echo $destinataire['id']; ?>" style="text-decoration: none; color: inherit;">
+            <a href="/messagerie/<?php echo $destinataire['id']; ?>" style="text-decoration: none; color: inherit;">
                 <div class="conversation">
                     <div class="profile-circle"><?php echo htmlspecialchars($initiale); ?></div>
                     <div>

@@ -119,7 +119,7 @@ $min_rating = $_GET['min_rating'] ?? '0';
                 while($row = $logements->fetch_assoc()) {
             ?>
             <div class="col-md-4">
-                <a href="logement.php?id=<?php echo $row['ID']; ?>" class="logement-link">
+                <a href="/recherche/<?php echo $row['ID']; ?>" class="logement-link">
                     <div class="logement-card">
                         <img src="<?php echo $row['photo_url'] ?: 'placeholder.jpg'; ?>" 
      alt="<?php echo $row['titre']; ?>">

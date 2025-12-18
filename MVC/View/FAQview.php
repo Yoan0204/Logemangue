@@ -1,6 +1,7 @@
 <?php
 
 class FAQView {
+
     public function renderFAQ($faqContent = null) {
         ?>
        <!DOCTYPE html>
@@ -125,7 +126,6 @@ class FAQView {
 
 </body>
 </html>
-<?php
+        <?php
     }
 }
-?>
