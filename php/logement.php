@@ -235,7 +235,7 @@ if (isset($_GET['error'])) {
             <div class="action-card">
                 <form method="POST" action="candidater.php">
                     <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
-                <button type="submit" class="action-btn">📄 Candidater</button>
+                <button type="submit" class="action-btn">📄 Candidater</button></form>
 
                 <button class="action-btn">⭐ Favoris</button>
                 <a href="messagerie.php?dest=<?php echo $row[
