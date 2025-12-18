@@ -144,7 +144,7 @@ class CGUView {
 </main>
 
 <footer>
-    <a href="index.php">Retour à l’accueil</a>
+    <a href="/">Retour à l’accueil</a>
 </footer>
 
 </body>

@@ -2,6 +2,7 @@
 
 class FAQView {
     public function __construct() {
+        ?>
        <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -124,5 +125,6 @@ class FAQView {
 
 </body>
 </html>
+        <?php
     }
 }
