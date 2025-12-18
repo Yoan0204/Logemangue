@@ -5,6 +5,13 @@ if (isset($_GET["publish"]) && $_GET["publish"] === "success") {?>
                 </div>
 <?php
 };
+
+if (isset($_GET["registered"]) && $_GET["registered"] === "1") {?>
+            <div style="margin: 20px; margin-top: 20px;" class="alert alert-success alert-dismissible fade show" role="alert">
+                    Inscription réussie ! Vous pouvez maintenant vous <a href="login.html">connecter</a>.                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+<?php
+};
 // Simple router: use ?page=cgu or ?page=faq to view MVC pages
 $page = isset($_GET["page"]) ? $_GET["page"] : "home";
 if ($page === "cgu") {

@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="fr">
   <head>
@@ -123,6 +124,7 @@
         text-decoration: underline;
       }
     </style>
+
   </head>
   <body>
   <header class="topbar">
@@ -142,6 +144,10 @@
     </nav>
   </header>
 
+
+
+
+
     <div class="content-wrapper">
       <div class="container">
         <a href="index.php" class="topbar-logo">
@@ -154,6 +160,9 @@
         </div>
 
         <!-- Formulaire de connexion -->
+        <div id="msg-erreur" style="display:none; color:red;">
+            <strong>Erreur :</strong> Les identifiants sont incorrects. Veuillez réessayer.
+        </div>         
         <form id="login-form" action="login.php" method="post">
           <div class="form-group">
             <label for="login-email">Adresse email</label>
@@ -219,6 +228,13 @@
       </div>
     </div>
 
+    <script>
+  const params = new URLSearchParams(window.location.search);
+
+  if (params.get('erreur') === '1') {
+    document.getElementById('msg-erreur').style.display = 'block';
+  }
+</script>
     <script>
       const loginTab = document.getElementById("login-tab");
       const registerTab = document.getElementById("register-tab");
