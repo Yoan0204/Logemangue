@@ -1,89 +1,22 @@
 <?php
-<<<<<<< HEAD
-require_once "config.php";
+session_start();
+
+require_once __DIR__ . "/config/database.php";
 
 $pdo = getPDO();
 
+/**
+ * AUTOLOAD MVC
+ */
 spl_autoload_register(function ($class) {
-    if (file_exists("controller/$class.php")) require_once "controller/$class.php";
-    if (file_exists("model/$class.php")) require_once "model/$class.php";
-    if (file_exists("view/$class.php")) require_once "view/$class.php";
-});
-
-if (isset($_GET['action'])) {
-
-    switch ($_GET['action']) {
-
-        case "login":
-            $controller = new LoginController($pdo);
-            $controller->login();
-            exit;
-
-        case "register":
-            $controller = new RegisterController($pdo);
-            $controller->register();
-            exit;
-
-        case "logout":
-            session_destroy();
-            header("Location: index.php");
-            exit;
-
-        case "profil":
-            $controller = new ProfilController($pdo);
-            $controller->profil();
-            exit;
-
-        case "logements":
-            $controller = new LogementController($pdo);
-            $controller->list();
-            exit;
-
-        case "logement":
-            $controller = new LogementController($pdo);
-            $controller->detail($_GET['id']);
-            exit;
-
-        case "mes_annonces":
-            $controller = new AnnonceController($pdo);
-            $controller->mesAnnonces();
-            exit;
-
-        case "admin":
-            $controller = new AdminController($pdo);
-            $controller->dashboard();
-            exit;
-
-
-        case "faq":
-            $controller = new FAQController();
-            $controller->show();
-            exit;
-
-        case "cgu":
-            $controller = new CGUController();
-            $controller->show();
-            exit;
-
-        case "messages_list":
-            $controller = new MessagesController($pdo);
-            $controller->list();
-            exit;
-
-        case "conversation":
-            $controller = new MessagesController($pdo);
-            $controller->conversation($_GET['dest']);
-            exit;
-
-        case "send_message":
-            $controller = new MessagesController($pdo);
-            $controller->send();
-            exit;
+    foreach (["controller", "model"] as $folder) {
+        $file = __DIR__ . "/$folder/$class.php";
+        if (file_exists($file)) {
+            require_once $file;
+            return;
+        }
     }
-
-session_start();
-
-require_once '../app/config/database.php';
+});
 
 $uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 
@@ -91,132 +24,62 @@ $uri = str_replace($basePath, '', $uri);
 $uri = trim($uri, '/');
 
 $segments = explode('/', $uri);
-$page = $segments[0] ?? '';
+$route = $segments[0] ?? '';
 $param = $segments[1] ?? null;
 
-switch ($page) {
+switch ($route) {
 
     case '':
-        require '../app/views/home.php';
+        require __DIR__ . "/view/home.php";
         break;
 
     case 'login':
-        require '../app/controllers/LoginController.php';
-        (new LoginController())->login();
+        (new LoginController($pdo))->login();
         break;
 
+    case 'register':
+        (new RegisterController($pdo))->register();
+        break;
+
+    case 'logout':
+        session_destroy();
+        header("Location: /");
+        exit;
+
     case 'profil':
-        require '../app/controllers/ProfilController.php';
-        (new ProfilController())->profile();
+        (new ProfilController($pdo))->show();
         break;
 
     case 'logements':
-        require '../app/controllers/LogementController.php';
-        (new LogementController())->index();
+        (new LogementController($pdo))->list();
         break;
 
     case 'logement':
-        require '../app/controllers/LogementController.php';
-        (new LogementController())->show($param);
+        (new LogementController($pdo))->detail($param);
         break;
 
     case 'messagerie':
-        require '../app/controllers/MessageController.php';
-        (new MessageController())->index($param);
+        (new MessagesController($pdo))->list();
+        break;
+
+    case 'conversation':
+        (new MessagesController($pdo))->conversation($param);
         break;
 
     case 'faq':
-        require '../app/views/static/faq.php';
+        require __DIR__ . "/view/static/faq.php";
         break;
 
     case 'cgu':
-        require '../app/views/static/cgu.php';
+        require __DIR__ . "/view/static/cgu.php";
         break;
 
     default:
         http_response_code(404);
-        echo "Page introuvable";
+        echo "404 — Page introuvable";
 }
-
-}
-
 ?>
 
-=======
-if (isset($_GET["publish"]) && $_GET["publish"] === "success") {?>
-            <div style="margin: 20px; margin-top: 20px;" class="alert alert-success alert-dismissible fade show" role="alert">
-                    Le logement a été publié avec succès !                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-<?php
-};
-
-if (isset($_GET["registered"]) && $_GET["registered"] === "1") {?>
-            <div style="margin: 20px; margin-top: 20px;" class="alert alert-success alert-dismissible fade show" role="alert">
-                    Inscription réussie ! Vous pouvez maintenant vous <a href="login.html">connecter</a>.                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-<?php
-};
-// Simple router: use ?page=cgu or ?page=faq to view MVC pages
-$page = isset($_GET["page"]) ? $_GET["page"] : "home";
-if ($page === "cgu") {
-    require_once __DIR__ . "/../MVC/Model/CGUmodel.php";
-    require_once __DIR__ . "/../MVC/Controller/CGUcontroller.php";
-    $model = new CGUModel();
-    $controller = new CGUController($model);
-    $controller->showCGU();
-    exit();
-}
-if ($page === "faq") {
-    require_once __DIR__ . "/../MVC/Model/FAQmodel.php";
-    require_once __DIR__ . "/../MVC/Controller/FAQcontroller.php";
-    $model = new FAQModel();
-    $controller = new FAQController($model);
-    $controller->showFAQ();
-    exit();
-}
-
-if ($page === "login") {
-    require_once __DIR__ . "/../MVC/View/Loginview.php";
-    $view = new LoginView();
-    $view->render();
-    exit();
-}
-
-if ($page === "register") {
-    require_once __DIR__ . "/../MVC/View/Loginview.php";
-    $view = new RegisterView();
-    $view->render();
-    exit();
-}
-
-if ($page === "messagerie" || $page === "listemessagerie") {
-    require_once __DIR__ . "/db.php";
-    $userId = $_SESSION["user_id"] ?? 1;
-    require_once __DIR__ . "/../MVC/Model/Messageriemodel.php";
-    require_once __DIR__ . "/../MVC/Controller/Messageriecontroller.php";
-    $model = new MessagerieModel($pdo);
-    $controller = new MessagerieController($model);
-    $controller->showMessagerie($userId);
-    exit();
-}
-
-if ($page === "profil") {
-    require_once __DIR__ . "/db.php";
-    $userId = $_SESSION["user_id"] ?? 1;
-    require_once __DIR__ . "/../MVC/Model/Profilmodel.php";
-    require_once __DIR__ . "/../MVC/Controller/Profilcontroller.php";
-    $model = new Profilmodel($pdo);
-    $controller = new Profilcontroller($model);
-    $profile = $controller->viewProfile($userId);
-    require_once __DIR__ . "/../MVC/View/Profilview.php";
-    $view = new Profilview();
-    $view->renderProfile($profile);
-    exit();
-}
-
-// default: render home HTML below
-?>
->>>>>>> b9e7d2509fc7c4b8828362bca33beba991aac4f0
 <!doctype html>
 <html lang="fr">
   <!-- Formated by Astral v1 -->
@@ -258,10 +121,10 @@ if ($page === "profil") {
     </a>
 
     <nav class="topbar-nav">
-<<<<<<< HEAD
+
       <a class="nav-link active-link" href="/">Accueil</a>
       <a class="nav-link" href="/recherche">Recherche</a>
-
+      <?php if (!$isEtudiant): ?>
       <a class="nav-link" href="/publier">Publier une annonce</a>
       <a class="nav-link" href="/mes_annonces">Mes annonces</a>
 
@@ -271,21 +134,7 @@ if ($page === "profil") {
       <?php endif; ?>
 
       <a class="nav-link " href="/profil">Mon profil</a>
-=======
-      <a class="nav-link active-link" href="index">Accueil</a>
-      <a class="nav-link" href="logements">Recherche</a>
-      <?php if (!$isEtudiant): ?>
-      <a class="nav-link" href="publish">Publier une annonce</a>
-      <?php endif; ?>
-      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>
 
-      <a class="nav-link" href="listemessagerie">Ma messagerie</a>
-      <?php if ($isAdmin): ?> 
-          <a class="nav-link" href="admin">Admin ⚙️</a>
-      <?php endif; ?>
-
-      <a class="nav-link " href="profil">Mon profil</a>
->>>>>>> b9e7d2509fc7c4b8828362bca33beba991aac4f0
     </nav>
   </header>
 
