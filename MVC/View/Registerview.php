@@ -21,7 +21,7 @@ class RegisterView {
             <button type="submit">S'inscrire</button>
         </form>
 
-        <p>Déjà un compte ? <a href="login.php">Se connecter</a></p>
+        <p>Déjà un compte ? <a href="/login">Se connecter</a></p>
         <?php
     }
 }
