@@ -19,10 +19,11 @@ $stmt->bind_param("i", $userId);
 $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
-if ($user['type_utilisateur'] !== 'etudiant') {
+if ($user['type_utilisateur'] !== 'Etudiant') {
     header("Location: logement.php?id=" . $logementId . "&error=not_student");
     exit();
 }
+
 //Insertion dans la table candidatures
 if ($logementId) {
     $stmt = $conn->prepare("INSERT INTO reservation (date_debut, date_fin, statut, montant, id_etudiant, id_logement) VALUES (NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH), 'en attente', (SELECT loyer FROM logement WHERE ID = ?), ?, ?)");
