@@ -79,6 +79,64 @@ if (isset($_GET['action'])) {
             $controller->send();
             exit;
     }
+
+session_start();
+
+require_once '../app/config/database.php';
+
+$uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+
+$uri = str_replace($basePath, '', $uri);
+$uri = trim($uri, '/');
+
+$segments = explode('/', $uri);
+$page = $segments[0] ?? '';
+$param = $segments[1] ?? null;
+
+switch ($page) {
+
+    case '':
+        require '../app/views/home.php';
+        break;
+
+    case 'login':
+        require '../app/controllers/LoginController.php';
+        (new LoginController())->login();
+        break;
+
+    case 'profil':
+        require '../app/controllers/ProfilController.php';
+        (new ProfilController())->profile();
+        break;
+
+    case 'logements':
+        require '../app/controllers/LogementController.php';
+        (new LogementController())->index();
+        break;
+
+    case 'logement':
+        require '../app/controllers/LogementController.php';
+        (new LogementController())->show($param);
+        break;
+
+    case 'messagerie':
+        require '../app/controllers/MessageController.php';
+        (new MessageController())->index($param);
+        break;
+
+    case 'faq':
+        require '../app/views/static/faq.php';
+        break;
+
+    case 'cgu':
+        require '../app/views/static/cgu.php';
+        break;
+
+    default:
+        http_response_code(404);
+        echo "Page introuvable";
+}
+
 }
 
 ?>
@@ -140,18 +198,18 @@ if (isset($_GET['action'])) {
     </a>
 
     <nav class="topbar-nav">
-      <a class="nav-link active-link" href="index.php">Accueil</a>
-      <a class="nav-link" href="logements.php">Recherche</a>
+      <a class="nav-link active-link" href="/">Accueil</a>
+      <a class="nav-link" href="/recherche">Recherche</a>
 
-      <a class="nav-link" href="publish.php">Publier une annonce</a>
-      <a class="nav-link" href="logements.php?view=mesannonces">Mes annonces</a>
+      <a class="nav-link" href="/publier">Publier une annonce</a>
+      <a class="nav-link" href="/mes_annonces">Mes annonces</a>
 
-      <a class="nav-link" href="listemessagerie.php">Ma messagerie</a>
+      <a class="nav-link" href="/messagerie">Ma messagerie</a>
       <?php if ($isAdmin): ?> 
-          <a class="nav-link" href="admin.php">Admin ⚙️</a>
+          <a class="nav-link" href="/admin">Admin ⚙️</a>
       <?php endif; ?>
 
-      <a class="nav-link " href="profil.php">Mon profil</a>
+      <a class="nav-link " href="/profil">Mon profil</a>
     </nav>
   </header>
 
