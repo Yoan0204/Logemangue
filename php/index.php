@@ -1,85 +1,77 @@
 <?php
-session_start();
+if (isset($_GET["publish"]) && $_GET["publish"] === "success") {?>
+            <div style="margin: 20px; margin-top: 20px;" class="alert alert-success alert-dismissible fade show" role="alert">
+                    Le logement a été publié avec succès !                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+<?php
+};
 
-require_once __DIR__ . "/config/database.php";
-
-$pdo = getPDO();
-
-/**
- * AUTOLOAD MVC
- */
-spl_autoload_register(function ($class) {
-    foreach (["controller", "model"] as $folder) {
-        $file = __DIR__ . "/$folder/$class.php";
-        if (file_exists($file)) {
-            require_once $file;
-            return;
-        }
-    }
-});
-
-$uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
-
-$uri = str_replace($basePath, '', $uri);
-$uri = trim($uri, '/');
-
-$segments = explode('/', $uri);
-$route = $segments[0] ?? '';
-$param = $segments[1] ?? null;
-
-switch ($route) {
-
-    case '':
-        require __DIR__ . "/view/home.php";
-        break;
-
-    case 'login':
-        (new LoginController($pdo))->login();
-        break;
-
-    case 'register':
-        (new RegisterController($pdo))->register();
-        break;
-
-    case 'logout':
-        session_destroy();
-        header("Location: /");
-        exit;
-
-    case 'profil':
-        (new ProfilController($pdo))->show();
-        break;
-
-    case 'logements':
-        (new LogementController($pdo))->list();
-        break;
-
-    case 'logement':
-        (new LogementController($pdo))->detail($param);
-        break;
-
-    case 'messagerie':
-        (new MessagesController($pdo))->list();
-        break;
-
-    case 'conversation':
-        (new MessagesController($pdo))->conversation($param);
-        break;
-
-    case 'faq':
-        require __DIR__ . "/view/static/faq.php";
-        break;
-
-    case 'cgu':
-        require __DIR__ . "/view/static/cgu.php";
-        break;
-
-    default:
-        http_response_code(404);
-        echo "404 — Page introuvable";
+if (isset($_GET["registered"]) && $_GET["registered"] === "1") {?>
+            <div style="margin: 20px; margin-top: 20px;" class="alert alert-success alert-dismissible fade show" role="alert">
+                    Inscription réussie ! Vous pouvez maintenant vous <a href="login.html">connecter</a>.                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+<?php
+};
+// Simple router: use ?page=cgu or ?page=faq to view MVC pages
+$page = isset($_GET["page"]) ? $_GET["page"] : "home";
+if ($page === "cgu") {
+    require_once __DIR__ . "/../MVC/Model/CGUmodel.php";
+    require_once __DIR__ . "/../MVC/Controller/CGUcontroller.php";
+    $model = new CGUModel();
+    $controller = new CGUController($model);
+    $controller->showCGU();
+    exit();
 }
-?>
+if ($page === "faq") {
+    require_once __DIR__ . "/../MVC/Model/FAQmodel.php";
+    require_once __DIR__ . "/../MVC/Controller/FAQcontroller.php";
+    $model = new FAQModel();
+    $controller = new FAQController($model);
+    $controller->showFAQ();
+    exit();
+}
 
+if ($page === "login") {
+    require_once __DIR__ . "/../MVC/View/Loginview.php";
+    $view = new LoginView();
+    $view->render();
+    exit();
+}
+
+if ($page === "register") {
+    require_once __DIR__ . "/../MVC/View/Loginview.php";
+    $view = new RegisterView();
+    $view->render();
+    exit();
+}
+
+if ($page === "messagerie" || $page === "listemessagerie") {
+    require_once __DIR__ . "/db.php";
+    $userId = $_SESSION["user_id"] ?? 1;
+    require_once __DIR__ . "/../MVC/Model/Messageriemodel.php";
+    require_once __DIR__ . "/../MVC/Controller/Messageriecontroller.php";
+    $model = new MessagerieModel($pdo);
+    $controller = new MessagerieController($model);
+    $controller->showMessagerie($userId);
+    exit();
+}
+
+if ($page === "profil") {
+    require_once __DIR__ . "/db.php";
+    $userId = $_SESSION["user_id"] ?? 1;
+    require_once __DIR__ . "/../MVC/Model/Profilmodel.php";
+    require_once __DIR__ . "/../MVC/Controller/Profilcontroller.php";
+    $model = new Profilmodel($pdo);
+    $controller = new Profilcontroller($model);
+    $profile = $controller->viewProfile($userId);
+    require_once __DIR__ . "/../MVC/View/Profilview.php";
+    $view = new Profilview();
+    $view->renderProfile($profile);
+    exit();
+}
+
+// default: render home HTML below
+?>
 <!doctype html>
 <html lang="fr">
   <!-- Formated by Astral v1 -->
@@ -121,20 +113,19 @@ switch ($route) {
     </a>
 
     <nav class="topbar-nav">
-
-      <a class="nav-link active-link" href="/">Accueil</a>
-      <a class="nav-link" href="/recherche">Recherche</a>
+      <a class="nav-link active-link" href="index">Accueil</a>
+      <a class="nav-link" href="logements">Recherche</a>
       <?php if (!$isEtudiant): ?>
-      <a class="nav-link" href="/publier">Publier une annonce</a>
-      <a class="nav-link" href="/mes_annonces">Mes annonces</a>
+      <a class="nav-link" href="publish">Publier une annonce</a>
+      <?php endif; ?>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>
 
-      <a class="nav-link" href="/messagerie">Ma messagerie</a>
+      <a class="nav-link" href="listemessagerie">Ma messagerie</a>
       <?php if ($isAdmin): ?> 
-          <a class="nav-link" href="/admin">Admin ⚙️</a>
+          <a class="nav-link" href="admin">Admin ⚙️</a>
       <?php endif; ?>
 
-      <a class="nav-link " href="/profil">Mon profil</a>
-
+      <a class="nav-link " href="profil">Mon profil</a>
     </nav>
   </header>
 
