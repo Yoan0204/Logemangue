@@ -5,7 +5,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
 
 # Réécriture
-RewriteRule ^(.+)$ index.php [L]
+RewriteRule ^(.+)$ $1.php [L]
 
 # Sécurité : bloquer les méthodes HTTP non désirées
 <LimitExcept GET POST>
