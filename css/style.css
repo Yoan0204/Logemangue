@@ -107,7 +107,7 @@
 /* --- RESPONSIVE --- */
 
 /* Tablets et petits écrans */
-@media (max-width: 968px) {
+@media (max-width: 1300px) {
   .topbar-nav {
     gap: 15px;
     transform: translateX(-30px);
@@ -115,7 +115,7 @@
 
   .topbar-nav .nav-link {
     padding: 6px 10px;
-    font-size: 14px;
+    font-size: 10px;
   }
 
   .topbar-logo img {
@@ -124,7 +124,7 @@
 }
 
 /* Mobile */
-@media (max-width: 768px) {
+@media (max-width: 890px) {
   .topbar {
     padding: 10px 15px;
   }
@@ -381,6 +381,96 @@
   grid-template-columns: 2fr 1fr 1fr 1.2fr;
   gap: 1rem;
   align-items: center;
+}
+
+.search-input-filters,
+.form-control,
+.form-select {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+.search-input-filters:focus,
+.form-control:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
+}
+/* --- RESPONSIVE --- */
+
+/* Tablettes */
+@media (max-width: 968px) {
+  .search-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .search-input-filters {
+    grid-column: 1 / -1;
+  }
+
+  .btn-filters {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .search-bar {
+    padding: 15px !important;
+    margin-bottom: 20px !important;
+    border-radius: 20px;
+  }
+
+  .search-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .search-input-filters,
+  .form-control,
+  .form-select,
+  .btn-filters {
+    grid-column: 1;
+    width: 100%;
+  }
+
+  .search-input-filters,
+  .form-control,
+  .form-select {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .btn-filters {
+    padding: 12px 15px;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+}
+
+/* Petits mobiles */
+@media (max-width: 480px) {
+  .search-bar {
+    padding: 12px !important;
+    border-radius: 20px !important;
+  }
+
+  .search-grid {
+    gap: 8px;
+  }
+
+  .search-input-filters,
+  .form-control,
+  .form-select,
+  .btn-filters {
+    padding: 10px;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
 }
 
 /* Champs de saisie */
