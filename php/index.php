@@ -8,7 +8,7 @@ if (isset($_GET["publish"]) && $_GET["publish"] === "success") {?>
 
 if (isset($_GET["registered"]) && $_GET["registered"] === "1") {?>
             <div style="margin: 20px; margin-top: 20px;" class="alert alert-success alert-dismissible fade show" role="alert">
-                    Inscription réussie ! Vous pouvez maintenant vous <a href="login.html">connecter</a>.                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    Inscription réussie ! Vous pouvez maintenant vous <a class="alert-link" href="login.html">connecter</a>.                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
 <?php
 };
@@ -125,7 +125,7 @@ if ($page === "profil") {
           <a class="nav-link" href="admin">Admin ⚙️</a>
       <?php endif; ?>
 
-      <a class="nav-link " href="profil">Mon profil</a>
+      <a class="nav-link " href="profil">Mon profil</a>   
     </nav>
   </header>
 
