@@ -221,7 +221,7 @@ if (isset($_GET['error'])) {
                                     <form method="POST" action="supprimercandidature.php" style="display: inline;">
                                         <input type="hidden" name="etudiant_id" value="<?php echo $candidature["ID"]; ?>">
                                         <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
-                                        <button type="submit" style="height: 40px; align-itself: right;" class="btn btn-unapproved">Supprimer la candidature</button>
+                                        <button type="submit" style="height: 40px; align-itself: right;" class="btn btn-unapproved">Refuser la candidature</button>
                                     </form>
 
                                 </div>
@@ -256,7 +256,6 @@ if (isset($_GET['error'])) {
         </div>
         
     </div>
-
 </div>
 
 

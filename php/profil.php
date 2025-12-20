@@ -108,6 +108,7 @@ if (isset($_POST["valider"])) {
     $date_naissance = $_POST["date_naissance"];
     $type_utilisateur = $_POST["type_utilisateur"];
     $biography = $_POST["biography"];
+    $facile = $_POST["facile"];
 
     // Validation du numéro de téléphone
     if (!preg_match("/^[0-9]{10}$/", $telephone)) {
@@ -123,16 +124,17 @@ if (isset($_POST["valider"])) {
     } else {
         // Mettre à jour les champs de l'utilisateur
         $updateSql =
-            "UPDATE users SET nom=?, telephone=?, genre=?, date_naissance=?, type_utilisateur=?,biography=? WHERE id=?";
+            "UPDATE users SET nom=?, telephone=?, genre=?, date_naissance=?, type_utilisateur=?,biography=?, facile=? WHERE id=?";
         $stmt = $conn->prepare($updateSql);
         $stmt->bind_param(
-            "ssssssi",
+            "sssssssi",
             $nom,
             $telephone,
             $genre,
             $date_naissance,
             $type_utilisateur,
             $biography,
+            $facile,
             $userId
         );
 
@@ -253,6 +255,13 @@ if (isset($_GET["update"]) && $_GET["update"] == "success") {
                     </select>
                   </div>
                 </div>
+                <?php if ($user["type_utilisateur"] == "Etudiant") { ?>
+                  <div>
+                    <input type="text" name="facile" class="form-control" placeholder="URL de votre dossier FACILE" value=<?php if(isset($user["facile"])) {echo $user["facile"];}?>>
+                  </div>                  
+                <?php
+                }
+                ?> <br>
                 <textarea class="form-control text-center mb-3" name="biography" placeholder="<?php echo $user[
                     "biography"
                 ]; ?>"></textarea> 

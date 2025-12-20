@@ -1,4 +1,21 @@
 <?php
+function nettoyer_input($data) {
+    // Supprimer les espaces en début/fin
+    $data = trim($data);
+    // Supprimer les slashes
+    $data = stripslashes($data);
+    // Convertir les caractères spéciaux en entités HTML
+    $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+    return $data;
+}
+
+// Appliquer à tous les champs POST
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    foreach ($_POST as $key => $value) {
+        $_POST[$key] = nettoyer_input($value);
+    }
+}
+
 require 'db2.php'; // connexion à la base
 
 if (
