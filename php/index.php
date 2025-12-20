@@ -149,7 +149,7 @@ if ($page === "profil") {
           <input
             type="text"
             name="search"
-            class="form-control search-input"
+            class=" search-input"
             placeholder="Ville, quartier, type de logement..."
           />
           <button type="submit" class="btn-search">Rechercher →</button>

@@ -336,5 +336,7 @@ toggle.addEventListener("click", () => {
     }
 </script>
 </body>
-
+<div class="container" style="text-align : center;">
+    <?php include "footer.php"; ?>
+</div>
 </html>
