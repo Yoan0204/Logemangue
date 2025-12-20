@@ -124,7 +124,26 @@
         text-decoration: underline;
       }
     </style>
+    <style>
+      .email-status {
+    display: block;
+    margin-top: 6px;
+    font-size: 14px;
+}
 
+.email-status.success {
+    color: #2ecc71;
+}
+
+.email-status.error {
+    color: #e74c3c;
+}
+
+.email-status.loading {
+    color: #999;
+    font-style: italic;
+}
+      </style>
   </head>
   <body>
   <header class="topbar">
@@ -148,6 +167,7 @@
 
 
 
+
     <div class="content-wrapper">
       <div class="container">
         <a href="index.php" class="topbar-logo">
@@ -162,6 +182,9 @@
         <!-- Formulaire de connexion -->
         <div id="msg-erreur" style="display:none; color:red;">
             <strong>Erreur :</strong> Les identifiants sont incorrects. Veuillez réessayer.
+        </div>         
+        <div id="msg-erreur-car" style="display:none; color:red;">
+            <strong>Erreur :</strong> Vous avez utilisé des caractères non autorisés.
         </div>         
         <form id="login-form" action="login.php" method="post">
           <div class="form-group">
@@ -182,7 +205,9 @@
         <form id="register-form" action="register.php" method="post" style="display: none">
           <div class="form-group">
             <label for="register-email">Adresse email</label>
+            <!-- email checker -->     
             <input type="email" id="register-email" name="email" required />
+            <span id="email-status"></span>
           </div>
           <div class="form-group">
             <label for="register-password">Mot de passe</label>
@@ -234,6 +259,9 @@
   if (params.get('erreur') === '1') {
     document.getElementById('msg-erreur').style.display = 'block';
   }
+    if (params.get('error') === 'carun') {
+    document.getElementById('msg-erreur-car').style.display = 'block';
+  }
 </script>
     <script>
       const loginTab = document.getElementById("login-tab");
@@ -255,6 +283,47 @@
         loginForm.style.display = "none";
       });
     </script>
+    <script>
+const emailInput = document.getElementById('register-email');
+const status = document.getElementById('email-status');
+
+let timeout = null;
+
+emailInput.addEventListener('input', () => {
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+        const email = emailInput.value;
+
+        if (!email) {
+            status.textContent = '';
+            status.className = 'email-status';
+            return;
+        }
+
+        status.textContent = 'Vérification...';
+        status.className = 'email-status loading';
+
+        fetch('check_email.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.exists) {
+                status.textContent = '❌ Email déjà utilisé';
+                status.className = 'email-status error';
+            } else {
+                status.textContent = '✅ Email disponible';
+                status.className = 'email-status success';
+            }
+        });
+    }, 500);
+});
+
+</script>
+
   </body>
   <footer style="text-align: center; padding: 20px; margin-top: 20px;">
     <a class="link text-muted" href="index.php?page=faq">FAQ</a>

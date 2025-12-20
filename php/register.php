@@ -6,10 +6,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
     $name = $_POST['name'];
+    $name = trim($name);
     $phone = $_POST['phone'];
     $genre = $_POST['genre'];
     $birthdate = $_POST['birthdate'];
     $type_utilisateur = $_POST['type_utilisateur'];
+
+if (!preg_match('/^[a-zA-Z0-9 _-]+$/', $name)) {
+    header("Location: login.html?error=carun");
+    die();
+}
+
+
 
      // Validation du numéro de téléphone
 
@@ -28,4 +36,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Erreur lors de l'inscription: " . $e->getMessage());
     }
 }
+        
 ?>
