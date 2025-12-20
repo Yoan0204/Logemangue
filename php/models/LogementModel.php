@@ -114,8 +114,7 @@ class LogementModel {
      ORDER BY id_photo ASC
      LIMIT 1) AS photo_url
     FROM logement l
-    WHERE l.status='Approved'
-    ORDER BY l.loyer";
+    WHERE l.status='Approved'";
 
     
     // Filtre de recherche par titre ou description

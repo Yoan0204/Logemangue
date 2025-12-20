@@ -203,7 +203,7 @@ if (isset($_GET['error'])) {
                         <h3 class="alert-heading">Liste des candidatures reçues :</h3> <br>
                         <?php
                         $stmt = $pdo->prepare(  
-                            "SELECT u.ID, u.nom, u.email, u.telephone
+                            "SELECT u.ID, u.nom, u.email, u.telephone, u.facile
                              FROM reservation r 
                              JOIN users u ON r.id_etudiant = u.ID
                              WHERE r.id_logement = :id_logement"
@@ -217,6 +217,11 @@ if (isset($_GET['error'])) {
                                     <p><strong>Nom :</strong> <?php echo htmlspecialchars($candidature["nom"]); ?></p>
                                     <p><strong>Email :</strong> <?php echo htmlspecialchars($candidature["email"]); ?></p>
                                     <p><strong>Téléphone :</strong> <?php echo htmlspecialchars($candidature["telephone"]); ?></p>
+                                    <?php
+                                    if (!$candidature["facile"] == NULL) { ?>
+                                        <p><strong>Dossier FACILE</strong> <a href="https://<?php echo $candidature["facile"]; ?> "><?php echo htmlspecialchars($candidature["facile"]); ?></a></p>
+                                    <?php } ?>
+                                    
                                     <a style="display: inline-flex; align-items: center; justify-content: center;" href="messagerie.php?dest=<?php echo $candidature["ID"]; ?>" class="btn btn-approved">Contacter</a>
                                     <form method="POST" action="supprimercandidature.php" style="display: inline;">
                                         <input type="hidden" name="etudiant_id" value="<?php echo $candidature["ID"]; ?>">

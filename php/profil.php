@@ -91,13 +91,13 @@ if (isset($_POST["logout"])) {
     session_start();
 
     // Supprimer toutes les variables de session
-    $_SESSION = array();
+    $_SESSION = [];
 
     // Détruire la session
     session_destroy();
 
     // Rediriger vers la page de connexion
-    header('Location: login.html');
+    header("Location: login.html");
     exit();
 }
 
@@ -117,6 +117,16 @@ if (isset($_POST["valider"])) {
     // Validation de la date de naissance
     elseif (empty($date_naissance)) {
         echo "<p>La date de naissance est requise.</p>";
+    } elseif (
+        !str_starts_with(
+            $facile,
+            "https://locataire.dossierfacile.logement.gouv.fr/public-file/"
+        ) &&
+        !$facile == null
+    ) {
+        // l'URL ne commence PAS par le bon préfixe
+        header("Location: profil?erreur=badurl");
+        exit();
     }
     // Validation du type d'utilisateur
     elseif (empty($type_utilisateur)) {
@@ -191,6 +201,15 @@ if (isset($_GET["update"]) && $_GET["update"] == "success") {
 
             <div class="info-box">
               <div class="info-title text-center">Mes informations</div>
+              <?php if (
+                  isset($_GET["erreur"]) &&
+                  $_GET["erreur"] == "badurl"
+              ) { ?>
+      <div style="margin: 20px; margin-top: 20px;" class="alert alert-danger alert-dismissible fade show" role="alert">
+              L'URL de votre dossier FACILE n'est pas bonne.                    
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div> 
+        <?php } ?>
 
               <form method="post" action="">
                 <div class="row g-3 mb-3">
@@ -257,11 +276,13 @@ if (isset($_GET["update"]) && $_GET["update"] == "success") {
                 </div>
                 <?php if ($user["type_utilisateur"] == "Etudiant") { ?>
                   <div>
-                    <input type="text" name="facile" class="form-control" placeholder="URL de votre dossier FACILE" value=<?php if(isset($user["facile"])) {echo $user["facile"];}?>>
+                    <input type="text" name="facile" class="form-control" placeholder="URL de votre dossier FACILE" value=<?php if (
+                        isset($user["facile"])
+                    ) {
+                        echo $user["facile"];
+                    } ?>>
                   </div>                  
-                <?php
-                }
-                ?> <br>
+                <?php } ?> <br>
                 <textarea class="form-control text-center mb-3" name="biography" placeholder="<?php echo $user[
                     "biography"
                 ]; ?>"></textarea> 
