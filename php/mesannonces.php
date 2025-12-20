@@ -25,7 +25,11 @@ $result = $conn->query($sql);
     <a href="index.php" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
-
+  <div class="burger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
     <nav class="topbar-nav">
       <a class="nav-link " href="index.php">Accueil</a>
       <a class="nav-link" href="logements.php">Recherche</a>

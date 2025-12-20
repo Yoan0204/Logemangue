@@ -111,7 +111,11 @@ if ($page === "profil") {
     <a href="index" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
-
+  <div class="burger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
     <nav class="topbar-nav">
       <a class="nav-link active-link" href="index">Accueil</a>
       <a class="nav-link" href="logements">Recherche</a>
@@ -396,5 +400,6 @@ if ($page === "profil") {
       });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/responsive.js"></script>
   </body>
 </html>
