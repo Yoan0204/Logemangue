@@ -237,5 +237,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+<script src="../js/responsive.js"></script>
 </body>
 </html>

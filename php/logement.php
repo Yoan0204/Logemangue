@@ -77,8 +77,8 @@ if (isset($_GET['error'])) {
                 ID de logement manquant.
               </div>';
     }    elseif ($error === 'not_student') {
-        echo '<div style="margin: 20px;" class="alert alert-danger" role="alert">
-                Seuls les étudiants peuvent candidater pour un logement.
+        echo '<div style="margin: 20px;" class="alert alert-danger alert-dismissible fade show" role="alert">
+                Seuls les étudiants peuvent candidater pour un logement. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>';
     }
 
