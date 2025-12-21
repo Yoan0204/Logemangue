@@ -75,7 +75,7 @@ if (isset($_POST["valider"])) {
         );
 
         if ($stmt->execute()) {
-            header("Location: profil.php?update=success");
+            header("Location: profil?update=success");
         } else {
             echo "<p>Erreur lors de la mise à jour des informations.</p>";
         }
