@@ -7,7 +7,7 @@ if ($etudiantId && $logementId) {
     $stmt->bind_param("ii", $etudiantId, $logementId);
     
     if ($stmt->execute()) {
-        header("Location: logement.php?id=" . $logementId . "&success=candidature_deleted");
+        header("Location: logement?id=" . $logementId . "&success=candidature_deleted");
         exit();
     } else {
         echo "Erreur lors de la suppression de la candidature : " . $stmt->error;
@@ -15,6 +15,6 @@ if ($etudiantId && $logementId) {
     
     $stmt->close();
 } else {
-    header("Location: logement.php?error=missing_parameters");
+    header("Location: logement?error=missing_parameters");
 }
 ?>

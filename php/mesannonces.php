@@ -66,7 +66,7 @@ $result = $conn->query($sql);
                   while($row = $result->fetch_assoc()) {                    
                   ?>                    
                   <div class="col-md-4">                        
-                    <a href="logement.php?id=<?php echo $row['ID']; ?>" class="logement-link">                            
+                    <a href="logement?id=<?php echo $row['ID']; ?>" class="logement-link">                            
                       <div class="logement-card">                                
                         <img src="test.webp" alt="<?php echo $row['titre']; ?>">                                
                         <div class="info">                                    

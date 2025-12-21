@@ -10,7 +10,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-    header("Location: logement.php?id=" . $logementId . "&error=candidature_exists");
+    header("Location: logement?id=" . $logementId . "&error=candidature_exists");
     exit();
 }
 //Check si l'utilisateur est un étudiant
@@ -20,7 +20,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 if ($user['type_utilisateur'] !== 'Etudiant') {
-    header("Location: logement.php?id=" . $logementId . "&error=not_student");
+    header("Location: logement?id=" . $logementId . "&error=not_student");
     exit();
 }
 
@@ -30,7 +30,7 @@ if ($logementId) {
     $stmt->bind_param("iii", $logementId, $userId, $logementId);
     
     if ($stmt->execute()) {
-        header("Location: logement.php?id=" . $logementId . "&success=candidature_submitted");
+        header("Location: logement?id=" . $logementId . "&success=candidature_submitted");
         exit();
     } else {
         echo "Erreur lors de l'envoi de la candidature : " . $stmt->error;
@@ -38,6 +38,6 @@ if ($logementId) {
     
     $stmt->close();
 } else {
-    header("Location: logement.php?error=missing_logement_id");
+    header("Location: logement?error=missing_logement_id");
 }
 

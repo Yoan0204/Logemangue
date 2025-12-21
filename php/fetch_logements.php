@@ -31,7 +31,7 @@ if ($logements && $logements->num_rows > 0) {
 
         // Construire le HTML pour chaque carte, identique à la vue
         $html .= '<div class="col-md-4">';
-        $html .= '<a href="logement.php?id=' . intval($row['ID']) . '" class="logement-link">';
+        $html .= '<a href="logement?id=' . intval($row['ID']) . '" class="logement-link">';
         $html .= '<div class="logement-card">';
         $html .= '<img src="' . $photo . '" alt="' . $titre . '">';
         $html .= '<div class="info">';

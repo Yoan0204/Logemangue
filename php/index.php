@@ -183,7 +183,7 @@ if ($page === "profil") {
               <?php if (!empty($carouselLogements)): ?>
                 <?php foreach ($carouselLogements as $i => $lg): ?>
                   <div class="carousel-item <?php echo $i === 0 ? 'active' : ''; ?>">
-                    <a href="logement.php?id=<?php echo intval($lg['ID']); ?>" title="<?php echo htmlspecialchars($lg['titre'] ?: 'Voir le logement'); ?>" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
+                    <a href="logement?id=<?php echo intval($lg['ID']); ?>" title="<?php echo htmlspecialchars($lg['titre'] ?: 'Voir le logement'); ?>" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
                       <img src="<?php echo htmlspecialchars($lg['photo_url'] ?: 'https://via.placeholder.com/1000x500?text=No+Photo'); ?>" class="d-block w-100" alt="<?php echo htmlspecialchars($lg['titre'] ?: 'Logement'); ?>" />
                       <div class="carousel-caption">
                         <h5 class="property-title"><?php echo htmlspecialchars($lg['titre'] ?: 'Titre'); ?></h5>
@@ -321,7 +321,7 @@ if ($page === "profil") {
                   $photoUrl = !empty(trim((string)($row['photo_url'] ?? ''))) ? $row['photo_url'] : 'https://via.placeholder.com/400x300?text=No+Photo';
                   ?>
                   <div class="col-md-4">
-                    <a href="logement.php?id=<?php echo intval($row['ID']); ?>" class="logement-link">
+                    <a href="logement?id=<?php echo intval($row['ID']); ?>" class="logement-link">
                       <div class="logement-card">
                         <img src="<?php echo htmlspecialchars($photoUrl); ?>" alt="<?php echo htmlspecialchars($row['titre'] ?? 'Logement'); ?>" />
                         <div class="info">
