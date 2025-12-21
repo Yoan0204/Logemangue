@@ -1,5 +1,5 @@
-<a class="link text-muted" href="index.php?page=faq">FAQ</a>
-<a class="link text-muted" href="index.php?page=cgu">CGU</a>
+<a class="link text-muted" href="index?page=faq">FAQ</a>
+<a class="link text-muted" href="index?page=cgu">CGU</a>
 © <?php echo date("Y"); ?> Logemangue - Tous droits réservés
 <br />
 <small class="text-muted"

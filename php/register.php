@@ -31,7 +31,7 @@ if (!preg_match('/^[a-zA-Z0-9 _-]+$/', $name)) {
     try {
         $stmt = $pdo->prepare("INSERT INTO users (email, password, nom, telephone, genre, date_naissance, type_utilisateur) VALUES (?, ? , ?,?,?,?,?)");
         $stmt->execute([$email, $hashed_password, $name, $phone, $genre, $birthdate, $type_utilisateur]);
-        header("Location: index.php?registered=1");
+        header("Location: index?registered=1");
     } catch (PDOException $e) {
         die("Erreur lors de l'inscription: " . $e->getMessage());
     }

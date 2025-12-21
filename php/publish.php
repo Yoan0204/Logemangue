@@ -113,7 +113,7 @@ if (!empty($_FILES['photos']['name'][0])) {
 
 
         // ✅ REDIRECTION À LA FIN
-        header("Location: index.php?publish=success");
+        header("Location: index?publish=success");
         exit;
 
     } else {
@@ -177,7 +177,7 @@ $conn->close();
                     Un fichier que vous avez importé n'est pas une image. Types supportés : .jpg, .jpeg, .png, .webp<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>          
         <?php } ?>        
-        <form class="p-4 rounded-4 publication-form" id="formAnnonce" action="publish.php" method="POST" enctype="multipart/form-data">
+        <form class="p-4 rounded-4 publication-form" id="formAnnonce" action="publish" method="POST" enctype="multipart/form-data">
           <div class="row g-3">
             <div class="col-md-6">
               <label class="form-label fw-semibold">Titre de l'annonce</label>
