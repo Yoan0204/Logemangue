@@ -174,7 +174,7 @@
 
   /* Animation du burger en X */
   .burger-menu.active span:nth-child(1) {
-    transform: rotate(45deg) translate(8px, 8px);
+    transform: rotate(45deg) translate(4px, 4px);
   }
 
   .burger-menu.active span:nth-child(2) {
