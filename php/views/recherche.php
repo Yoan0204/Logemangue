@@ -11,9 +11,6 @@ $type_proprio = $_GET['type_proprio'] ?? '';
 $keywords = $_GET['keywords'] ?? '';
 $min_rating = $_GET['min_rating'] ?? '0';
 ?>
-<style>
-
-</style>
 <!-- Vue: Recherche de Logements -->
 <div class="container-fluid p-4">
     <!-- BARRE DE RECHERCHE PLEINE LARGEUR -->
