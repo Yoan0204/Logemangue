@@ -120,7 +120,7 @@ if (isset($_POST["valider"])) {
     } elseif (
         !str_starts_with(
             $facile,
-            "https://locataire.dossierfacile.logement.gouv.fr/public-file/"
+            "locataire.dossierfacile.logement.gouv.fr/public-file/"
         ) &&
         !$facile == null
     ) {
@@ -280,7 +280,7 @@ if (isset($_GET["update"]) && $_GET["update"] == "success") {
                 </div>
                 <?php if ($user["type_utilisateur"] == "Etudiant") { ?>
                   <div>
-                    <input type="text" name="facile" class="form-control" placeholder="URL de votre dossier FACILE" value=<?php if (
+                    <input type="text" name="facile" class="form-control" placeholder="URL de votre dossier FACILE ( locataire.dossierfacile.logement.gouv.fr/public-file/... )" value=<?php if (
                         isset($user["facile"])
                     ) {
                         echo $user["facile"];
