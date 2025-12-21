@@ -52,7 +52,12 @@ $photo = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php if (!$isEtudiant): ?>
       <a class="nav-link" href="publish">Publier une annonce</a>
         <?php endif; ?>
-      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>
+      <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>        
+      <?php endif; ?>
+      <?php if ($isEtudiant): ?>
+      <a class="nav-link" href="candidatures">Mes candidatures</a>        
+      <?php endif; ?>      
 
       <a class="nav-link" href="listemessagerie">Ma messagerie</a>
       <?php if ($isAdmin): ?> 
@@ -210,7 +215,7 @@ if (isset($_GET['error'])) {
                             "SELECT u.ID, u.nom, u.email, u.telephone, u.facile
                              FROM reservation r 
                              JOIN users u ON r.id_etudiant = u.ID
-                             WHERE r.id_logement = :id_logement"
+                             WHERE r.id_logement = :id_logement AND r.statut = 'En Attente'"
                         );
                         $stmt->execute([":id_logement" => $logementId]);
                         $candidatures = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -232,6 +237,12 @@ if (isset($_GET['error'])) {
                                         <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
                                         <button type="submit" style="height: 40px; align-itself: right;" class="btn btn-unapproved">Refuser la candidature</button>
                                     </form>
+                                    <form method="POST" action="approuvercandidature.php" style="display: inline;">
+                                        <input type="hidden" name="etudiant_id" value="<?php echo $candidature["ID"]; ?>">
+                                        <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
+                                        <button type="submit" style="height: 40px; align-itself: right;" class="btn btn-approved">Approuver la candidature</button>
+                                    </form>
+                                    
 
                                 </div>
                         <?php

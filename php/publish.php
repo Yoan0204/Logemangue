@@ -151,7 +151,9 @@ $conn->close();
       <a class="nav-link" href="logements">Recherche</a>
 
       <a class="nav-link active-link" href="publish">Publier une annonce</a>
-      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>
+      <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>        
+      <?php endif; ?>
 
       <a class="nav-link" href="listemessagerie">Ma messagerie</a>
       <?php if ($isAdmin): ?>

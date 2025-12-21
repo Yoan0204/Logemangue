@@ -108,8 +108,12 @@ if (isset($_GET["update"]) && $_GET["update"] == "success") {
       <?php if (!$isEtudiant): ?>
       <a class="nav-link" href="publish">Publier une annonce</a>
       <?php endif; ?>
-      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>
-
+      <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>        
+      <?php endif; ?>
+      <?php if ($isEtudiant): ?>
+      <a class="nav-link" href="candidatures">Mes candidatures</a>        
+      <?php endif; ?>
       <a class="nav-link" href="listemessagerie">Ma messagerie</a>
       <?php if ($isAdmin): ?>
       <a class="nav-link" href="admin">Admin ⚙️</a>

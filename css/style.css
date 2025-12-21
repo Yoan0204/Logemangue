@@ -294,7 +294,7 @@
 }
 
 .logement-link:hover {
-  transform: translateY(-5px);
+  transform: translateY(-1px);
 }
 
 .logement-card {

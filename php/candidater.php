@@ -4,7 +4,7 @@ include 'db2.php';
 $logementId = $_POST['logement_id'] ?? null;
 
 //Check si il y a déja une candidature en cours pour ce logement et cet étudiant
-$stmt = $conn->prepare("SELECT * FROM reservation WHERE id_etudiant = ? AND id_logement = ? AND statut = 'en attente'");
+$stmt = $conn->prepare("SELECT * FROM reservation WHERE id_etudiant = ? AND id_logement = ? AND statut = 'En Attente'");
 $stmt->bind_param("ii", $userId, $logementId);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -26,7 +26,7 @@ if ($user['type_utilisateur'] !== 'Etudiant') {
 
 //Insertion dans la table candidatures
 if ($logementId) {
-    $stmt = $conn->prepare("INSERT INTO reservation (date_debut, date_fin, statut, montant, id_etudiant, id_logement) VALUES (NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH), 'en attente', (SELECT loyer FROM logement WHERE ID = ?), ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO reservation (date_debut, date_fin, statut, montant, id_etudiant, id_logement) VALUES (NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH), 'En Attente', (SELECT loyer FROM logement WHERE ID = ?), ?, ?)");
     $stmt->bind_param("iii", $logementId, $userId, $logementId);
     
     if ($stmt->execute()) {
