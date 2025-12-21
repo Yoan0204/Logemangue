@@ -127,7 +127,7 @@ class MessagerieView {
       <!-- Liste des conversations -->
       <div class="container">
         <a
-          href="messagerie.php?dest=<?php echo $destinataire['id']; ?>"
+          href="messagerie?dest=<?php echo $destinataire['id']; ?>"
           style="text-decoration: none; color: inherit"
         >
           <div class="conversation">

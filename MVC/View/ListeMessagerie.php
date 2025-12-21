@@ -106,7 +106,7 @@ class ListeMessagerie {
       <a class="nav-link" href="publish.php">Publier une annonce</a>
       <a class="nav-link" href="mesannonces.php">Mes annonces</a>
 
-      <a class="nav-link active-link" href="listemessagerie.php">Ma messagerie</a>
+      <a class="nav-link active-link" href="listemessagerie">Ma messagerie</a>
 
       <a class="nav-link" href="admin.php">Admin ⚙️</a>
 
@@ -154,7 +154,7 @@ class ListeMessagerie {
                 $initiale = strtoupper(substr($destinataire['nom'], 0, 1));
                 $dernierMessage = $destinataire['dernier_message'] ?? 'Aucun message';
             ?>
-            <a href="messagerie.php?dest=<?php echo $destinataire['id']; ?>" style="text-decoration: none; color: inherit;">
+            <a href="messagerie?dest=<?php echo $destinataire['id']; ?>" style="text-decoration: none; color: inherit;">
                 <div class="conversation">
                     <div class="profile-circle"><?php echo htmlspecialchars($initiale); ?></div>
                     <div>

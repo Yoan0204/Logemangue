@@ -226,7 +226,7 @@ if (isset($_GET['error'])) {
                                         <p><strong>Dossier FACILE</strong> <a href="https://<?php echo $candidature["facile"]; ?> "><?php echo htmlspecialchars($candidature["facile"]); ?></a></p>
                                     <?php } ?>
                                     
-                                    <a style="display: inline-flex; align-items: center; justify-content: center;" href="messagerie.php?dest=<?php echo $candidature["ID"]; ?>" class="btn btn-approved">Contacter</a>
+                                    <a style="display: inline-flex; align-items: center; justify-content: center;" href="messagerie?dest=<?php echo $candidature["ID"]; ?>" class="btn btn-approved">Contacter</a>
                                     <form method="POST" action="supprimercandidature.php" style="display: inline;">
                                         <input type="hidden" name="etudiant_id" value="<?php echo $candidature["ID"]; ?>">
                                         <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
@@ -257,7 +257,7 @@ if (isset($_GET['error'])) {
                 <button type="submit" class="action-btn">📄 Candidater</button></form>
 
                 <button class="action-btn">⭐ Favoris</button>
-                <a href="messagerie.php?dest=<?php echo $row[
+                <a href="messagerie?dest=<?php echo $row[
                     "id_proprietaire"
                 ]; ?>" class="action-btn link-offset-2 link-underline link-underline-opacity-0">💬 Envoyer un message</a>
                 <button class="action-btn" onclick="copyUrl()">📤 Partager</button>

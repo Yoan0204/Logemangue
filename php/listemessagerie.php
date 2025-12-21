@@ -88,7 +88,7 @@ foreach ($destinataires as $destinataire):
     $dernierMessage = $destinataire['dernier_message'] ?? 'Aucun message';
 ?>
 
-            <a href="messagerie.php?dest=<?php echo $destinataire['id']; ?>" style="text-decoration: none; color: inherit;">
+            <a href="messagerie?dest=<?php echo $destinataire['id']; ?>" style="text-decoration: none; color: inherit;">
                 <div class="conversation">
                     <div class="profile-circle"><?php echo htmlspecialchars($initiale); ?></div>
                     <div>
