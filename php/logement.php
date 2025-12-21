@@ -279,8 +279,19 @@ if (isset($_GET['error'])) {
                 <form method="POST" action="candidater.php">
                     <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
                 <button type="submit" class="action-btn">📄 Candidater</button></form>
-
-                <button class="action-btn">⭐ Favoris</button>
+                <form method="POST" action="noterlogement.php">
+                    <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
+                    <input type="hidden" name="etudiant_id" value="<?php echo $userId; ?>">
+                    <select name="note" class="form-select " required>
+                        <option value="" disabled selected>Noter le logement</option>
+                        <option value="1">1 ⭐</option>
+                        <option value="2">2 ⭐⭐</option>
+                        <option value="3">3 ⭐⭐⭐</option>
+                        <option value="4">4 ⭐⭐⭐⭐</option>
+                        <option value="5">5 ⭐⭐⭐⭐⭐</option>
+                    </select>
+                    <button type="submit" class="action-btn mt-2">📝 Noter</button>
+                </form>
                 <a href="messagerie?dest=<?php echo $row[
                     "id_proprietaire"
                 ]; ?>" class="action-btn link-offset-2 link-underline link-underline-opacity-0">💬 Envoyer un message</a>
