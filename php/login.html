@@ -13,18 +13,6 @@
         padding: 0;
         box-sizing: border-box;
       }
-      input {
-        padding: 12px 15px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-size: 15px;
-        transition: all 0.3s ease;
-      }
-      input:focus {
-        outline: none;
-        border-color: var(--orange);
-        box-shadow: 0 0 0 1px rgba(255, 152, 0, 1);
-      }
       body {
         background: linear-gradient(135deg, #ffd700, #ffa500);
       }
@@ -93,11 +81,19 @@
 
       .form-group input,
       .form-group select {
+        padding: 12px 15px;        
         width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: var(--orange);
+        box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
       }
 
       .form-select {
