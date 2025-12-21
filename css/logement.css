@@ -58,7 +58,7 @@
 
 .tab-btn.active {
   background: linear-gradient(90deg, var(--yellow), var(--orange));
-  border-color: transparent;
+  border: none;
   color: black;
   font-weight: 600;
 }
