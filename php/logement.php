@@ -211,6 +211,17 @@ if (isset($_GET['error'])) {
                     <div class="alert alert-info mt-3" role="alert">
                         <h3 class="alert-heading">Liste des candidatures reçues :</h3> <br>
                         <?php
+                        // Vérifier s'il existe une candidature approuvée pour ce logement
+                        $sql = "SELECT COUNT(*) as count FROM reservation WHERE id_logement = :id_logement AND statut = 'Approuvée'";
+                        $stmtCheck = $pdo->prepare($sql);
+                        $stmtCheck->execute([":id_logement" => $logementId]);
+                        $resultCheck = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+                        $hasApprovedCandidature = $resultCheck['count'] > 0;
+                        if ($hasApprovedCandidature):
+                            echo "<p>Une candidature a déjà été approuvée pour ce logement.</p>";
+                            
+                        endif;
+                        if (!$hasApprovedCandidature):
                         $stmt = $pdo->prepare(  
                             "SELECT u.ID, u.nom, u.email, u.telephone, u.facile
                              FROM reservation r 
@@ -231,7 +242,7 @@ if (isset($_GET['error'])) {
                                         <p><strong>Dossier FACILE</strong> <a href="https://<?php echo $candidature["facile"]; ?> "><?php echo htmlspecialchars($candidature["facile"]); ?></a></p>
                                     <?php } ?>
                                     
-                                    <a style="display: inline-flex; align-items: center; justify-content: center;" href="messagerie?dest=<?php echo $candidature["ID"]; ?>" class="btn btn-approved">Contacter</a>
+                                    <a style="display: inline-flex; align-items: center; justify-content: center;" href="messagerie?dest=<?php echo $candidature["ID"]; ?>" class="btn btn-medium">Contacter</a>
                                     <form method="POST" action="supprimercandidature.php" style="display: inline;">
                                         <input type="hidden" name="etudiant_id" value="<?php echo $candidature["ID"]; ?>">
                                         <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
@@ -242,7 +253,7 @@ if (isset($_GET['error'])) {
                                         <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
                                         <button type="submit" style="height: 40px; align-itself: right;" class="btn btn-approved">Approuver la candidature</button>
                                     </form>
-                                    
+
 
                                 </div>
                         <?php
@@ -250,9 +261,11 @@ if (isset($_GET['error'])) {
                         else:
                             echo "<p>Aucune candidature reçue pour le moment.</p>";
                         endif;
+                        endif;
                         ?>
                     </div>
                 <?php endif; ?>
+
               </div>
           </div>
 

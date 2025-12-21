@@ -4,7 +4,7 @@ include 'db2.php';
 $logementId = $_POST['logement_id'] ?? null;
 
 //Check si il y a déja une candidature en cours pour ce logement et cet étudiant
-$stmt = $conn->prepare("SELECT * FROM reservation WHERE id_etudiant = ? AND id_logement = ? AND statut = 'En Attente'");
+$stmt = $conn->prepare("SELECT * FROM reservation WHERE id_etudiant = ? AND id_logement = ?");
 $stmt->bind_param("ii", $userId, $logementId);
 $stmt->execute();
 $result = $stmt->get_result();
