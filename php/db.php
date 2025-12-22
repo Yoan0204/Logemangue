@@ -1,8 +1,8 @@
 <?php
-$db_host = 'sql310.infinityfree.com';
-$db_name = 'if0_40739245_logemangue';
-$db_user = 'if0_40739245';
-$db_pass = 'jBSNfcgnL8';
+$db_host = 'localhost';
+$db_name = 'logemangue';
+$db_user = 'websiteadmin';
+$db_pass = 'websiteadmin';
 $dsn = "mysql:host=$db_host;dbname=$db_name;charset=utf8mb4";
 
 try {
