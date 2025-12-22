@@ -1,4 +1,10 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+?>
+
+<?php
 if (isset($_GET["publish"]) && $_GET["publish"] === "success") {?>
             <div style="margin: 20px; margin-top: 20px;" class="alert alert-success alert-dismissible fade show" role="alert">
                     Le logement a été publié avec succès !                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
