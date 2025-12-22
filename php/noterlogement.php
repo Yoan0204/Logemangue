@@ -10,7 +10,18 @@ if ($etudiantId && $logementId && $note !== null) {
     $stmt->bind_param("ii", $etudiantId, $logementId);
     $stmt->execute();
     $result = $stmt->get_result();
+
+// vérifir s'il a déja noté ce logement 
+    $checkStmt = $conn->prepare("SELECT * FROM avis WHERE id_etudiant = ? AND id_logement = ?");
+    $checkStmt->bind_param("ii", $etudiantId, $logementId);
+    $checkStmt->execute();
+    $checkResult = $checkStmt->get_result();
+    if ($checkResult->num_rows > 0) {
+        header("Location: logement?id=" . $logementId . "&error=already_rated");
+        exit();
+    }
     
+
     if ($result->num_rows > 0) {
         // insérer la note dans la table des notes
         $insertStmt = $conn->prepare("INSERT INTO avis (id_etudiant, id_logement, note) VALUES (?, ?, ?)");
