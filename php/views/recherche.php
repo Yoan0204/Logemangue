@@ -74,8 +74,8 @@ $min_rating = $_GET['min_rating'] ?? '0';
                 <div class="col-md-4">
                     <select name="type_proprio" class="form-select">
                         <option value="">Proposé par (Agence, Particulier...)</option>
-                        <option value="Agence" <?php echo $type_proprio === 'Agence' ? 'selected' : ''; ?>>Agence</option>
-                        <option value="Particulier" <?php echo $type_proprio === 'Particulier' ? 'selected' : ''; ?>>Particulier</option>
+                        <option value="Organisme" <?php echo $type_proprio === 'Organisme' ? 'selected' : ''; ?>>Organisme</option>
+                        <option value="Proprietaire" <?php echo $type_proprio === 'Proprietaire' ? 'selected' : ''; ?>>Proprietaire</option>
                     </select>
                 </div>
                 <div class="col-md-4">
@@ -130,7 +130,6 @@ $min_rating = $_GET['min_rating'] ?? '0';
                             <p class="small text-muted mb-0">
                                 <?php echo $row['ville']; ?>
                             <p class="small text-muted mb-0">
-                                Disponible : <?php echo ($row['disponible'] == 1) ? 'Oui' : 'Non'; ?>
                             </p>
                             <p class="small text-muted mb-0">
                                 <?php echo $row['surface']; ?> m² - <?php echo $row['TYPE']; ?>

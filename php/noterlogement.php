@@ -28,9 +28,35 @@ if ($etudiantId && $logementId && $note !== null) {
         $insertStmt->bind_param("iii", $etudiantId, $logementId, $note);
         
         if ($insertStmt->execute()) {
-            header("Location: logement?id=" . $logementId . "&success=note_added");
-            exit();
-        } else {
+
+        // Calcul de la moyenne
+        $avgStmt = $conn->prepare("
+            SELECT AVG(note) AS moyenne 
+            FROM avis 
+            WHERE id_logement = ?
+        ");
+        $avgStmt->bind_param("i", $logementId);
+        $avgStmt->execute();
+        $avgResult = $avgStmt->get_result();
+        $row = $avgResult->fetch_assoc();
+        $moyenne = $row['moyenne'];
+        $avgStmt->close();
+
+        // Mise à jour du logement
+        $updateStmt = $conn->prepare("
+            UPDATE logement 
+            SET note = ? 
+            WHERE id = ?
+        ");
+        $updateStmt->bind_param("di", $moyenne, $logementId);
+        $updateStmt->execute();
+        $updateStmt->close();
+
+        header("Location: logement?id=" . $logementId . "&success=note_added");
+        exit();
+    }
+
+ else {
             echo "Erreur lors de l'ajout de la note : " . $insertStmt->error;
         }
         
