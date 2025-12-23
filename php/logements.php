@@ -71,7 +71,7 @@ if ($view === 'mesannonces') {
                 <a class="nav-link" href="publish">Publier une annonce</a>
             <?php endif; ?>
             <?php if (!$isEtudiant): ?>
-                <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>               
+                <a class="nav-link <?php echo $view === 'mesannonces' ? 'active-link' : ''; ?>" href="logements?view=mesannonces">Mes annonces</a>               
             <?php endif; ?>
             <?php if ($isEtudiant): ?>
                 <a class="nav-link" href="candidatures">Mes candidatures</a>        
