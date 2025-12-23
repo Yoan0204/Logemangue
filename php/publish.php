@@ -33,16 +33,18 @@ if (
     $charges_incluses = isset($_POST['charges_incluses']) ? 1 : 0;
     $meuble = isset($_POST['meuble']) ? 1 : 0;
     $description = $_POST['description'];
+    $colocation = isset($_POST['colocation']) ? 1 : 0;
+    $date_disponibilite = $_POST['date_disponibilite'];
     $id_proprietaire = $userId;
 
     // 1️⃣ Insertion logement
     $sql = "INSERT INTO logement 
-        (titre, description, adresse, ville, code_postal, TYPE, surface, loyer, charges_incluses, meuble, id_proprietaire)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        (titre, description, adresse, ville, code_postal, TYPE, surface, loyer, charges_incluses, meuble, id_proprietaire, colocation, date_disponibilite)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param(
-        "ssssssiiiii",
+        "ssssssiiiiiis",
         $titre,
         $description,
         $adresse,
@@ -53,7 +55,10 @@ if (
         $loyer,
         $charges_incluses,
         $meuble,
-        $id_proprietaire
+        $id_proprietaire,
+        $colocation,
+        $date_disponibilite
+        
     );
 
     if ($stmt->execute()) {
@@ -228,8 +233,16 @@ $conn->close();
               <input class="custom-checkbox" style="margin-top: 37px;" type="checkbox" id="charges_incluses" name="charges_incluses" value="1">
             </div>
             <div class="col-md-3">
+              <label class="form-label fw-semibold">Colocation</label>
+              <input class="custom-checkbox" style="margin-top: 37px;" type="checkbox" id="colocation" name="colocation" value="1">
+            </div>
+            <div class="col-md-3">
               <label class="form-label fw-semibold">Meublé</label>
               <input class="custom-checkbox" style="margin-top: 37px;" type="checkbox" id="meuble" name="meuble" value="1">
+            </div>            
+            <div class="col-md-3">
+              <label class="form-label fw-semibold">Date de disponibilité</label>
+              <input type="date" class="form-control form-field" id="date_disponibilite" name="date_disponibilite" required>
             </div>
 
             <div class="col-12">
