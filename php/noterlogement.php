@@ -1,5 +1,5 @@
 <?php
-include "db2withoutlogin.php";
+include "db2withoutlogin.php"; 
 $etudiantId = $_POST['etudiant_id'] ?? null;
 echo $etudiantId;
 $logementId = $_POST['logement_id'] ?? null;

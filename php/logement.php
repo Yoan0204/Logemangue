@@ -115,6 +115,10 @@ if (isset($_GET['error'])) {
         echo '<div style="margin: 20px;" class="alert alert-success" role="alert">
                 Logement noté avec succès !
               </div>';
+    } elseif ($success === 'updated') {
+        echo '<div style="margin: 20px;" class="alert alert-success" role="alert">
+                Annonce mise à jour avec succès !
+              </div>';
     }
 }
 ?>
@@ -223,7 +227,14 @@ if (isset($_GET['error'])) {
                         $owner["telephone"]
                     ); ?></p>
                 <?php if (isset($userId) && $row["id_proprietaire"] == $userId): ?>
-                    <div class="alert alert-info mt-3" role="alert">
+                    <a href="publish?id=<?php echo $logementId; ?>" 
+                    class="action-btn">
+                        Modifier l’annonce
+                    </a>
+                <?php endif; ?>
+                
+                <?php if (isset($userId) && $row["id_proprietaire"] == $userId): ?>
+                    <div class="alert alert-info mt-3" role="alert" style="margin-left:0px; margin-right:0px;">
                         <h3 class="alert-heading">Liste des candidatures reçues :</h3> <br>
                         <?php
                         // Vérifier s'il existe une candidature approuvée pour ce logement

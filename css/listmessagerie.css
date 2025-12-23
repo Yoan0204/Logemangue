@@ -75,52 +75,104 @@
 
 
         .separator-line {
-            width: 60%;
-            height: 4px;
-            background: #0e6b37;
-            margin: 20px auto;
-            border-radius: 2px;
-        }
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #0e6b37, transparent);
+    margin: 20px auto;
+    border-radius: 2px;
+}
 
-        /* Conversations */
-        .conversation {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            margin: 18px 0;
-            border-radius: 15px;
-            background: linear-gradient(to right, #ffcd00, #ff8a3d);
-            box-shadow: 4px 4px 0px #e3dfd1;
-            cursor: pointer;
-        }
+/* Conversations */
+.conversation {
+    display: flex;
+    align-items: center;
+    padding: 16px 18px;
+    margin: 16px 0;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #ffcd00 0%, #ff8a3d 100%);
+    box-shadow: 0 4px 16px rgba(255, 138, 61, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-        .conversation:hover {
-            transform: scale(1.01);
-            transition: 0.2s;
-        }
+.conversation:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 138, 61, 0.25);
+}
 
-        .profile-circle {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 24px;
-            margin-right: 20px;
-        }
+.profile-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 22px;
+    margin-right: 18px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+    transition: transform 0.2s ease;
+}
 
-        .arrow-box {
-            margin-left: auto;
-            background: #bd6438;
-            color: white;
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-        }
+.conversation:hover .profile-circle {
+    transform: scale(1.05);
+}
+
+.conversation-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.conversation-info h5 {
+    margin: 0 0 4px 0;
+    font-weight: 700;
+    color: #000;
+    font-size: 1.05rem;
+}
+
+.conversation-info p {
+    margin: 0;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.arrow-box {
+    margin-left: auto;
+    background: #a55630;
+    color: white;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 3px 10px rgba(165, 86, 48, 0.3);
+    transition: transform 0.2s ease;
+}
+
+.conversation:hover .arrow-box {
+    transform: translateX(3px);
+}
+
+/* Badge notification (inchangé, déjà discret) */
+.notification-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #ff4444;
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+    border: 2px solid white;
+}
