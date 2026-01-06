@@ -1,67 +1,128 @@
 <?php
+function nettoyer_input($data) {
+    // Supprimer les espaces en début/fin
+    $data = trim($data);
+    // Supprimer les slashes
+    $data = stripslashes($data);
+    // Convertir les caractères spéciaux en entités HTML
+    $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+    return $data;
+}
+
+// Appliquer à tous les champs POST
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    foreach ($_POST as $key => $value) {
+        $_POST[$key] = nettoyer_input($value);
+    }
+}
+
 require 'db2.php'; // connexion à la base
 
 if (
-    isset($_POST['titre']) &&
-    isset($_POST['type']) &&
-    isset($_POST['adresse']) &&
-    isset($_POST['ville']) &&
-    isset($_POST['code']) &&
-    isset($_POST['surface']) &&
-    isset($_POST['loyer']) &&
-    isset($_POST['description'])
+    isset($_POST['titre'], $_POST['type'], $_POST['adresse'], $_POST['ville'],
+          $_POST['code'], $_POST['surface'], $_POST['loyer'], $_POST['description'])
 ) {
+
     $titre = $_POST['titre'];
     $type = $_POST['type'];
     $adresse = $_POST['adresse'];
     $ville = $_POST['ville'];
     $code_postal = $_POST['code'];
-    $surface = $_POST['surface'];
-    $loyer = $_POST['loyer'];
+    $surface = (int)$_POST['surface'];
+    $loyer = (int)$_POST['loyer'];
     $charges_incluses = isset($_POST['charges_incluses']) ? 1 : 0;
     $meuble = isset($_POST['meuble']) ? 1 : 0;
     $description = $_POST['description'];
-    $id_proprietaire = $userId; // à remplacer par l'ID de l'utilisateur connecté
+    $id_proprietaire = $userId;
 
-    // 1️⃣ Publier le logement
-    $sql = "INSERT INTO logement (titre, description, adresse, ville, code_postal, TYPE, surface, loyer, charges_incluses, meuble, id_proprietaire)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    // 1️⃣ Insertion logement
+    $sql = "INSERT INTO logement 
+        (titre, description, adresse, ville, code_postal, TYPE, surface, loyer, charges_incluses, meuble, id_proprietaire)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssiiiii", $titre, $description, $adresse, $ville, $code_postal, $type, $surface, $loyer, $charges_incluses, $meuble, $id_proprietaire);
+    $stmt->bind_param(
+        "ssssssiiiii",
+        $titre,
+        $description,
+        $adresse,
+        $ville,
+        $code_postal,
+        $type,
+        $surface,
+        $loyer,
+        $charges_incluses,
+        $meuble,
+        $id_proprietaire
+    );
 
     if ($stmt->execute()) {
-        $id_logement = $stmt->insert_id; // récupère l'id du logement créé
+
+        $id_logement = $stmt->insert_id;
+
+// 2️⃣ Upload des photos
+if (!empty($_FILES['photos']['name'][0])) {
+
+    $targetDir = "../uploads/";
+    if (!is_dir($targetDir)) {
+        mkdir($targetDir, 0755, true);
+    }
+
+    $maxSize = 5 * 1024 * 1024; // 5 Mo
+
+    foreach ($_FILES['photos']['tmp_name'] as $key => $tmp_name) {
+
+        if ($_FILES['photos']['error'][$key] !== UPLOAD_ERR_OK) {
+            exit;
+        }
+
+        // ✅ Vérification taille (5 Mo max)
+        if ($_FILES['photos']['size'][$key] > $maxSize) {
+          header("Location: publish?erreur=taillefichier");
+          exit;
+        }
+
+        $ext = strtolower(pathinfo($_FILES['photos']['name'][$key], PATHINFO_EXTENSION));
+        $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+
+        if (!in_array($ext, $allowed)) {
+          header("Location: publish?erreur=typefichier");
+          exit;
+        }
+
+        if (!getimagesize($tmp_name)) {
+            exit;
+        }
+
+        $fileName = uniqid('photo_', true) . '.' . $ext;
+        $targetFile = $targetDir . $fileName;
+
+        if (move_uploaded_file($tmp_name, $targetFile)) {
+
+            $sqlPhoto = "INSERT INTO photo (url_photo, description, id_logement)
+                         VALUES (?, ?, ?)";
+
+            $stmtPhoto = $conn->prepare($sqlPhoto);
+            $descPhoto = "";
+            $stmtPhoto->bind_param("ssi", $targetFile, $descPhoto, $id_logement);
+            $stmtPhoto->execute();
+            $stmtPhoto->close();
+        }
+    }
+}
+
+
+        // ✅ REDIRECTION À LA FIN
         header("Location: index.php?publish=success");
-        
-        // 2️⃣ Upload des photos
-        if (isset($_FILES['photos'])) {
-            $targetDir = "../uploads/";
+        exit;
 
-            foreach ($_FILES['photos']['tmp_name'] as $key => $tmp_name) {
-                $fileName = basename($_FILES['photos']['name'][$key]);
-                $fileName = time() . "_" . $fileName; // éviter les doublons
-                $targetFile = $targetDir . $fileName;
-
-                if (move_uploaded_file($tmp_name, $targetFile)) {
-                    // Insertion dans la table photo
-                    $sqlPhoto = "INSERT INTO photo (url_photo, description, id_logement) VALUES (?, ?, ?)";
-                    $stmtPhoto = $conn->prepare($sqlPhoto);
-                    $descPhoto = ""; // tu peux récupérer une description spécifique si tu veux
-                    $stmtPhoto->bind_param("ssi", $targetFile, $descPhoto, $id_logement);
-                    $stmtPhoto->execute();
-                    $stmtPhoto->close();
-                } else {
-                    echo "⚠️ Erreur lors de l'upload de la photo : $fileName<br>";
-                }
-            }
-            
-        } 
     } else {
-        echo "Erreur: " . $stmt->error;
+        echo "Erreur logement : " . $stmt->error;
     }
 
     $stmt->close();
 }
+
 
 $conn->close();
 ?>
@@ -80,7 +141,11 @@ $conn->close();
     <a href="index" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
-
+  <div class="burger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
     <nav class="topbar-nav">
       <a class="nav-link " href="index">Accueil</a>
       <a class="nav-link" href="logements">Recherche</a>
@@ -102,7 +167,16 @@ $conn->close();
         <h1 class="text-center text-dark fw-bold p-3 mb-4 publication-header">
           Publier une annonce
         </h1>
-
+        <?php if (isset($_GET["erreur"]) && $_GET["erreur"] == "taillefichier") { ?>
+            <div style="margin: 20px; margin-top: 20px;" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    Une image que vous avez importer est trop lourde (5mo max par image)<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>          
+        <?php } ?>
+        <?php if (isset($_GET["erreur"]) && $_GET["erreur"] == "typefichier") { ?>
+            <div style="margin: 20px; margin-top: 20px;" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    Un fichier que vous avez importé n'est pas une image. Types supportés : .jpg, .jpeg, .png, .webp<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>          
+        <?php } ?>        
         <form class="p-4 rounded-4 publication-form" id="formAnnonce" action="publish.php" method="POST" enctype="multipart/form-data">
           <div class="row g-3">
             <div class="col-md-6">
@@ -161,7 +235,7 @@ $conn->close();
               <textarea class="form-control form-field" rows="4" placeholder="Décrivez votre logement..." id="description" name="description" required></textarea>
             </div>
 
-          <input type="file" name="photos[]" multiple>
+          <input type="file" name="photos[]" multiple accept="image/*">
           </div>
 
           <!-- Boutons -->

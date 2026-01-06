@@ -5,3 +5,4 @@
 <small class="text-muted"
     >Dernière mise à jour : <?php echo date( "d/m/Y à H:i" ); ?></small
 >
+<script src="../js/responsive.js"></script>

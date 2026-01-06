@@ -113,7 +113,11 @@ $nom_destinataire = $destinataire
     <a href="index" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
-
+  <div class="burger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
     <nav class="topbar-nav">
       <a class="nav-link " href="index">Accueil</a>
       <a class="nav-link" href="logements">Recherche</a>
@@ -233,5 +237,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+<script src="../js/responsive.js"></script>
 </body>
 </html>

@@ -41,7 +41,11 @@ $photo = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <a href="index" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
-
+  <div class="burger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
     <nav class="topbar-nav">
       <a class="nav-link" href="index">Accueil</a>
       <a class="nav-link" href="logements">Recherche</a>
@@ -73,8 +77,8 @@ if (isset($_GET['error'])) {
                 ID de logement manquant.
               </div>';
     }    elseif ($error === 'not_student') {
-        echo '<div style="margin: 20px;" class="alert alert-danger" role="alert">
-                Seuls les étudiants peuvent candidater pour un logement.
+        echo '<div style="margin: 20px;" class="alert alert-danger alert-dismissible fade show" role="alert">
+                Seuls les étudiants peuvent candidater pour un logement. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>';
     }
 
@@ -203,7 +207,7 @@ if (isset($_GET['error'])) {
                         <h3 class="alert-heading">Liste des candidatures reçues :</h3> <br>
                         <?php
                         $stmt = $pdo->prepare(  
-                            "SELECT u.ID, u.nom, u.email, u.telephone
+                            "SELECT u.ID, u.nom, u.email, u.telephone, u.facile
                              FROM reservation r 
                              JOIN users u ON r.id_etudiant = u.ID
                              WHERE r.id_logement = :id_logement"
@@ -217,11 +221,16 @@ if (isset($_GET['error'])) {
                                     <p><strong>Nom :</strong> <?php echo htmlspecialchars($candidature["nom"]); ?></p>
                                     <p><strong>Email :</strong> <?php echo htmlspecialchars($candidature["email"]); ?></p>
                                     <p><strong>Téléphone :</strong> <?php echo htmlspecialchars($candidature["telephone"]); ?></p>
+                                    <?php
+                                    if (!$candidature["facile"] == NULL) { ?>
+                                        <p><strong>Dossier FACILE</strong> <a href="https://<?php echo $candidature["facile"]; ?> "><?php echo htmlspecialchars($candidature["facile"]); ?></a></p>
+                                    <?php } ?>
+                                    
                                     <a style="display: inline-flex; align-items: center; justify-content: center;" href="messagerie.php?dest=<?php echo $candidature["ID"]; ?>" class="btn btn-approved">Contacter</a>
                                     <form method="POST" action="supprimercandidature.php" style="display: inline;">
                                         <input type="hidden" name="etudiant_id" value="<?php echo $candidature["ID"]; ?>">
                                         <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
-                                        <button type="submit" style="height: 40px; align-itself: right;" class="btn btn-unapproved">Supprimer la candidature</button>
+                                        <button type="submit" style="height: 40px; align-itself: right;" class="btn btn-unapproved">Refuser la candidature</button>
                                     </form>
 
                                 </div>
@@ -256,7 +265,6 @@ if (isset($_GET['error'])) {
         </div>
         
     </div>
-
 </div>
 
 
@@ -328,5 +336,7 @@ toggle.addEventListener("click", () => {
     }
 </script>
 </body>
-
+<div class="container" style="text-align : center;">
+    <?php include "footer.php"; ?>
+</div>
 </html>

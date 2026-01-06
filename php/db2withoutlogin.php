@@ -18,7 +18,7 @@ if (!isset($_SESSION['user_id'])) {
         $userId = $_SESSION['user_id'];
 
 
-            $sql = "SELECT nom, telephone, genre, date_naissance,is_admin, type_utilisateur, biography FROM users WHERE id = $userId";
+            $sql = "SELECT nom, telephone, genre, date_naissance,is_admin, type_utilisateur, biography, facile FROM users WHERE id = $userId";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {

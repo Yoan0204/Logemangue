@@ -8,7 +8,7 @@ if (isset($_GET["publish"]) && $_GET["publish"] === "success") {?>
 
 if (isset($_GET["registered"]) && $_GET["registered"] === "1") {?>
             <div style="margin: 20px; margin-top: 20px;" class="alert alert-success alert-dismissible fade show" role="alert">
-                    Inscription réussie ! Vous pouvez maintenant vous <a href="login.html">connecter</a>.                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    Inscription réussie ! Vous pouvez maintenant vous <a class="alert-link" href="login.html">connecter</a>.                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
 <?php
 };
@@ -111,7 +111,11 @@ if ($page === "profil") {
     <a href="index" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
-
+  <div class="burger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
     <nav class="topbar-nav">
       <a class="nav-link active-link" href="index">Accueil</a>
       <a class="nav-link" href="logements">Recherche</a>
@@ -125,7 +129,7 @@ if ($page === "profil") {
           <a class="nav-link" href="admin">Admin ⚙️</a>
       <?php endif; ?>
 
-      <a class="nav-link " href="profil">Mon profil</a>
+      <a class="nav-link " href="profil">Mon profil</a>   
     </nav>
   </header>
 
@@ -145,7 +149,7 @@ if ($page === "profil") {
           <input
             type="text"
             name="search"
-            class="form-control search-input"
+            class=" search-input"
             placeholder="Ville, quartier, type de logement..."
           />
           <button type="submit" class="btn-search">Rechercher →</button>
@@ -396,5 +400,6 @@ if ($page === "profil") {
       });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/responsive.js"></script>
   </body>
 </html>
