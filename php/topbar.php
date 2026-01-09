@@ -1,5 +1,5 @@
   <header class="topbar">
-    <a href="index.php" class="topbar-logo">
+    <a href="index" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
 

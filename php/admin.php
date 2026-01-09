@@ -2,7 +2,7 @@
 require "db2.php";
 
 if (!isset($user["is_admin"]) && $user["is_admin"] != 1) {
-    header("Location: index.php");
+    header("Location: index");
     exit();
 }
 
@@ -257,7 +257,7 @@ foreach ($userTypes as $type) {
                                 if (count($logements) > 0) {
                                         foreach ($logements as $row) { ?>                    
                                     <div class="col-md-4">                        
-                    <a href="logement.php?id=<?php echo $row[
+                    <a href="logement?id=<?php echo $row[
                         "ID"
                     ]; ?>" class="logement-link">                            
                       <div class="logement-card">                                

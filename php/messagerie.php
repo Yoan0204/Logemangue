@@ -125,8 +125,12 @@ $nom_destinataire = $destinataire
       <?php if (!$isEtudiant): ?>
       <a class="nav-link" href="publish">Publier une annonce</a>
       <?php endif; ?>
-      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>
-
+      <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>        
+      <?php endif; ?>
+      <?php if ($isEtudiant): ?>
+      <a class="nav-link" href="candidatures">Mes candidatures</a>        
+      <?php endif; ?>
       <a class="nav-link active-link" href="listemessagerie">Ma messagerie</a>
 
       <?php if ($isAdmin): ?> 

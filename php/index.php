@@ -122,8 +122,12 @@ if ($page === "profil") {
       <?php if (!$isEtudiant): ?>
       <a class="nav-link" href="publish">Publier une annonce</a>
       <?php endif; ?>
-      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>
-
+      <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>               
+      <?php endif; ?>
+      <?php if ($isEtudiant): ?>
+      <a class="nav-link" href="candidatures">Mes candidatures</a>        
+      <?php endif; ?>      
       <a class="nav-link" href="listemessagerie">Ma messagerie</a>
       <?php if ($isAdmin): ?> 
           <a class="nav-link" href="admin">Admin ⚙️</a>
@@ -145,7 +149,7 @@ if ($page === "profil") {
           logement parfait
         </p>
 
-        <form action="logements.php" method="GET" class="d-flex justify-content-center align-items-center mb-5">
+        <form action="logements" method="GET" class="d-flex justify-content-center align-items-center mb-5">
           <input
             type="text"
             name="search"
@@ -183,7 +187,7 @@ if ($page === "profil") {
               <?php if (!empty($carouselLogements)): ?>
                 <?php foreach ($carouselLogements as $i => $lg): ?>
                   <div class="carousel-item <?php echo $i === 0 ? 'active' : ''; ?>">
-                    <a href="logement.php?id=<?php echo intval($lg['ID']); ?>" title="<?php echo htmlspecialchars($lg['titre'] ?: 'Voir le logement'); ?>" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
+                    <a href="logement?id=<?php echo intval($lg['ID']); ?>" title="<?php echo htmlspecialchars($lg['titre'] ?: 'Voir le logement'); ?>" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
                       <img src="<?php echo htmlspecialchars($lg['photo_url'] ?: 'https://via.placeholder.com/1000x500?text=No+Photo'); ?>" class="d-block w-100" alt="<?php echo htmlspecialchars($lg['titre'] ?: 'Logement'); ?>" />
                       <div class="carousel-caption">
                         <h5 class="property-title"><?php echo htmlspecialchars($lg['titre'] ?: 'Titre'); ?></h5>
@@ -195,7 +199,7 @@ if ($page === "profil") {
               <?php else: ?>
                 <!-- Fallback static items if DB empty -->
                 <div class="carousel-item active">
-                  <a href="logements.php" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
+                  <a href="logements" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
                     <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1000&h=500&fit=crop" class="d-block w-100" alt="Appartement moderne" />
                     <div class="carousel-caption">
                       <h5 class="property-title">Appartement Moderne - Centre Ville</h5>
@@ -204,7 +208,7 @@ if ($page === "profil") {
                   </a>
                 </div>
                 <div class="carousel-item">
-                  <a href="logements.php" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
+                  <a href="logements" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
                     <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1000&h=500&fit=crop" class="d-block w-100" alt="Maison avec jardin" />
                     <div class="carousel-caption">
                       <h5 class="property-title">Maison avec Jardin - Banlieue</h5>
@@ -213,7 +217,7 @@ if ($page === "profil") {
                   </a>
                 </div>
                 <div class="carousel-item">
-                  <a href="logements.php" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
+                  <a href="logements" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
                     <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1000&h=500&fit=crop" class="d-block w-100" alt="Studio lumineux" />
                     <div class="carousel-caption">
                       <h5 class="property-title">Studio Lumineux - Quartier Résidentiel</h5>
@@ -222,7 +226,7 @@ if ($page === "profil") {
                   </a>
                 </div>
                 <div class="carousel-item">
-                  <a href="logements.php" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
+                  <a href="logements" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
                     <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&h=500&fit=crop" class="d-block w-100" alt="Loft contemporain" />
                     <div class="carousel-caption">
                       <h5 class="property-title">Loft Contemporain - Zone Artistique</h5>
@@ -321,7 +325,7 @@ if ($page === "profil") {
                   $photoUrl = !empty(trim((string)($row['photo_url'] ?? ''))) ? $row['photo_url'] : 'https://via.placeholder.com/400x300?text=No+Photo';
                   ?>
                   <div class="col-md-4">
-                    <a href="logement.php?id=<?php echo intval($row['ID']); ?>" class="logement-link">
+                    <a href="logement?id=<?php echo intval($row['ID']); ?>" class="logement-link">
                       <div class="logement-card">
                         <img src="<?php echo htmlspecialchars($photoUrl); ?>" alt="<?php echo htmlspecialchars($row['titre'] ?? 'Logement'); ?>" />
                         <div class="info">

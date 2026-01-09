@@ -27,8 +27,12 @@
       <?php if (!$isEtudiant): ?>
       <a class="nav-link" href="publish">Publier une annonce</a>
       <?php endif; ?>
-      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>
-
+      <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>        
+      <?php endif; ?>
+      <?php if ($isEtudiant): ?>
+      <a class="nav-link" href="candidatures">Mes candidatures</a>        
+      <?php endif; ?>
       <a class="nav-link active-link" href="listemessagerie">Ma messagerie</a>
         <?php if ($isAdmin): ?>
       <a class="nav-link" href="admin">Admin ⚙️</a>
@@ -88,7 +92,7 @@ foreach ($destinataires as $destinataire):
     $dernierMessage = $destinataire['dernier_message'] ?? 'Aucun message';
 ?>
 
-            <a href="messagerie.php?dest=<?php echo $destinataire['id']; ?>" style="text-decoration: none; color: inherit;">
+            <a href="messagerie?dest=<?php echo $destinataire['id']; ?>" style="text-decoration: none; color: inherit;">
                 <div class="conversation">
                     <div class="profile-circle"><?php echo htmlspecialchars($initiale); ?></div>
                     <div>

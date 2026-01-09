@@ -92,7 +92,7 @@
                 params.set('offset', offset);
                 params.set('limit', limit);
 
-                const res = await fetch('fetch_user_logements.php?' + params.toString());
+                const res = await fetch('fetch_user_logements?' + params.toString());
                 const data = await res.json();
                 if (!data.success) throw new Error('Erreur');
                 if (data.added && data.html) container.insertAdjacentHTML('beforeend', data.html);

@@ -99,6 +99,6 @@ class LogementController {
 
     //Affiche la vue appropriée (mes annonces ou recherche)
     public function render($view, $data = []) {
-        return require $this->view . $view . '.php';
+        return require $this->view . $view . '  ';
     }
 }

@@ -11,13 +11,10 @@ $type_proprio = $_GET['type_proprio'] ?? '';
 $keywords = $_GET['keywords'] ?? '';
 $min_rating = $_GET['min_rating'] ?? '0';
 ?>
-<style>
-
-</style>
 <!-- Vue: Recherche de Logements -->
 <div class="container-fluid p-4">
     <!-- BARRE DE RECHERCHE PLEINE LARGEUR -->
-    <form method="GET" action="logements.php" id="searchForm" class="search-form">
+    <form method="GET" action="logements" id="searchForm" class="search-form">
         <input type="hidden" name="view" value="recherche">
         <div class="search-bar p-3 rounded-14 shadow-sm mb-4">
             <div class="search-grid">
@@ -77,8 +74,8 @@ $min_rating = $_GET['min_rating'] ?? '0';
                 <div class="col-md-4">
                     <select name="type_proprio" class="form-select">
                         <option value="">Proposé par (Agence, Particulier...)</option>
-                        <option value="Agence" <?php echo $type_proprio === 'Agence' ? 'selected' : ''; ?>>Agence</option>
-                        <option value="Particulier" <?php echo $type_proprio === 'Particulier' ? 'selected' : ''; ?>>Particulier</option>
+                        <option value="Organisme" <?php echo $type_proprio === 'Organisme' ? 'selected' : ''; ?>>Organisme</option>
+                        <option value="Proprietaire" <?php echo $type_proprio === 'Proprietaire' ? 'selected' : ''; ?>>Proprietaire</option>
                     </select>
                 </div>
                 <div class="col-md-4">
@@ -103,7 +100,7 @@ $min_rating = $_GET['min_rating'] ?? '0';
                     <button type="submit" class="btn btn-filters w-100">Appliquer les filtres</button>
                 </div>
                 <div class="col-md-4">
-                    <a style="    display: inline-flex; align-items: center;justify-content: center;" href="logements.php" class="btn btn-filters-secondary w-100 mb-2">Réinitialiser</a>
+                    <a style="    display: inline-flex; align-items: center;justify-content: center;" href="logements" class="btn btn-filters-secondary w-100 mb-2">Réinitialiser</a>
                 </div>
             </div>
         </div>
@@ -133,7 +130,6 @@ $min_rating = $_GET['min_rating'] ?? '0';
                             <p class="small text-muted mb-0">
                                 <?php echo $row['ville']; ?>
                             <p class="small text-muted mb-0">
-                                Disponible : <?php echo ($row['disponible'] == 1) ? 'Oui' : 'Non'; ?>
                             </p>
                             <p class="small text-muted mb-0">
                                 <?php echo $row['surface']; ?> m² - <?php echo $row['TYPE']; ?>
@@ -186,7 +182,7 @@ $min_rating = $_GET['min_rating'] ?? '0';
                 $prevOffset = max(0, $offset - $limit);
                 $q = $_GET; $q['offset'] = $prevOffset; $q['limit'] = $limit;
             ?>
-                <a href="logements.php?<?php echo http_build_query($q); ?>" class="btn btn-outline-secondary">Précédent</a>
+                <a href="logements?<?php echo http_build_query($q); ?>" class="btn btn-outline-secondary">Précédent</a>
             <?php endif; ?>
 
             <?php if ($offset + $limit < $total):
@@ -194,10 +190,10 @@ $min_rating = $_GET['min_rating'] ?? '0';
                 $nextOffset = $offset + $limit;
                 $q = $_GET; $q['offset'] = $nextOffset; $q['limit'] = $limit;
             ?>
-                <a id="loadMoreLink" href="logements.php?<?php echo http_build_query($q); ?>" class="btn btn-primary d-none">Voir plus</a>
+                <a id="loadMoreLink" href="logements?<?php echo http_build_query($q); ?>" class="btn btn-primary d-none">Voir plus</a>
                 <button id="loadMoreBtn" class="btn btn-login" data-offset="<?php echo $offset + $limit; ?>" data-limit="<?php echo $limit; ?>" data-total="<?php echo $total; ?>">Voir plus</button>
                 <noscript>
-                    <a href="logements.php?<?php echo http_build_query($q); ?>" class="btn btn-login">Voir plus</a>
+                    <a href="logements?<?php echo http_build_query($q); ?>" class="btn btn-login">Voir plus</a>
                 </noscript>
             <?php endif; ?>
         </div>
@@ -264,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
             params.set('offset', offset);
             params.set('limit', limit);
 
-            const res = await fetch('fetch_logements.php?' + params.toString());
+            const res = await fetch('fetch_logements?' + params.toString());
             if (!res.ok) throw new Error('Network error');
             const data = await res.json();
             if (!data.success) throw new Error('Server error');

@@ -18,24 +18,33 @@ if (!$logementId) {
     echo "Logement non spécifié.";
     exit();
 }
-$stmt = $pdo->prepare("SELECT * FROM logement WHERE id = :id");
-$stmt->execute([":id" => $logementId]);
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
-if (!$row) {
+
+// Requête 1 : Récupérer les informations du logement
+$logementId = $conn->real_escape_string($logementId);
+$sql = "SELECT * FROM logement WHERE id = '$logementId'";
+$result = $conn->query($sql);
+
+if ($result->num_rows === 0) {
     echo "Logement non trouvé.";
     exit();
 }
-$stmt = $pdo->prepare(
-    "SELECT user.nom, user.email, user.telephone FROM users user JOIN logement loge ON user.id = loge.id_proprietaire WHERE loge.id = :id_logement"
-);
-$stmt->execute([":id_logement" => $logementId]);
-$owner = $stmt->fetch(PDO::FETCH_ASSOC);
+$row = $result->fetch_assoc();
 
-$stmt = $pdo->prepare(
-    "SELECT url_photo FROM photo WHERE id_logement = :id_logement ORDER BY id_photo ASC"
-);
-$stmt->execute([":id_logement" => $logementId]);
-$photo = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Requête 2 : Récupérer les informations du propriétaire
+$sql = "SELECT user.nom, user.email, user.telephone 
+        FROM users user 
+        JOIN logement loge ON user.id = loge.id_proprietaire 
+        WHERE loge.id = '$logementId'";
+$result = $conn->query($sql);
+$owner = $result->fetch_assoc();
+
+// Requête 3 : Récupérer les photos du logement
+$sql = "SELECT url_photo FROM photo WHERE id_logement = '$logementId' ORDER BY id_photo ASC";
+$result = $conn->query($sql);
+$photo = [];
+while ($photoRow = $result->fetch_assoc()) {
+    $photo[] = $photoRow;
+}
 ?>
    <header class="topbar">
     <a href="index" class="topbar-logo">
@@ -52,7 +61,12 @@ $photo = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php if (!$isEtudiant): ?>
       <a class="nav-link" href="publish">Publier une annonce</a>
         <?php endif; ?>
-      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>
+      <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>        
+      <?php endif; ?>
+      <?php if ($isEtudiant): ?>
+      <a class="nav-link" href="candidatures">Mes candidatures</a>        
+      <?php endif; ?>      
 
       <a class="nav-link" href="listemessagerie">Ma messagerie</a>
       <?php if ($isAdmin): ?> 
@@ -80,6 +94,14 @@ if (isset($_GET['error'])) {
         echo '<div style="margin: 20px;" class="alert alert-danger alert-dismissible fade show" role="alert">
                 Seuls les étudiants peuvent candidater pour un logement. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>';
+    } elseif ($error === 'no_approved_reservation') {
+        echo '<div style="margin: 20px;" class="alert alert-danger" role="alert">
+                Vous ne pouvez pas noter ce logement car vous n\'avez pas de réservation approuvée.
+              </div>';
+    } elseif ($error === 'already_rated') {
+        echo '<div style="margin: 20px;" class="alert alert-danger" role="alert">
+                Vous avez déjà noté ce logement.
+              </div>';
     }
 
     
@@ -94,8 +116,19 @@ if (isset($_GET['error'])) {
         echo '<div style="margin: 20px;" class="alert alert-success" role="alert">
                 Candidature supprimée avec succès !
               </div>';
-    } 
-
+    } elseif ($success === 'candidature_approved') {
+        echo '<div style="margin: 20px;" class="alert alert-success" role="alert">
+                Candidature approuvée avec succès !
+              </div>';
+    } elseif ($success === 'note_added') {
+        echo '<div style="margin: 20px;" class="alert alert-success" role="alert">
+                Logement noté avec succès !
+              </div>';
+    } elseif ($success === 'updated') {
+        echo '<div style="margin: 20px;" class="alert alert-success" role="alert">
+                Annonce mise à jour avec succès !
+              </div>';
+    }
 }
 ?>
 <div class="container py-4">
@@ -203,45 +236,71 @@ if (isset($_GET['error'])) {
                         $owner["telephone"]
                     ); ?></p>
                 <?php if (isset($userId) && $row["id_proprietaire"] == $userId): ?>
-                    <div class="alert alert-info mt-3" role="alert">
+                    <a href="publish?id=<?php echo $logementId; ?>" 
+                    class="action-btn">
+                        Modifier l'annonce
+                    </a>
+                <?php endif; ?>
+                
+                <?php if (isset($userId) && $row["id_proprietaire"] == $userId): ?>
+                    <div class="alert alert-info mt-3" role="alert" style="margin-left:0px; margin-right:0px;">
                         <h3 class="alert-heading">Liste des candidatures reçues :</h3> <br>
                         <?php
-                        $stmt = $pdo->prepare(  
-                            "SELECT u.ID, u.nom, u.email, u.telephone, u.facile
-                             FROM reservation r 
-                             JOIN users u ON r.id_etudiant = u.ID
-                             WHERE r.id_logement = :id_logement"
-                        );
-                        $stmt->execute([":id_logement" => $logementId]);
-                        $candidatures = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                        if (count($candidatures) > 0):
-                            foreach ($candidatures as $candidature):
+                        // Vérifier s'il existe une candidature approuvée pour ce logement
+                        $sql = "SELECT COUNT(*) as count FROM reservation WHERE id_logement = '$logementId' AND statut = 'Approuvée'";
+                        $resultCheck = $conn->query($sql);
+                        $rowCheck = $resultCheck->fetch_assoc();
+                        $hasApprovedCandidature = $rowCheck['count'] > 0;
+                        
+                        if ($hasApprovedCandidature):
+                            echo "<p>Une candidature a déjà été approuvée pour ce logement.</p>";
+                        endif;
+                        
+                        if (!$hasApprovedCandidature):
+                            $sql = "SELECT u.ID, u.nom, u.email, u.telephone, u.facile
+                                    FROM reservation r 
+                                    JOIN users u ON r.id_etudiant = u.ID
+                                    WHERE r.id_logement = '$logementId' AND r.statut = 'En Attente'";
+                            $result = $conn->query($sql);
+                            $candidatures = [];
+                            while ($candidatureRow = $result->fetch_assoc()) {
+                                $candidatures[] = $candidatureRow;
+                            }
+                            
+                            if (count($candidatures) > 0):
+                                foreach ($candidatures as $candidature):
                         ?>
-                                <div class="candidature-item mb-3 p-3 border rounded">
-                                    <p><strong>Nom :</strong> <?php echo htmlspecialchars($candidature["nom"]); ?></p>
-                                    <p><strong>Email :</strong> <?php echo htmlspecialchars($candidature["email"]); ?></p>
-                                    <p><strong>Téléphone :</strong> <?php echo htmlspecialchars($candidature["telephone"]); ?></p>
-                                    <?php
-                                    if (!$candidature["facile"] == NULL) { ?>
-                                        <p><strong>Dossier FACILE</strong> <a href="https://<?php echo $candidature["facile"]; ?> "><?php echo htmlspecialchars($candidature["facile"]); ?></a></p>
-                                    <?php } ?>
-                                    
-                                    <a style="display: inline-flex; align-items: center; justify-content: center;" href="messagerie.php?dest=<?php echo $candidature["ID"]; ?>" class="btn btn-approved">Contacter</a>
-                                    <form method="POST" action="supprimercandidature.php" style="display: inline;">
-                                        <input type="hidden" name="etudiant_id" value="<?php echo $candidature["ID"]; ?>">
-                                        <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
-                                        <button type="submit" style="height: 40px; align-itself: right;" class="btn btn-unapproved">Refuser la candidature</button>
-                                    </form>
-
-                                </div>
+                                    <div class="candidature-item mb-3 p-3 border rounded">
+                                        <p><strong>Nom :</strong> <?php echo htmlspecialchars($candidature["nom"]); ?></p>
+                                        <p><strong>Email :</strong> <?php echo htmlspecialchars($candidature["email"]); ?></p>
+                                        <p><strong>Téléphone :</strong> <?php echo htmlspecialchars($candidature["telephone"]); ?></p>
+                                        <?php
+                                        if (!$candidature["facile"] == NULL) { ?>
+                                            <p><strong>Dossier FACILE</strong> <a href="https://<?php echo $candidature["facile"]; ?> "><?php echo htmlspecialchars($candidature["facile"]); ?></a></p>
+                                        <?php } ?>
+                                        
+                                        <a style="display: inline-flex; align-items: center; justify-content: center;" href="messagerie?dest=<?php echo $candidature["ID"]; ?>" class="btn btn-medium">Contacter</a>
+                                        <form method="POST" action="supprimercandidature.php" style="display: inline;">
+                                            <input type="hidden" name="etudiant_id" value="<?php echo $candidature["ID"]; ?>">
+                                            <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
+                                            <button type="submit" style="height: 40px; align-itself: right;" class="btn btn-unapproved">Refuser la candidature</button>
+                                        </form>
+                                        <form method="POST" action="approuvercandidature.php" style="display: inline;">
+                                            <input type="hidden" name="etudiant_id" value="<?php echo $candidature["ID"]; ?>">
+                                            <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
+                                            <button type="submit" style="height: 40px; align-itself: right;" class="btn btn-approved">Approuver la candidature</button>
+                                        </form>
+                                    </div>
                         <?php
-                            endforeach;
-                        else:
-                            echo "<p>Aucune candidature reçue pour le moment.</p>";
+                                endforeach;
+                            else:
+                                echo "<p>Aucune candidature reçue pour le moment.</p>";
+                            endif;
                         endif;
                         ?>
                     </div>
                 <?php endif; ?>
+
               </div>
           </div>
 
@@ -249,15 +308,26 @@ if (isset($_GET['error'])) {
 
         </div>
 
-        <!-- Bloc boutons d’action -->
+        <!-- Bloc boutons d'action -->
         <div class="col-lg-3">
             <div class="action-card">
                 <form method="POST" action="candidater.php">
                     <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
                 <button type="submit" class="action-btn">📄 Candidater</button></form>
-
-                <button class="action-btn">⭐ Favoris</button>
-                <a href="messagerie.php?dest=<?php echo $row[
+                <form method="POST" action="noterlogement.php">
+                    <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
+                    <input type="hidden" name="etudiant_id" value="<?php echo $userId; ?>">
+                    <select name="note" class="form-select " required>
+                        <option value="" disabled selected>Noter le logement</option>
+                        <option value="1">1 ⭐</option>
+                        <option value="2">2 ⭐⭐</option>
+                        <option value="3">3 ⭐⭐⭐</option>
+                        <option value="4">4 ⭐⭐⭐⭐</option>
+                        <option value="5">5 ⭐⭐⭐⭐⭐</option>
+                    </select>
+                    <button type="submit" class="action-btn mt-2">📝 Noter</button>
+                </form>
+                <a href="messagerie?dest=<?php echo $row[
                     "id_proprietaire"
                 ]; ?>" class="action-btn link-offset-2 link-underline link-underline-opacity-0">💬 Envoyer un message</a>
                 <button class="action-btn" onclick="copyUrl()">📤 Partager</button>

@@ -1,9 +1,9 @@
 
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logemangue - Connexion/Inscription</title>
     <link href="../css/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,7 +13,6 @@
         padding: 0;
         box-sizing: border-box;
       }
-
       body {
         background: linear-gradient(135deg, #ffd700, #ffa500);
       }
@@ -43,16 +42,16 @@
         margin-bottom: 10px;
       }
 
-      .subtitle {
-        color: #666;
-        font-size: 14px;
-        margin-bottom: 20px;
-      }
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
 
-      .tabs {
-        display: flex;
-        margin-bottom: 20px;
-      }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
 
       .tab {
         flex: 1;
@@ -63,30 +62,38 @@
         font-weight: 500;
       }
 
-      .tab.active {
-        color: #f5a623;
-        border-bottom-color: #f5a623;
-      }
+        .tab.active {
+            color: #F5A623;
+            border-bottom-color: #F5A623;
+        }
 
-      .form-group {
-        margin-bottom: 15px;
-        text-align: left;
-      }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
 
-      .form-group label {
-        display: block;
-        margin-bottom: 5px;
-        font-size: 14px;
-        color: #666;
-      }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #666;
+        }
 
       .form-group input,
       .form-group select {
+        padding: 12px 15px;        
         width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: var(--orange);
+        box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
       }
 
       .form-select {
@@ -114,15 +121,15 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
-      .link {
-        color: #f5a623;
-        text-decoration: none;
-        font-size: 14px;
-      }
+        .link {
+            color: #F5A623;
+            text-decoration: none;
+            font-size: 14px;
+        }
 
-      .link:hover {
-        text-decoration: underline;
-      }
+        .link:hover {
+            text-decoration: underline;
+        }
     </style>
     <style>
       .email-status {
@@ -147,7 +154,7 @@
   </head>
   <body>
   <header class="topbar">
-    <a href="index.php" class="topbar-logo">
+    <a href="index" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
   <div class="burger-menu">
@@ -156,13 +163,15 @@
     <span></span>
   </div>
     <nav class="topbar-nav">
-      <a class="nav-link " href="index.php">Accueil</a>
-      <a class="nav-link" href="logements.php">Recherche</a>
+      <a class="nav-link " href="index">Accueil</a>
+      <a class="nav-link" href="logements">Recherche</a>
 
-      <a class="nav-link" href="publish.php">Publier une annonce</a>
-      <a class="nav-link" href="logements.php?view=mesannonces">Mes annonces</a>
+      <a class="nav-link" href="publish">Publier une annonce</a>
+      <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>        
+      <?php endif; ?>
 
-      <a class="nav-link" href="listemessagerie.php">Ma messagerie</a>
+      <a class="nav-link" href="listemessagerie">Ma messagerie</a>
       <a class="nav-link " href="profil.php">Mon profil</a>
     </nav>
   </header>
@@ -174,7 +183,7 @@
 
     <div class="content-wrapper">
       <div class="container">
-        <a href="index.php" class="topbar-logo">
+        <a href="index" class="topbar-logo">
           <img src="../png/topbar.png" onresize="3000" alt="Logo" />
         </a>        
 
@@ -200,7 +209,7 @@
             <input type="password" id="login-password" name="password" required />
           </div>
           <div class="form-group">
-            <a href="#" class="link">Mot de passe oublié ?</a>
+            <a href="forgot_password" class="link">Mot de passe oublié ?</a>
           </div>
           <button type="submit" class="btn">Se connecter</button>
         </form>
@@ -253,7 +262,7 @@
           <button type="submit" class="btn">S'inscrire</button>
         </form>
         
-        <a href="logements.php" class="link">→ Je veux simplement voir les logements</a>
+        <a href="logements" class="link">→ Je veux simplement voir les logements</a>
       </div>
     </div>
 
@@ -273,19 +282,19 @@
       const loginForm = document.getElementById("login-form");
       const registerForm = document.getElementById("register-form");
 
-      loginTab.addEventListener("click", () => {
-        loginTab.classList.add("active");
-        registerTab.classList.remove("active");
-        loginForm.style.display = "block";
-        registerForm.style.display = "none";
-      });
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('active');
+            registerTab.classList.remove('active');
+            loginForm.style.display = 'block';
+            registerForm.style.display = 'none';
+        });
 
-      registerTab.addEventListener("click", () => {
-        registerTab.classList.add("active");
-        loginTab.classList.remove("active");
-        registerForm.style.display = "block";
-        loginForm.style.display = "none";
-      });
+        registerTab.addEventListener('click', () => {
+            registerTab.classList.add('active');
+            loginTab.classList.remove('active');
+            registerForm.style.display = 'block';
+            loginForm.style.display = 'none';
+        });
     </script>
     <script>
 const emailInput = document.getElementById('register-email');
@@ -330,8 +339,8 @@ emailInput.addEventListener('input', () => {
 <script src="../js/responsive.js"> </script>
   </body>
   <footer style="text-align: center; padding: 20px; margin-top: 20px;">
-    <a class="link text-muted" href="index.php?page=faq">FAQ</a>
-    <a class="link text-muted" href="index.php?page=cgu">CGU</a> <br>
+    <a class="link text-muted" href="index?page=faq">FAQ</a>
+    <a class="link text-muted" href="index?page=cgu">CGU</a> <br>
       Logemangue - Tous droits réservés
 <br />
 </footer>

@@ -8,80 +8,6 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/profil.css">
-  <style>
-    /* Style spécifique à la page profil */
-    .profile-header {
-      background: linear-gradient(90deg, #ffb300, #ff7a00);
-      color: #000;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      padding: 1rem 1.5rem;
-      box-shadow: 4px 4px 0 #e6d7c1;
-      font-weight: 700;
-      margin-bottom: 2rem;
-    }
-
-    .profile-header .avatar {
-      background-color: #fff;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 1.2rem;
-      margin-right: 1rem;
-      border: 1px solid #ddd;
-    }
-
-    .info-box {
-      background: #f9f6ee;
-      border: 1px solid #000;
-      border-radius: 10px;
-      padding: 2rem;
-    }
-
-    .info-box input,
-    .info-box select,
-    .info-box textarea {
-      border-radius: 10px;
-      border: 1px solid #aaa;
-      background-color: #fff;
-    }
-
-    .info-box textarea {
-      resize: none;
-      height: 120px;
-    }
-
-    .info-title {
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-    }
-    .vertical-center {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-    }
-    .modal-content {
-        border-radius: 15px;
-        border: none;
-    }
-    .modal-header, .modal-footer {
-        border: none;
-    }
-    .custom-modal {
-        background-color: #ff8c00; /* Couleur orange */
-        color: white;
-    }
-    .custom-modal .btn-close {
-        filter: invert(1);
-    }
-  </style>
 </head>
 <?php
 require "db2.php";
@@ -120,7 +46,7 @@ if (isset($_POST["valider"])) {
     } elseif (
         !str_starts_with(
             $facile,
-            "https://locataire.dossierfacile.logement.gouv.fr/public-file/"
+            "locataire.dossierfacile.logement.gouv.fr/public-file/"
         ) &&
         !$facile == null
     ) {
@@ -149,7 +75,7 @@ if (isset($_POST["valider"])) {
         );
 
         if ($stmt->execute()) {
-            header("Location: profil.php?update=success");
+            header("Location: profil?update=success");
         } else {
             echo "<p>Erreur lors de la mise à jour des informations.</p>";
         }
@@ -182,8 +108,12 @@ if (isset($_GET["update"]) && $_GET["update"] == "success") {
       <?php if (!$isEtudiant): ?>
       <a class="nav-link" href="publish">Publier une annonce</a>
       <?php endif; ?>
-      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>
-
+      <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>        
+      <?php endif; ?>
+      <?php if ($isEtudiant): ?>
+      <a class="nav-link" href="candidatures">Mes candidatures</a>        
+      <?php endif; ?>
       <a class="nav-link" href="listemessagerie">Ma messagerie</a>
       <?php if ($isAdmin): ?>
       <a class="nav-link" href="admin">Admin ⚙️</a>
@@ -280,7 +210,7 @@ if (isset($_GET["update"]) && $_GET["update"] == "success") {
                 </div>
                 <?php if ($user["type_utilisateur"] == "Etudiant") { ?>
                   <div>
-                    <input type="text" name="facile" class="form-control" placeholder="URL de votre dossier FACILE" value=<?php if (
+                    <input type="text" name="facile" class="form-control" placeholder="URL de votre dossier FACILE ( locataire.dossierfacile.logement.gouv.fr/public-file/... )" value=<?php if (
                         isset($user["facile"])
                     ) {
                         echo $user["facile"];

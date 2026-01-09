@@ -19,7 +19,10 @@ class UserModel {
 
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-        $stmt = $this->pdo->prepare("INSERT INTO users (email, password) VALUES (:email, :password)");
+        $stmt = $this->pdo->prepare("
+            INSERT INTO users (email, password)
+            VALUES (:email, :password)
+        ");
 
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':password', $passwordHash, PDO::PARAM_STR);
@@ -43,7 +46,9 @@ class UserModel {
 
     public function login($email, $password) {
 
-        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt = $this->pdo->prepare("
+            SELECT * FROM users WHERE email = :email
+        ");
 
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
