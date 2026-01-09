@@ -37,7 +37,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 }
 
 $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-$sql = "SELECT nom, telephone, genre, date_naissance,is_admin, type_utilisateur, biography FROM users WHERE id = $userId";
+$sql = "SELECT nom, telephone, genre, date_naissance,is_admin, type_utilisateur, biography, facile FROM users WHERE id = $userId";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -46,5 +46,6 @@ if ($result->num_rows > 0) {
 } else {
     echo "Aucun utilisateur trouvé";
 }
-$isAdmin = isset($user['is_admin']) ? $user['is_admin'] : 0;
+$isAdmin = isset($user['is_admin']) ? $user['is_admin'] : 0;   
+$isEtudiant = (isset($user['type_utilisateur']) && $user['type_utilisateur'] === 'Etudiant') ? true : false; 
 ?>

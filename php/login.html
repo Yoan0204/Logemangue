@@ -1,66 +1,57 @@
+
 <!doctype html>
 <html lang="fr">
-  <head>
-    </style>
-  <header class="topbar">
-    <a href="index.php" class="topbar-logo">
-      <img src="../png/topbar.png" onresize="3000" alt="Logo" />
-    </a>
-
-    <nav class="topbar-nav">
-      <a class="nav-link " href="index.php">Accueil</a>
-      <a class="nav-link" href="logements.php">Recherche</a>
-
-      <a class="nav-link" href="publish.html">Publier une annonce</a>
-      <a class="nav-link active-link" href="logements.php?view=mesannonces">Mes annonces</a>
-
-      <a class="nav-link" href="listemessagerie.php">Ma messagerie</a>
-      <a class="nav-link" href="admin.php">Admin ⚙️</a>
-      <a class="nav-link " href="profil.php">Mon profil</a>
-    </nav>
-  </header>
-<body>
-    <meta charset="UTF-8" />              <!--important-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logemangue - Connexion/Inscription</title>
+    <link href="../css/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/css.css">
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
       body {
-        font-family: Arial, sans-serif;
         background: linear-gradient(135deg, #ffd700, #ffa500);
+      }
+
+      .content-wrapper {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
-        margin: 0;
+        min-height: calc(100vh - 80px);
+        padding: 20px;
       }
 
       .container {
         background-color: white;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        width: 350px;
+        padding: 30px;
+        width: 100%;
+        max-width: 400px;
         text-align: center;
       }
 
       .logo {
         color: #f5a623;
         font-size: 24px;
+        font-weight: bold;
         margin-bottom: 10px;
       }
 
-      .subtitle {
-        color: #666;
-        font-size: 14px;
-        margin-bottom: 20px;
-      }
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
 
-      .tabs {
-        display: flex;
-        margin-bottom: 20px;
-      }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
 
       .tab {
         flex: 1;
@@ -68,31 +59,46 @@
         cursor: pointer;
         border-bottom: 2px solid transparent;
         color: #666;
+        font-weight: 500;
       }
 
-      .tab.active {
-        color: #f5a623;
-        border-bottom-color: #f5a623;
-      }
+        .tab.active {
+            color: #F5A623;
+            border-bottom-color: #F5A623;
+        }
 
-      .form-group {
-        margin-bottom: 15px;
-        text-align: left;
-      }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
 
-      .form-group label {
-        display: block;
-        margin-bottom: 5px;
-        font-size: 14px;
-        color: #666;
-      }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #666;
+        }
 
-      .form-group input {
+      .form-group input,
+      .form-group select {
+        padding: 12px 15px;        
         width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: var(--orange);
+        box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
+      }
+
+      .form-select {
+        background-color: white;
+        cursor: pointer;
       }
 
       .btn {
@@ -105,139 +111,238 @@
         font-size: 16px;
         cursor: pointer;
         margin-bottom: 10px;
-        box-shadow: var(--shadow);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         transition: 0.3s ease;
       }
+
       .btn:hover {
-        background-color: var(--orange);
-        color: black;
+        background-color: #ff8c00;
         transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
-      .link {
-        color: #f5a623;
-        text-decoration: none;
-        font-size: 14px;
-      }
+        .link {
+            color: #F5A623;
+            text-decoration: none;
+            font-size: 14px;
+        }
 
-      .link:hover {
-        text-decoration: underline;
-      }
+        .link:hover {
+            text-decoration: underline;
+        }
     </style>
+    <style>
+      .email-status {
+    display: block;
+    margin-top: 6px;
+    font-size: 14px;
+}
+
+.email-status.success {
+    color: #2ecc71;
+}
+
+.email-status.error {
+    color: #e74c3c;
+}
+
+.email-status.loading {
+    color: #999;
+    font-style: italic;
+}
+      </style>
   </head>
   <body>
-    <div class="container">
-      <div class="logo bold">Logemangue</div>
-      <div class="subtitle">Votre espace étudiant logement</div>
+  <header class="topbar">
+    <a href="index" class="topbar-logo">
+      <img src="../png/topbar.png" onresize="3000" alt="Logo" />
+    </a>
+  <div class="burger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+    <nav class="topbar-nav">
+      <a class="nav-link " href="index">Accueil</a>
+      <a class="nav-link" href="logements">Recherche</a>
 
-      <div class="tabs">
-        <div class="tab active" id="login-tab">Connexion</div>
-        <div class="tab" id="register-tab">Créer un compte</div>
-      </div>
+      <a class="nav-link" href="publish">Publier une annonce</a>
+      <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>        
+      <?php endif; ?>
 
-      <!-- Formulaire de connexion -->
-      <form id="login-form" action="login.php" method="post">
-        <div class="form-group">
-          <label for="login-email">Adresse email</label>
-          <input type="email" id="login-email" name="email" required />
-        </div>
-        <div class="form-group">
-          <label for="login-password">Mot de passe</label>
-          <input type="password" id="login-password" name="password" required />
-        </div>
-        <div class="form-group">
-          <a href="#" class="link">Mot de passe oublié ?</a>
-        </div>
-        <button type="submit" class="btn">Se connecter</button>
-      </form>
+      <a class="nav-link" href="listemessagerie">Ma messagerie</a>
+      <a class="nav-link " href="profil.php">Mon profil</a>
+    </nav>
+  </header>
 
-      <!-- Formulaire d'inscription -->
-      <form
-        id="register-form"
-        action="register.php"
-        method="post"
-        style="display: none"
-      >
-        <div class="form-group">
-          <label for="register-email">Adresse email</label>
-          <input type="email" id="register-email" name="email" required />
+
+
+
+
+
+    <div class="content-wrapper">
+      <div class="container">
+        <a href="index" class="topbar-logo">
+          <img src="../png/topbar.png" onresize="3000" alt="Logo" />
+        </a>        
+
+        <div class="tabs">
+          <div class="tab active" id="login-tab">Connexion</div>
+          <div class="tab" id="register-tab">Créer un compte</div>
         </div>
-        <div class="form-group">
-          <label for="register-password">Mot de passe</label>
-          <input
-            type="password"
-            id="register-password"
-            name="password"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="register-confirm-password"
-            >Confirmer le mot de passe</label
-          >
-          <input
-            type="password"
-            id="register-confirm-password"
-            name="confirm_password"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="register-name">Nom complet</label>
-          <input type="text" id="register-name" name="name" required />
+
+        <!-- Formulaire de connexion -->
+        <div id="msg-erreur" style="display:none; color:red;">
+            <strong>Erreur :</strong> Les identifiants sont incorrects. Veuillez réessayer.
+        </div>         
+        <div id="msg-erreur-car" style="display:none; color:red;">
+            <strong>Erreur :</strong> Vous avez utilisé des caractères non autorisés.
+        </div>         
+        <form id="login-form" action="login.php" method="post">
+          <div class="form-group">
+            <label for="login-email">Adresse email</label>
+            <input type="email" id="login-email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="login-password">Mot de passe</label>
+            <input type="password" id="login-password" name="password" required />
+          </div>
+          <div class="form-group">
+            <a href="forgot_password" class="link">Mot de passe oublié ?</a>
+          </div>
+          <button type="submit" class="btn">Se connecter</button>
+        </form>
+
+        <!-- Formulaire d'inscription -->
+        <form id="register-form" action="register.php" method="post" style="display: none">
+          <div class="form-group">
+            <label for="register-email">Adresse email</label>
+            <!-- email checker -->     
+            <input type="email" id="register-email" name="email" required />
+            <span id="email-status"></span>
+          </div>
+          <div class="form-group">
+            <label for="register-password">Mot de passe</label>
+            <input type="password" id="register-password" name="password" required />
+          </div>
+          <div class="form-group">
+            <label for="register-confirm-password">Confirmer le mot de passe</label>
+            <input type="password" id="register-confirm-password" name="confirm_password" required />
+          </div>
+          <div class="form-group">
+            <label for="register-name">Nom complet</label>
+            <input type="text" id="register-name" name="name" required />
+          </div>
+          <div class="form-group">
+            <label for="register-phone">Numéro de téléphone</label>
+            <input type="tel" id="register-phone" name="phone" required />
+          </div>  
+          <div class="form-group">
+            <label for="register-birthdate">Date de naissance</label>
+            <input type="date" id="register-birthdate" name="birthdate" required />
+          </div>         
+          <div class="form-group">
+            <label for="register-type">Type d'utilisateur</label>
+            <select class="form-select" id="register-type" name="type_utilisateur" required>
+              <option value="" disabled selected>Choisir le type d'utilisateur</option>
+              <option value="Etudiant">Étudiant</option>
+              <option value="Proprietaire">Propriétaire</option>
+            </select>
+          </div>         
+          <div class="form-group">
+            <label for="genre">Genre</label>
+            <select class="form-select" id="genre" name="genre" required>
+              <option value="" disabled selected>Choisir votre genre</option>
+              <option value="Homme">Homme</option>
+              <option value="Femme">Femme</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>         
+          <button type="submit" class="btn">S'inscrire</button>
+        </form>
         
-        </div>
-        <div class="form-group">
-          <label for="register-phone">Numéro de téléphone</label>
-          <input type="tel" id="register-phone" name="phone" required />
-        </div>  
-        <div class="form-group">
-          <label for="register-birthdate">Date de naissance</label>
-          <input type="date" id="register-birthdate" name="birthdate" required />
-        </div>         
-        <div class="form-group">
-          <label for="register-type">Type d'utilisateur</label>
-          <select class="form-select" id="register-type" name="type_utilisateur" required>
-            <option value="" disabled selected>Choisir le type d'utilisateur</option>
-            <option value="Etudiant">Étudiant</option>
-            <option value ="Proprietaire">Propriétaire</option>
-          </select>
-        </div>         
-        <div class="form-group">
-          <label for="genre">Genre</label>
-          <select class="form-select" id="genre" name="genre" required>
-            <option value="" disabled selected>Choisir votre genre</option>
-            <option value="Homme">Homme</option>
-            <option value ="Femme">Femme</option>
-            <option value="Autre">Autre</option>
-          </select>
-        </div>         
-      <button type="submit" class="btn">S'inscrire</button>
-      </form>
-      <a href="logements.php" class="link"
-        >→ Je veux simplement voir les logements</a
-      >
+        <a href="logements" class="link">→ Je veux simplement voir les logements</a>
+      </div>
     </div>
 
+    <script>
+  const params = new URLSearchParams(window.location.search);
+
+  if (params.get('erreur') === '1') {
+    document.getElementById('msg-erreur').style.display = 'block';
+  }
+    if (params.get('error') === 'carun') {
+    document.getElementById('msg-erreur-car').style.display = 'block';
+  }
+</script>
     <script>
       const loginTab = document.getElementById("login-tab");
       const registerTab = document.getElementById("register-tab");
       const loginForm = document.getElementById("login-form");
       const registerForm = document.getElementById("register-form");
 
-      loginTab.addEventListener("click", () => {
-        loginTab.classList.add("active");
-        registerTab.classList.remove("active");
-        loginForm.style.display = "block";
-        registerForm.style.display = "none";
-      });
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('active');
+            registerTab.classList.remove('active');
+            loginForm.style.display = 'block';
+            registerForm.style.display = 'none';
+        });
 
-      registerTab.addEventListener("click", () => {
-        registerTab.classList.add("active");
-        loginTab.classList.remove("active");
-        registerForm.style.display = "block";
-        loginForm.style.display = "none";
-      });
+        registerTab.addEventListener('click', () => {
+            registerTab.classList.add('active');
+            loginTab.classList.remove('active');
+            registerForm.style.display = 'block';
+            loginForm.style.display = 'none';
+        });
     </script>
+    <script>
+const emailInput = document.getElementById('register-email');
+const status = document.getElementById('email-status');
+
+let timeout = null;
+
+emailInput.addEventListener('input', () => {
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+        const email = emailInput.value;
+
+        if (!email) {
+            status.textContent = '';
+            status.className = 'email-status';
+            return;
+        }
+
+        status.textContent = 'Vérification...';
+        status.className = 'email-status loading';
+
+        fetch('check_email.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.exists) {
+                status.textContent = '❌ Email déjà utilisé';
+                status.className = 'email-status error';
+            } else {
+                status.textContent = '✅ Email disponible';
+                status.className = 'email-status success';
+            }
+        });
+    }, 500);
+});
+
+</script>
+<script src="../js/responsive.js"> </script>
   </body>
+  <footer style="text-align: center; padding: 20px; margin-top: 20px;">
+    <a class="link text-muted" href="index?page=faq">FAQ</a>
+    <a class="link text-muted" href="index?page=cgu">CGU</a> <br>
+      Logemangue - Tous droits réservés
+<br />
+</footer>
+
 </html>

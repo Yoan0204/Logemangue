@@ -15,9 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_email'] = $user['email'];
             $_SESSION['logged_in'] = true;
-            header("Location: index.php");
+            header("Location: index");
         } else {
-            header("Location: ender.html?error=1");
+            header("Location: login.html?erreur=1");
         }
     } catch (PDOException $e) {
         die("Erreur lors de la connexion: " . $e->getMessage());

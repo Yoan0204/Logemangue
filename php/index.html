@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="fr">
+  <!-- Formated by Astral v1 -->
+  <!-- Test de Merge -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/carrousel.css" />
+    <link rel="icon" type="image/x-icon" href="Aberent.png" onresize="2300" />
+    <title>Accueil - Logemangue</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="../css/css.css" />
+    <script src="../js/carrousel.js"></script>
+  </head>
+  <header class="topbar">
+    <a href="index.php" class="topbar-logo">
+      <img src="topbar.png" onresize="3000" alt="Logo" />
+    </a>
+
+    <nav class="topbar-nav">
+      <a class="nav-link active-link" href="index.html">Accueil</a>
+      <a class="nav-link" href="recherche.html">Recherche</a>
+
+      <a class="nav-link" href="publish.html">Publier une annonce</a>
+      <a class="nav-link" href="mesannonces.php">Mes annonces</a>
+
+      <a class="nav-link" href="messagerie.html">Ma messagerie</a>
+
+      <a class="nav-link" href="admin.php">Admin ⚙️</a>
+
+      <a class="nav-link" href="profil.html">Mon profil</a>
+    </nav>
+  </header>
+
+  <body>
+    <!-- Contenu principal -->
+    <div>
+      <section class="hero text-center text-white">
+        <h1 class="display-5 fw-bold mb-3">
+          Trouvez votre logement étudiant idéal
+        </h1>
+        <p class="lead mb-5">
+          La plateforme qui connecte étudiants et propriétaires pour trouver le
+          logement parfait
+        </p>
+
+        <div class="d-flex justify-content-center align-items-center mb-5">
+          <input
+            type="text"
+            class="form-control search-input"
+            placeholder="Ville, quartier, type de logement..."
+          />
+          <button class="btn-search">Rechercher →</button>
+        </div>
+
+        <!--
+<div class="d-flex justify-content-center gap-5 stats">
+<div><strong>15+</strong><br>Logements disponibles</div>
+<div><strong>100%</strong><br>Annonces vérifiées</div>
+<div><strong>24/7</strong><br>Support étudiant</div>
+</div>-->
+        <div class="container p-3">
+          <div class="row g-4">
+            <div class="col-md-4">
+              <a href="logement1.html" class="logement-link">
+                <div class="logement-card">
+                  <img
+                    src="https://media.ouest-france.fr/v1/pictures/MjAyNTAzNzRlZGJjMzkyMTE3MDAwYjhhMDcyNDRjZWU1NDIyZDI?width=630&height=354&focuspoint=50%2C25&cropresize=1&client_id=bpeditorial&sign=fc6738042c167692858ff0af38f68071d2553bb6c47ea13f880968838751d160"
+                    alt="Logement 1"
+                  />
+                  <div class="info">
+                    <h6 class="fw-bold mb-1 logement-title-dark">
+                      Appartement T1 - Lyon
+                    </h6>
+                    <p class="text-muted mb-0">
+                      Proche université, meublé, 500€/mois
+                    </p>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-md-4">
+              <a href="logement2.html" class="logement-link">
+                <div class="logement-card">
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/en/9/96/Meme_Man_on_transparent_background.webp"
+                    alt="Logement 2"
+                  />
+                  <div class="info">
+                    <h6 class="fw-bold mb-1 logement-title-dark">
+                      Studio - Paris 13
+                    </h6>
+                    <p class="text-muted mb-0">
+                      Idéal étudiant, toutes charges incluses
+                    </p>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-md-4">
+              <a href="logement3.html" class="logement-link">
+                <div class="logement-card">
+                  <img
+                    src="https://preview.redd.it/post-the-best-cat-memes-you-got-in-the-comments-please-v0-kg82lbnu0ste1.png?auto=webp&s=e6f9eee86484f5de3f4e31f3c33b2d07fb982bd5"
+                    alt="Logement 3"
+                  />
+                  <div class="info">
+                    <h6 class="fw-bold mb-1 logement-title-dark">
+                      Colocation - Toulouse
+                    </h6>
+                    <p class="text-muted mb-0">
+                      Chambre disponible dans colocation de 3
+                    </p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="carousel">
+          <button class="carousel-btn prev">❮</button>
+
+          <div class="carousel-images">
+            <img
+              src="https://media.admagazine.fr/photos/65300bdda7dee5dd8ac5e683/16:9/w_2560%2Cc_limit/18th%2520apartment%2520-%2520wiercinski-studio%252016.jpg"
+              alt="Photo 1"
+            />
+            <img
+              src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=900&h=500&fit=crop"
+              alt="Photo 2"
+            />
+            <img
+              src="topbar.png?w=900&h=500&fit=crop"
+              alt="Photo 3"
+            />
+          </div>
+
+          <button class="carousel-btn next">❯</button>
+
+          <div class="carousel-dots"></div>
+        </div>
+      </section>
+
+      <section class="features text-center">
+        <h2 class="fw-bold mb-4">Pourquoi choisir Logemangue ?</h2>
+        <p class="text-muted mb-5">
+          Une plateforme moderne conçue pour faciliter votre recherche de
+          logement
+        </p>
+
+        <div class="container">
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="p-4 feature-card">
+                <div class="feature-icon">🔍</div>
+                <h5 class="fw-bold">Recherche Facile</h5>
+                <p>
+                  Trouvez votre logement idéal en quelques clics sur Logemangue
+                </p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="p-4 feature-card">
+                <div class="feature-icon">✔️</div>
+                <h5 class="fw-bold">Logements Vérifiés</h5>
+                <p>
+                  Annonces vérifiées de particuliers et organismes par nos
+                  modérateurs spécialisés.
+                </p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="p-4 feature-card">
+                <div class="feature-icon">👥</div>
+                <h5 class="fw-bold">Colocation</h5>
+                <p>
+                  Trouvez des colocataires en formant un groupe de candidatures.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="text-center py-3">
+        <a class="link" href="faq.html">FAQ</a>
+        <a class="link" href="contact.html">Contact</a>
+        © <?php echo date("Y"); ?> Logemangue - Tous droits réservés
+        <br />
+        <small class="text-muted"
+          >Dernière mise à jour : <?php echo date( "d/m/Y à H:i" ); ?></small
+        >
+      </footer>
+    </div>
+
+    <script>
+      const toggle = document.getElementById("menu-toggle");
+      const sidebar = document.getElementById("sidebar");
+
+      toggle.addEventListener("click", () => {
+        sidebar.classList.toggle("active");
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
+
+
+<div class="form-group">
+    <a href="forgot_password.php" class="link">Mot de passe oublié ?</a>
+</div>

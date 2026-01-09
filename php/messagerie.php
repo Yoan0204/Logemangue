@@ -106,110 +106,38 @@ $nom_destinataire = $destinataire
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/messagerie.css">
 </head>
-<style>/* ===== MESSAGERIE ===== */
 
-  .messagerie-header {
-    background: linear-gradient(to right, #ffd53d, #ff9c42);
-    box-shadow: 3px 3px 6px rgba(0,0,0,0.15);
-  }
-
-  .messagerie-avatar {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: #fff;
-    color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 20px;
-    border: 2px solid #ffe08a;
-  }
-
-  .conversation-box {
-    background: #fbf9ef;
-    border: 2px solid #d5d1c8;
-    min-height: 350px;
-    box-shadow: 3px 3px 6px rgba(0,0,0,0.15);
-    position: relative;
-  }
-
-  /* Messages */
-  .message {
-    max-width: 40%;
-    padding: 15px;
-    border-radius: 15px;
-    font-size: 15px;
-    line-height: 1.4;
-    color: #000;
-    box-shadow: 3px 3px 6px rgba(0,0,0,0.15);
-  }
-
-  .message-left {
-    background: linear-gradient(to right, #d77a4c, #c46d45);
-    margin-right: auto;
-  }
-
-  .message-right {
-    background: linear-gradient(to right, #ffd531, #ff9a3a);
-    margin-left: auto;
-  }
-
-  /* Barre d’envoi */
-  .send-bar {
-    background: linear-gradient(to right, #ffd53d, #ff9c42);
-    box-shadow: 3px 3px 6px rgba(0,0,0,0.2);
-  }
-
-  .send-input {
-    border-radius: 12px;
-    border: none;
-    padding: 10px;
-    font-size: 15px;
-    background: #ffffff;
-  }
-
-  .send-input:focus {
-    outline: none;
-    box-shadow: 0 0 5px rgba(255,136,0,0.6);
-  }
-
-  .send-button {
-    border: none;
-    background: #d97841;
-    color: white;
-    font-weight: bold;
-    font-size: 22px;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-    cursor: pointer;
-  }
-
-  .send-button:hover {
-    transform: scale(1.05);
-  }
-</style>
   <header class="topbar">
-    <a href="index.php" class="topbar-logo">
+    <a href="index" class="topbar-logo">
       <img src="../png/topbar.png" onresize="3000" alt="Logo" />
     </a>
-
+  <div class="burger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
     <nav class="topbar-nav">
-      <a class="nav-link " href="index.php">Accueil</a>
-      <a class="nav-link" href="logements.php">Recherche</a>
+      <a class="nav-link " href="index">Accueil</a>
+      <a class="nav-link" href="logements">Recherche</a>
 
-      <a class="nav-link" href="publish.php">Publier une annonce</a>
-      <a class="nav-link" href="logements.php?view=mesannonces">Mes annonces</a>
+      <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="publish">Publier une annonce</a>
+      <?php endif; ?>
+      <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>        
+      <?php endif; ?>
+      <?php if ($isEtudiant): ?>
+      <a class="nav-link" href="candidatures">Mes candidatures</a>        
+      <?php endif; ?>
+      <a class="nav-link active-link" href="listemessagerie">Ma messagerie</a>
 
-      <a class="nav-link active-link" href="listemessagerie.php">Ma messagerie</a>
+      <?php if ($isAdmin): ?> 
+          <a class="nav-link" href="admin">Admin ⚙️</a>
+      <?php endif; ?>
 
-      <a class="nav-link" href="admin.php">Admin ⚙️</a>
-
-      <a class="nav-link" href="profil.php">Mon profil</a>
+      <a class="nav-link" href="profil">Mon profil</a>
     </nav>
   </header>
 <body>
@@ -268,7 +196,11 @@ $nom_destinataire = $destinataire
 document.addEventListener('DOMContentLoaded', function() {
   const messageInput = document.getElementById('messageInput');
   const sendButton = document.getElementById('sendButton');
+  const messagesList = document.getElementById('messages-list');
+  const destinataireId = <?php echo json_encode($destinataire_id); ?>;
+  const userId = <?php echo json_encode($userId); ?>;
   
+  // Fonction pour envoyer un message
   function sendMessage() {
     const message = messageInput.value.trim();
     
@@ -277,9 +209,9 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
     
-    const destinataireId = <?php echo json_encode($destinataire_id); ?>;
+    // Désactiver le bouton pendant l'envoi
+    sendButton.disabled = true;
     
-    // Envoi vers la même page
     fetch(window.location.href, {
       method: 'POST',
       headers: {
@@ -291,27 +223,109 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(data => {
       if (data.success) {
         messageInput.value = '';
-        console.log('Message envoyé');
-        // Optionnel : recharger les messages
-        location.reload();
+        
+        // Ajouter le message à l'interface sans recharger
+        addMessageToUI(message, true);
+        
+        // Réactiver le bouton
+        sendButton.disabled = false;
+        
+        // Scroller vers le bas
+        scrollToBottom();
       } else {
         alert('Erreur : ' + data.error);
+        sendButton.disabled = false;
       }
     })
     .catch(error => {
       console.error('Erreur:', error);
       alert('Erreur lors de l\'envoi');
+      sendButton.disabled = false;
     });
   }
   
+  // Fonction pour ajouter un message à l'interface
+  function addMessageToUI(contenu, isFromCurrentUser) {
+    const conversationBox = messagesList.querySelector('.conversation-box');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = isFromCurrentUser ? 'message message-right mb-4' : 'message message-left mb-4';
+    
+    const now = new Date();
+    const dateStr = now.toISOString().slice(0, 19).replace('T', ' ');
+    
+    messageDiv.innerHTML = `
+      <p>${escapeHtml(contenu)}</p>
+      <small>${dateStr}</small>
+    `;
+    
+    conversationBox.appendChild(messageDiv);
+  }
+  
+  // Fonction pour échapper le HTML
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+  
+  // Fonction pour scroller vers le bas
+  function scrollToBottom() {
+    const conversationBox = messagesList.querySelector('.conversation-box');
+    conversationBox.scrollTop = conversationBox.scrollHeight;
+  }
+  
+  // Fonction pour charger les nouveaux messages (polling)
+  function loadNewMessages() {
+    fetch(`get_messages.php?dest=${destinataireId}&last_check=${lastMessageId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success && data.messages.length > 0) {
+        data.messages.forEach(msg => {
+          const isFromCurrentUser = msg.id_expediteur == userId;
+          addMessageToUI(msg.contenu, isFromCurrentUser);
+          lastMessageId = msg.id;
+        });
+        scrollToBottom();
+      }
+    })
+    .catch(error => {
+      console.error('Erreur lors du chargement des messages:', error);
+    });
+  }
+  
+  // ID du dernier message chargé
+  let lastMessageId = 0;
+  
+  // Récupérer l'ID du dernier message au chargement
+  const messages = messagesList.querySelectorAll('.message');
+  if (messages.length > 0) {
+    // Vous devrez ajouter un attribut data-id aux messages dans le PHP
+    const lastMessage = messages[messages.length - 1];
+    lastMessageId = lastMessage.dataset.messageId || 0;
+  }
+  
+  // Événements
   sendButton.addEventListener('click', sendMessage);
   
   messageInput.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
+      e.preventDefault();
       sendMessage();
     }
   });
+  
+  // Polling toutes les 3 secondes pour vérifier les nouveaux messages
+  setInterval(loadNewMessages, 3000);
+  
+  // Scroller vers le bas au chargement initial
+  scrollToBottom();
 });
 </script>
+<script src="../js/responsive.js"></script>
 </body>
 </html>

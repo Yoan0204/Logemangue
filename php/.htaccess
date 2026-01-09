@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# Si le fichier ou dossier existe, on ne touche pas
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+
+# Réécriture
+RewriteRule ^(.+)$ $1.php [L]
