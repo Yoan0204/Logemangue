@@ -1,7 +1,8 @@
 <?php
-require_once 'db2.php';
+require_once 'db2withoutlogin.php';
 
 $message = "";
+$user = null; 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'];
@@ -21,31 +22,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $link = "http://localhost/PROJET-LOGEMANGUE/Logemangue/php/reset_password.php?token=$token";
 
-
         $message = "Lien de réinitialisation : <br><a href='$link'>$link</a>";
-    } else {
-        $message = "Aucun compte trouvé avec cet email.";
-    }
+        } else {
+            $message = "Aucun compte trouvé avec cet email.";
+            }
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Mot de passe oublié</title>
-    <link rel="stylesheet" href="../css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mot de passe oublié</title>
+  <link rel="stylesheet" href="PROJET-LOGEMANGUE/Logemangue/css/style.css">
 </head>
 <body>
-<div class="container">
-    <h2>Mot de passe oublié</h2>
+  <div class="auth-container">
+    <div class="auth-card">
+      <h2>Mot de passe oublié</h2>
+      <p class="subtitle">Entrez votre email pour recevoir un lien de réinitialisation.</p>
 
-    <form method="post">
+      <form method="post">
         <input type="email" name="email" placeholder="Votre email" required>
-        <button type="submit" class="btn">Envoyer le lien</button>
-    </form>
+        <button type="submit">Envoyer le lien</button>
+      </form>
 
-    <p><?= $message ?></p>
-</div>
+      <?php if (!empty($message)) : ?>
+        <p class="message"><?= $message ?></p>
+      <?php endif; ?>
+    </div>
+  </div>
 </body>
-</html>

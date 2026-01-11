@@ -1,5 +1,5 @@
 <?php
-require_once 'db2.php';
+require_once 'db2withoutlogin.php';
 
 $token = $_GET['token'] ?? '';
 $message = "";
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Nouveau mot de passe</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="PROJET-LOGEMANGUE/Logemangue/css/style.css">
 </head>
 <body>
 <div class="container">
