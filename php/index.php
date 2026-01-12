@@ -348,9 +348,9 @@ if ($page === "profil") {
       </section>
       <!-- Avis des utilisateurs -->
       <section class="user-reviews text-center">
-        <h2 class="fw-bold mb-4">Ce que disent nos utilisateurs</h2>
+        <h2 class="fw-bold mb-4">Ce que disent nos utilisateurs :</h2>
         <p class="text-muted-white mb-5 ">
-          Des témoignages authentiques de nos utilisateurs satisfaits
+          Quelques retours d'amateurs de Logemangue !
         </p>
         <div class="container">
           <div class="row g-4">

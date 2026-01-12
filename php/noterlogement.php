@@ -68,6 +68,6 @@ if ($etudiantId && $logementId && $note !== null) {
     
     $stmt->close();
 } else {
-    header("Location: logement?error=missing_parameters");
+    header("Location: login.html");
 }
 ?>

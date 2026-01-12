@@ -79,81 +79,77 @@ while ($photoRow = $result->fetch_assoc()) {
 
 <body>
 <!-- ====== BLOC PRINCIPAL ====== -->
-<?php 
-if (isset($_GET['error'])) {
-    $error = $_GET['error'];
-    if ($error === 'candidature_exists') {
+<?php if (isset($_GET["error"])) {
+    $error = $_GET["error"];
+    if ($error === "candidature_exists") {
         echo '<div class="alert alert-danger" style="margin: 20px;" role="alert">
                 Vous avez déjà une candidature en cours pour ce logement.
               </div>';
-    } elseif ($error === 'missing_logement_id') {
+    } elseif ($error === "missing_logement_id") {
         echo '<div style="margin: 20px;" class="alert alert-danger" role="alert">
                 ID de logement manquant.
               </div>';
-    }    elseif ($error === 'not_student') {
+    } elseif ($error === "not_student") {
         echo '<div style="margin: 20px;" class="alert alert-danger alert-dismissible fade show" role="alert">
                 Seuls les étudiants peuvent candidater pour un logement. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>';
-    } elseif ($error === 'no_approved_reservation') {
+    } elseif ($error === "no_approved_reservation") {
         echo '<div style="margin: 20px;" class="alert alert-danger" role="alert">
                 Vous ne pouvez pas noter ce logement car vous n\'avez pas de réservation approuvée.
               </div>';
-    } elseif ($error === 'already_rated') {
+    } elseif ($error === "already_rated") {
         echo '<div style="margin: 20px;" class="alert alert-danger" role="alert">
                 Vous avez déjà noté ce logement.
               </div>';
     }
-
-    
-} elseif (isset($_GET['success'])) {
-    $success = $_GET['success'];
-    if ($success === 'candidature_submitted') {
+} elseif (isset($_GET["success"])) {
+    $success = $_GET["success"];
+    if ($success === "candidature_submitted") {
         echo '<div style="margin: 20px;" class="alert alert-success" role="alert">
                 Candidature envoyée avec succès !
               </div>';
-    }
-    elseif ($success === 'candidature_deleted') {
+    } elseif ($success === "candidature_deleted") {
         echo '<div style="margin: 20px;" class="alert alert-success" role="alert">
                 Candidature supprimée avec succès !
               </div>';
-    } elseif ($success === 'candidature_approved') {
+    } elseif ($success === "candidature_approved") {
         echo '<div style="margin: 20px;" class="alert alert-success" role="alert">
                 Candidature approuvée avec succès !
               </div>';
-    } elseif ($success === 'note_added') {
+    } elseif ($success === "note_added") {
         echo '<div style="margin: 20px;" class="alert alert-success" role="alert">
                 Logement noté avec succès !
               </div>';
-    } elseif ($success === 'updated') {
+    } elseif ($success === "updated") {
         echo '<div style="margin: 20px;" class="alert alert-success" role="alert">
                 Annonce mise à jour avec succès !
               </div>';
     }
-}
-?>
+} ?>
 <div class="container py-4">
 
     <div class="row">
         <!-- Grande image -->
         <div class="col-lg-9">
             <img id="mainImage" style="box-shadow: 4px 4px 0 #e1e1e1;" 
-                src="<?php echo $photo[0]['url_photo'] ?: 'placeholder.jpg'; ?>" 
+                src="<?php echo $photo[0]["url_photo"] ?:
+                    "placeholder.jpg"; ?>" 
                 class="banner-img" alt="logement">
         </div>
         <!-- Miniatures -->
         <div class="col-lg-3 d-flex flex-column justify-content-between">
             <?php if (isset($photo[1])) { ?>
-                <img src="<?php echo $photo[1]['url_photo']; ?>" 
+                <img src="<?php echo $photo[1]["url_photo"]; ?>" 
                     class="thumb-img" alt="miniature" 
                     onclick="swapImages(this)" style="cursor: pointer;">
             <?php } ?>
             <?php if (isset($photo[2])) { ?>
-                <img src="<?php echo $photo[2]['url_photo']; ?>" 
+                <img src="<?php echo $photo[2]["url_photo"]; ?>" 
                     class="thumb-img" alt="miniature" 
                     onclick="swapImages(this)" style="cursor: pointer;">
             <?php } ?>
             <?php if (isset($photo[3])) { ?>
-                <img src="<?php echo $photo[3]['url_photo']; ?>" 
+                <img src="<?php echo $photo[3]["url_photo"]; ?>" 
                     class="thumb-img" alt="miniature" 
                     onclick="swapImages(this)" style="cursor: pointer;">
             <?php } ?>            
@@ -176,53 +172,46 @@ if (isset($_GET['error'])) {
           <!-- CONTENU DES ONGLETS -->
           <div class="tab-content">
               <div class="tab-pane fade show active info-box" id="description">
-                    <h2>
-                        <?php echo htmlspecialchars($row["titre"]); ?> 
-                        <img src="../png/verified.png" 
-                            alt="Certifié" 
-                            title="Ce contenu est certifié et vérifié par les administrateurs de Logemangue."
-                            style="width: 20px; height: 20px; vertical-align: middle; margin-left: 5px; margin-bottom:5px; cursor: pointer;">
-                    </h2> 
-                    <h3 class=""><strong><?php echo htmlspecialchars(
-                        $row["loyer"]
-                    ); ?> € / mois</strong></h2> <br>
-                    <p><?php echo nl2br(
-                        htmlspecialchars($row["description"])   
-                    ); ?></p>
-                    <p><strong>Adresse :</strong> <?php echo htmlspecialchars(
-                        $row["adresse"]
-                    ); ?> - 
-                    <?php echo htmlspecialchars(
-                        $row["ville"]
-                    ); ?> </p>
-                    <p><strong>Type de logement :</strong> <?php echo htmlspecialchars(
-                        $row["TYPE"]
-                    ); ?></p>
-                    <p><strong>Surface :</strong> <?php echo htmlspecialchars(
-                        $row["surface"]
-                    ); ?> m²</p>
-                    <p><strong>Meublé :</strong> <?php echo $row[
-                        "meuble"
-                    ] ? "Oui" : "Non"; ?></p>
-                    <p><strong>Statut de l'annonce :</strong> <?php echo htmlspecialchars(
-                        $row["status"]
-                    ); ?></p>   
-                    <p><strong>Charges incluses :</strong> <?php echo $row[
-                        "charges_incluses"
-                    ] ? "Oui" : "Non"; ?></p>
-                    <p><strong>Note :</strong> <?php echo htmlspecialchars(
-                        $row["note"]
-                    ); ?>/5</p>
-                    
-              </div>
+    <h2>
+        <?php echo htmlspecialchars($row["titre"]); ?> 
+        <img src="../png/verified.png" alt="Certifié" title="Ce contenu est certifié et vérifié par les administrateurs de Logemangue."
+            style="width: 20px; height: 20px; vertical-align: middle; margin-left: 5px; margin-bottom:5px; cursor: pointer;">
+    </h2> 
 
-              <div class="tab-pane fade info-box" id="localisation">
-                    <p><strong>Adresse :</strong> <?php echo htmlspecialchars(
-                        $row["adresse"]
-                    ); ?></p>
-                
-                      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2086.8370832268038!2d2.2432445618470607!3d48.777118574786144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sfr!2sfr!4v1765278973850!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-              </div>
+    <h3><strong><?php echo htmlspecialchars($row["loyer"]); ?> € / mois</strong></h3>
+
+    <div class="infos-grid">
+        <p><?php echo nl2br(htmlspecialchars($row["description"])); ?></p>
+        <p><strong>Adresse :</strong> <?php echo htmlspecialchars($row["adresse"]); ?> - <?php echo htmlspecialchars($row["ville"]); ?></p>
+        <p><strong>Type de logement :</strong> <?php echo htmlspecialchars($row["TYPE"]); ?></p>
+        <p><strong>Surface :</strong> <?php echo htmlspecialchars($row["surface"]); ?> m²</p>
+        <p><strong>Meublé :</strong> <?php echo $row["meuble"] ? "Oui" : "Non"; ?></p>
+        <p><strong>Colocation :</strong> <?php echo $row["colocation"] ? "Oui" : "Non"; ?></p>
+        <p><strong>Statut de l'annonce :</strong> <?php echo htmlspecialchars($row["status"]); ?></p>
+        <p><strong>Charges incluses :</strong> <?php echo $row["charges_incluses"] ? "Oui" : "Non"; ?></p>
+        <p><strong>Note :</strong> <?php echo htmlspecialchars($row["note"]); ?>/5</p>
+    </div>
+</div>
+
+
+<div class="tab-pane fade info-box" id="localisation">
+    <p><strong>Adresse :</strong> <?php echo htmlspecialchars(
+        $row["adresse"]
+    ); ?></p>
+
+<?php $adresse = urlencode($row["ville"] . ", France"); ?>
+
+<iframe
+    width="600"
+    height="450"
+    style="border:0;"
+    loading="lazy"
+    allowfullscreen
+    src="https://www.google.com/maps?q=<?php echo $adresse; ?>&output=embed">
+</iframe>
+
+</div>
+
 
               <div class="tab-pane fade info-box" id="message">
                     <h4>Propriétaire du logement</h4> <br>
@@ -235,14 +224,20 @@ if (isset($_GET['error'])) {
                     <p><strong>Téléphone :</strong> <?php echo htmlspecialchars(
                         $owner["telephone"]
                     ); ?></p>
-                <?php if (isset($userId) && $row["id_proprietaire"] == $userId): ?>
+                <?php if (
+                    isset($userId) &&
+                    $row["id_proprietaire"] == $userId
+                ): ?>
                     <a href="publish?id=<?php echo $logementId; ?>" 
                     class="action-btn">
                         Modifier l'annonce
                     </a>
                 <?php endif; ?>
                 
-                <?php if (isset($userId) && $row["id_proprietaire"] == $userId): ?>
+                <?php if (
+                    isset($userId) &&
+                    $row["id_proprietaire"] == $userId
+                ): ?>
                     <div class="alert alert-info mt-3" role="alert" style="margin-left:0px; margin-right:0px;">
                         <h3 class="alert-heading">Liste des candidatures reçues :</h3> <br>
                         <?php
@@ -250,12 +245,12 @@ if (isset($_GET['error'])) {
                         $sql = "SELECT COUNT(*) as count FROM reservation WHERE id_logement = '$logementId' AND statut = 'Approuvée'";
                         $resultCheck = $conn->query($sql);
                         $rowCheck = $resultCheck->fetch_assoc();
-                        $hasApprovedCandidature = $rowCheck['count'] > 0;
-                        
+                        $hasApprovedCandidature = $rowCheck["count"] > 0;
+
                         if ($hasApprovedCandidature):
                             echo "<p>Une candidature a déjà été approuvée pour ce logement.</p>";
                         endif;
-                        
+
                         if (!$hasApprovedCandidature):
                             $sql = "SELECT u.ID, u.nom, u.email, u.telephone, u.facile
                                     FROM reservation r 
@@ -266,33 +261,48 @@ if (isset($_GET['error'])) {
                             while ($candidatureRow = $result->fetch_assoc()) {
                                 $candidatures[] = $candidatureRow;
                             }
-                            
+
                             if (count($candidatures) > 0):
-                                foreach ($candidatures as $candidature):
-                        ?>
+                                foreach ($candidatures as $candidature): ?>
                                     <div class="candidature-item mb-3 p-3 border rounded">
-                                        <p><strong>Nom :</strong> <?php echo htmlspecialchars($candidature["nom"]); ?></p>
-                                        <p><strong>Email :</strong> <?php echo htmlspecialchars($candidature["email"]); ?></p>
-                                        <p><strong>Téléphone :</strong> <?php echo htmlspecialchars($candidature["telephone"]); ?></p>
-                                        <?php
-                                        if (!$candidature["facile"] == NULL) { ?>
-                                            <p><strong>Dossier FACILE</strong> <a href="https://<?php echo $candidature["facile"]; ?> "><?php echo htmlspecialchars($candidature["facile"]); ?></a></p>
+                                        <p><strong>Nom :</strong> <?php echo htmlspecialchars(
+                                            $candidature["nom"]
+                                        ); ?></p>
+                                        <p><strong>Email :</strong> <?php echo htmlspecialchars(
+                                            $candidature["email"]
+                                        ); ?></p>
+                                        <p><strong>Téléphone :</strong> <?php echo htmlspecialchars(
+                                            $candidature["telephone"]
+                                        ); ?></p>
+                                        <?php if (
+                                            !$candidature["facile"] == null
+                                        ) { ?>
+                                            <p><strong>Dossier FACILE</strong> <a href="https://<?php echo $candidature[
+                                                "facile"
+                                            ]; ?> "><?php echo htmlspecialchars(
+     $candidature["facile"]
+ ); ?></a></p>
                                         <?php } ?>
                                         
-                                        <a style="display: inline-flex; align-items: center; justify-content: center;" href="messagerie?dest=<?php echo $candidature["ID"]; ?>" class="btn btn-medium">Contacter</a>
+                                        <a style="display: inline-flex; align-items: center; justify-content: center;" href="messagerie?dest=<?php echo $candidature[
+                                            "ID"
+                                        ]; ?>" class="btn btn-medium">Contacter</a>
                                         <form method="POST" action="supprimercandidature.php" style="display: inline;">
-                                            <input type="hidden" name="etudiant_id" value="<?php echo $candidature["ID"]; ?>">
+                                            <input type="hidden" name="etudiant_id" value="<?php echo $candidature[
+                                                "ID"
+                                            ]; ?>">
                                             <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
                                             <button type="submit" style="height: 40px; align-itself: right;" class="btn btn-unapproved">Refuser la candidature</button>
                                         </form>
                                         <form method="POST" action="approuvercandidature.php" style="display: inline;">
-                                            <input type="hidden" name="etudiant_id" value="<?php echo $candidature["ID"]; ?>">
+                                            <input type="hidden" name="etudiant_id" value="<?php echo $candidature[
+                                                "ID"
+                                            ]; ?>">
                                             <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
                                             <button type="submit" style="height: 40px; align-itself: right;" class="btn btn-approved">Approuver la candidature</button>
                                         </form>
                                     </div>
-                        <?php
-                                endforeach;
+                        <?php endforeach;
                             else:
                                 echo "<p>Aucune candidature reçue pour le moment.</p>";
                             endif;
