@@ -5,6 +5,15 @@
   max-width: 100%;
   padding: 20px;
 }
+.infos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 40px;
+}
+
+.infos-grid p {
+    margin: 0;
+}
 
 /* Images principale et miniatures */
 .banner-img {
