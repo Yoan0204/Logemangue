@@ -594,9 +594,9 @@
   transform: translateY(-1px);
 }
 .page-cgu .btn-home {
-  background: #ff7a00 !important;
-  color: #fff !important;
-  text-decoration: none !important;
+  background: #ff7a00;
+  color: #fff;
+  text-decoration: none;
 }
 
 /* Page mot de passe oublié */ 

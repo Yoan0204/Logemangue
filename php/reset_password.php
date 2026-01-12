@@ -34,6 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" href="PROJET-LOGEMANGUE/Logemangue/css/style.css">
 </head>
 <body>
+    <main
+      style="font-family: Arial;"
+      >
 <div class="container">
     <h2>Nouveau mot de passe</h2>
 
