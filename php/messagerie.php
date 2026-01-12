@@ -58,6 +58,22 @@ if (!isset($_GET["dest"]) || !is_numeric($_GET["dest"])) {
     die("ID du destinataire invalide.");
 }
 $destinataire_id = (int) $_GET["dest"];
+try {
+    $stmtLu = $pdo->prepare("
+        UPDATE message
+        SET lu = 1
+        WHERE id_destinataire = :userId
+          AND id_expediteur = :destinataire_id
+          AND lu = 0
+    ");
+    $stmtLu->execute([
+        "userId" => $userId,
+        "destinataire_id" => $destinataire_id
+    ]);
+} catch (PDOException $e) {
+    // Optionnel : logger l'erreur
+}
+
 $offset = isset($_GET["offset"]) ? (int) $_GET["offset"] : 0;
 $limit = 10;
 try {
