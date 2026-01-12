@@ -11,7 +11,7 @@ $stmt->execute([$token]);
 $user = $stmt->fetch();
 
 if (!$user) {
-    die("Lien invalide ou expiré.");
+    $message = "Lien invalide ou expiré.";
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -29,23 +29,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Nouveau mot de passe</title>
-    <link rel="stylesheet" href="../css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nouveau mot de passe</title>
+  <link rel="stylesheet" href="../css/style.css?v=1">
 </head>
+
 <body>
     <main
       style="font-family: Arial;"
       >
-<div class="container">
-    <h2>Nouveau mot de passe</h2>
+  <div class="auth-container">
+    <div class="auth-card">
+      <h2>Nouveau mot de passe</h2>
+      <p class="subtitle">Choisissez un nouveau mot de passe pour votre compte.</p>
 
-    <form method="post">
+      <form method="post">
         <input type="password" name="password" placeholder="Nouveau mot de passe" required>
-        <button type="submit" class="btn">Changer</button>
-    </form>
+        <button type="submit">Changer</button>
+      </form>
 
-    <p><?= $message ?></p>
-</div>
+      <?php if (!empty($message)) : ?>
+        <p class="message"><?= $message ?></p>
+      <?php endif; ?>
+
+      <div class="auth-links">
+        <a href="login.html" class="small-link">← Retour à la connexion</a>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

@@ -656,7 +656,7 @@
   margin-top:15px;
   font-size:14px;
 }
-/* Page mot de passe oublié - Lien de réinitialisation */ 
+/* Page mot de passe oublié - Lien de réinitialisation */
 .reset-link-btn{
   display:inline-block;
   margin-top:8px;
@@ -676,4 +676,22 @@
   margin-top:8px;
   font-size:12px;
   color:#777;
+}
+
+/* Page réinitialisation mot de passe */
+
+.auth-links{
+  margin-top: 15px;
+  text-align: center;
+}
+
+.small-link{
+  font-size: 13px;
+  color: #F5A623;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.small-link:hover{
+  text-decoration: underline;
 }
