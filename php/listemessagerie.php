@@ -64,6 +64,8 @@ $stmt = $pdo->prepare("
     SELECT DISTINCT 
         u.id,
         u.nom,
+
+        -- Dernier message
         (
             SELECT contenu
             FROM message 
@@ -73,36 +75,68 @@ $stmt = $pdo->prepare("
                 (id_expediteur = u.id AND id_destinataire = :userId)
             ORDER BY date_envoi DESC 
             LIMIT 1
-        ) AS dernier_message
+        ) AS dernier_message,
+
+        -- Nombre de messages non lus
+        (
+            SELECT COUNT(*)
+            FROM message
+            WHERE id_expediteur = u.id
+              AND id_destinataire = :userId
+              AND lu = 0
+        ) AS non_lus
+
     FROM users u
     INNER JOIN message m 
         ON (m.id_expediteur = u.id OR m.id_destinataire = u.id)
     WHERE :userId IN (m.id_expediteur, m.id_destinataire)
-    AND u.id != :userId
+      AND u.id != :userId
     ORDER BY u.nom
 ");
 
-// Exécution
 $stmt->execute(['userId' => $userId]);
 $destinataires = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+
+
+// Faire les notification pour les nouveaux messages
+
+
 // Boucle d'affichage
-foreach ($destinataires as $destinataire):
+foreach ($destinataires as $destinataire): 
     $initiale = strtoupper(substr($destinataire['nom'], 0, 1));
     $dernierMessage = $destinataire['dernier_message'] ?? 'Aucun message';
+    $nonLus = (int)$destinataire['non_lus'];
 ?>
 
+
             <a href="messagerie?dest=<?php echo $destinataire['id']; ?>" style="text-decoration: none; color: inherit;">
-                <div class="conversation">
-                    <div class="profile-circle"><?php echo htmlspecialchars($initiale); ?></div>
-                    <div>
-                        <h4 class="m-0 fw-bold"><?php echo htmlspecialchars($destinataire['nom']); ?></h4>
-                        <p class="m-0"><?php echo htmlspecialchars($dernierMessage); ?></p>
+                <div class="conversation d-flex align-items-center justify-content-between <?php echo $nonLus > 0 ? 'conversation-unread' : ''; ?>">
+                    <div class="d-flex align-items-center">
+                        <div class="profile-circle"><?php echo htmlspecialchars($initiale); ?></div>
+
+                        <div class="ms-3">
+                            <h4 class="m-0 fw-bold">
+                                <?php echo htmlspecialchars($destinataire['nom']); ?>
+                            </h4>
+                            <p class="m-0 text-muted">
+                                <?php echo htmlspecialchars($dernierMessage); ?>
+                            </p>
+                        </div>
                     </div>
-                    <div class="arrow-box">›</div>
+
+                    <div class="d-flex align-items-center">
+                        <?php if ($nonLus > 0): ?>
+                            <span class="badge badge-unread">
+                                <?php echo $nonLus; ?>
+                            </span>
+                        <?php endif; ?>
+                        <div class="arrow-box ms-3">›</div>
+                    </div>
                 </div>
             </a>
             <?php endforeach; ?>
+
 
         </div>
 
