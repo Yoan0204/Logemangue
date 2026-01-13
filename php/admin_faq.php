@@ -108,7 +108,7 @@ $faqs = $pdo->query("SELECT * FROM faq ORDER BY id_faq DESC")->fetchAll(PDO::FET
                 <form method="post">
                     <input type="text" name="question" class="form-control mb-2" placeholder="Question" required>
                     <textarea name="reponse" class="form-control mb-2" placeholder="Réponse" rows="4" required></textarea>
-                    <button class="btn btn-success" name="add_faq">Ajouter</button>
+                    <button class="btn btn-login" name="add_faq">Ajouter</button>
                 </form>
             </div>
         </div>
@@ -134,8 +134,8 @@ $faqs = $pdo->query("SELECT * FROM faq ORDER BY id_faq DESC")->fetchAll(PDO::FET
                                   rows="4"><?= htmlspecialchars($faq['reponse']) ?></textarea>
 
                         <div class="d-flex gap-2">
-                            <button class="btn btn-primary btn-sm" name="edit_faq">Modifier</button>
-                            <button class="btn btn-danger btn-sm"
+                            <button class="btn btn-approved btn-sm" name="edit_faq">Modifier</button>
+                            <button class="btn btn-unapproved btn-sm"
                                     name="delete_faq"
                                     onclick="return confirm('Supprimer cette FAQ ?')">
                                 Supprimer
