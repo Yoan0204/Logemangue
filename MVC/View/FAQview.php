@@ -153,22 +153,6 @@ class FAQView {
 <main>
 
 <?php
-// Inclusion du fichier de connexion à la base de données
-require_once '../php/db2withoutlogin.php'; // Ajustez le chemin si nécessaire
-
-try {
-    // Récupération de toutes les FAQ
-    $query = "SELECT question, reponse FROM faq ORDER BY id_faq";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute();
-    $faqs = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-} catch(PDOException $e) {
-    echo "Erreur de récupération des FAQ : " . $e->getMessage();
-    $faqs = [];
-}
-?>
-
 <!-- Affichage des FAQ -->
 <?php if (!empty($faqs)): ?>
     <?php foreach ($faqs as $faq): ?>
