@@ -9,7 +9,6 @@ class RegisterController {
     }
 
     public function register() {
-        $this->model->register();
         
         if (empty($_POST['email']) || empty($_POST['password']) || empty($_POST['confirm_password'])) {
             return "missing_fields";
