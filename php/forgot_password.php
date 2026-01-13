@@ -2,11 +2,7 @@
 require_once 'db2withoutlogin.php';
 
 $message = "";
-<<<<<<< HEAD
-$message_type = "";
-=======
 $user = null; 
->>>>>>> 4038c14523fc0f4b8f6a28b3e6828a4cc8d237c9
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'];
@@ -23,24 +19,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             "UPDATE users SET reset_token = ?, reset_expires = ? WHERE email = ?"
         );
         $stmt->execute([$token, $expires, $email]);
-<<<<<<< HEAD
-
-        $link = "reset_password.php?token=$token";
-        
-        $message = "Lien de réinitialisation : <br><a href='$link' style='color: var(--orange); font-weight: 600;'>$link</a>";
-        $message_type = "success";
-    } else {
-        $message = "Aucun compte trouvé avec cet email.";
-        $message_type = "error";
-    }
-=======
         
         $link = "http://localhost/PROJET-LOGEMANGUE/Logemangue/php/reset_password.php?token=$token";
         $message = "Un lien de réinitialisation a été généré.";
         } else {
             $message = "Aucun compte trouvé avec cet email.";
             }
->>>>>>> 4038c14523fc0f4b8f6a28b3e6828a4cc8d237c9
 }
 ?>
 
@@ -84,32 +68,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </nav>
   </header>
 <body>
-<<<<<<< HEAD
-    <div class="container" style="margin-top: 50px;">
-        <h2>Mot de passe oublié</h2>
-        <p class="subtitle">Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.</p>
-
-        <form method="post">
-            <div class="form-group">
-                <label for="email">Adresse email</label>
-                <input type="email" id="email" name="email" placeholder="exemple@email.com" required>
-            </div>
-            <button type="submit" class="btn">Envoyer le lien</button>
-        </form>
-
-        <?php if ($message): ?>
-            <div class="message <?= $message_type ?>">
-                <?= $message ?>
-            </div>
-        <?php endif; ?>
-
-        <div class="back-link">
-            <a href="login.html">← Retour à la connexion</a>
-        </div>
-    </div>
-</body>
-</html>
-=======
     <main
       style="font-family: Arial;"
       >
@@ -138,4 +96,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
       </div>
     </body>
->>>>>>> 4038c14523fc0f4b8f6a28b3e6828a4cc8d237c9

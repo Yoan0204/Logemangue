@@ -12,13 +12,7 @@ $stmt->execute([$token]);
 $user = $stmt->fetch();
 
 if (!$user) {
-<<<<<<< HEAD
-    $error = true;
     $message = "Lien invalide ou expiré.";
-    $message_type = "error";
-=======
-    $message = "Lien invalide ou expiré.";
->>>>>>> 4038c14523fc0f4b8f6a28b3e6828a4cc8d237c9
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && $user) {
