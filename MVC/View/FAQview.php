@@ -221,11 +221,7 @@ class FAQView {
 
 </body>
 </html>
-<<<<<<< HEAD
-        <?php
-=======
 
 <?php
->>>>>>> 280c68f215bad762b5e66ae8dd93a28d627d6363
     }
 }
