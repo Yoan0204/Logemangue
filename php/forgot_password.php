@@ -31,19 +31,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<<<<<<< HEAD
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mot de passe oublié</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/password.css" rel="stylesheet">
-=======
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mot de passe oublié</title>
   <link rel="stylesheet" href="../css/style.css">
->>>>>>> 4038c14523fc0f4b8f6a28b3e6828a4cc8d237c9
 </head>
   <header class="topbar">
     <a href="index" class="topbar-logo">
