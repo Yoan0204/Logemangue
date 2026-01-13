@@ -55,6 +55,20 @@ if ($page === "messagerie" || $page === "listemessagerie") {
     $controller->showMessagerie($userId);
     exit();
 }
+if ($page === "admin") {
+    require_once __DIR__ . "/db2.php";
+
+  if (!isset($user["is_admin"]) || $user["is_admin"] != 1) {
+      header("Location: index");
+      exit();
+  }
+
+  require_once __DIR__ . "/../MVC/Controller/Admincontroller.php";
+
+  $controller = new Admincontroller($pdo);
+  $controller->index();
+  exit;
+}
 
 if ($page === "profil") {
     require_once __DIR__ . "/db.php";
@@ -92,7 +106,7 @@ if ($page === "profil") {
 
     <?php
       // Charger logements pour le carrousel — ne garder que ceux qui ont une photo
-      require_once __DIR__ . '/models/LogementModel.php';
+      require_once '../MVC/Model/LogementModel.php';
       $logementModel = new LogementModel($conn, $pdo);
       // On récupère plus de résultats et on filtrera côté PHP pour garantir d'avoir 4 logements AVEC photo
       $carouselResult = $logementModel->getFilteredLogements([], 20, 0);

@@ -6,9 +6,9 @@ if (!isset($user["is_admin"]) || $user["is_admin"] != 1) {
     exit();
 }
 
-require_once __DIR__ . "/../MVC/Controller/Admincontroller.php";
+require_once __DIR__ . "/../MVC/Controller/Adminuserscontroller.php";
 
-$controller = new Admincontroller($pdo);
-$controller->index();
+$controller = new Adminuserscontroller($pdo);
+$controller->list();
 exit;
 
