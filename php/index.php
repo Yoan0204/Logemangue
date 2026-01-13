@@ -55,6 +55,20 @@ if ($page === "messagerie" || $page === "listemessagerie") {
     $controller->showMessagerie($userId);
     exit();
 }
+if ($page === "admin") {
+    require_once __DIR__ . "/db2.php";
+
+  if (!isset($user["is_admin"]) || $user["is_admin"] != 1) {
+      header("Location: index");
+      exit();
+  }
+
+  require_once __DIR__ . "/../MVC/Controller/Admincontroller.php";
+
+  $controller = new Admincontroller($pdo);
+  $controller->index();
+  exit;
+}
 
 if ($page === "profil") {
     require_once __DIR__ . "/db.php";
