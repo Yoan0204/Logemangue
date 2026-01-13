@@ -86,8 +86,9 @@ $faqs = $pdo->query("SELECT * FROM faq ORDER BY id_faq DESC")->fetchAll(PDO::FET
                 <hr>
 
                 <?php if (isset($user["is_admin"]) && $user["is_admin"] == 1): ?>
-                    <a class="nav-link" href="admin.php">Dashboard Admin ⚙️</a>
-                    <a class="nav-link active-link" href="admin_faq.php">Gestion FAQ ❓</a>
+                    <a class="nav-link" href="admin.php">Admin ⚙️</a>
+                <a class="nav-link" href="admin_users.php">Gestion utilisateurs</a>                    
+                    <a class="nav-link active-link" href="admin_faq.php">Gestion FAQ</a>
                 <?php endif; ?>
 
                 <a class="nav-link" href="profil">Mon profil</a>

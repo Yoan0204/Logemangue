@@ -136,46 +136,44 @@ foreach ($userTypes as $type) {
 <button id="menu-toggle" class="hamburger">☰</button>
 
 <div class="d-flex">
-    <!-- Sidebar -->
+        <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
-      <div>
-        <a href="index">
-          <img class="sidebar-logo" src="../png/Aberent.png" alt="Logo">
-        </a>
-        <nav class="nav flex-column">
-          <a class="nav-link" href="index">Accueil</a>
-          <a class="nav-link" href="logements">Recherche</a>
+        <div>
+            <a href="index">
+                <img class="sidebar-logo" src="../png/Aberent.png" alt="Logo">
+            </a>
 
-          <hr>
-          <?php if (
-              isset($user["type_utilisateur"]) &&
-                  $user["type_utilisateur"] == "Proprietaire" or
-              $user["type_utilisateur"] == "Organisme"
-          ): ?>
-            <li><a class="nav-link" href="publish">Publier une annonce</a></li>
-          <?php endif; ?>  
-          <?php if (
-              isset($user["type_utilisateur"]) &&
-                  $user["type_utilisateur"] == "Proprietaire" or
-              $user["type_utilisateur"] == "Organisme"
-          ): ?>
-            <li><a class="nav-link" href="logements?view=mesannonces">Mes annonces</a></li>
-          <?php endif; ?>  
-          <a class="nav-link" href="listemessagerie">Ma messagerie</a>
+            <nav class="nav flex-column">
+                <a class="nav-link" href="index">Accueil</a>
+                <a class="nav-link" href="logements">Recherche</a>
 
-          <hr>
-          <a class="nav-link" href="#">FAQ</a>
-          <a class="nav-link" href="#">Contact</a>
+                <hr>
 
-          <hr>
-          <?php if (isset($user["is_admin"]) && $user["is_admin"] == 1): ?>
-            <li><a class="nav-link active-link " href="admin">Admin ⚙️</a></li>
-            <li><a class="nav-link" href="admin_faq.php">Gestion FAQ ❓</a></li>
-          <?php endif; ?> 
-          <a class="nav-link " href="profil">Mon profil</a>
-          <a class="nav-link" href="login.html">Connexion</a>
-        </nav>
-      </div>
+                <?php if (
+                    isset($user["type_utilisateur"]) &&
+                    ($user["type_utilisateur"] == "Proprietaire" || $user["type_utilisateur"] == "Organisme")
+                ): ?>
+                    <a class="nav-link" href="publish">Publier une annonce</a>
+                    <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>
+                <?php endif; ?>
+
+                <a class="nav-link" href="listemessagerie">Ma messagerie</a>
+
+                <hr>
+
+                <a class="nav-link" href="faq.php">FAQ</a>
+                <a class="nav-link" href="#">Contact</a>
+
+                <hr>
+
+                <a class="nav-link active-link" href="admin.php">Admin ⚙️</a>
+                <a class="nav-link " href="admin_users.php">Gestion utilisateurs</a>
+                <a class="nav-link" href="admin_faq.php">Gestion FAQ</a>
+
+                <a class="nav-link" href="profil">Mon profil</a>
+                <a class="nav-link" href="login.html">Connexion</a>
+            </nav>
+        </div>
     </div>
   
     <!-- CONTENU PRINCIPAL -->
