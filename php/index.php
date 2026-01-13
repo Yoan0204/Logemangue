@@ -106,7 +106,7 @@ if ($page === "profil") {
 
     <?php
       // Charger logements pour le carrousel — ne garder que ceux qui ont une photo
-      require_once __DIR__ . '/models/LogementModel.php';
+      require_once '../MVC/Model/LogementModel.php';
       $logementModel = new LogementModel($conn, $pdo);
       // On récupère plus de résultats et on filtrera côté PHP pour garantir d'avoir 4 logements AVEC photo
       $carouselResult = $logementModel->getFilteredLogements([], 20, 0);

@@ -1,7 +1,7 @@
 <?php
 require_once 'db2withoutlogin.php';
-require 'controllers/LogementController.php';
-require 'models/LogementModel.php';
+require '../MVC/Controller/LogementController.php';
+require '../MVC/Model/LogementModel.php';
 
 
 // Initialiser le modèle et le contrôleur
@@ -100,7 +100,7 @@ if ($view === 'mesannonces') {
                 <div class="container-fluid" style="max-width: 2200px;">
                     <div class="row g-4">
                         <!-- Inclure la vue appropriée -->
-                        <?php include 'views/' . $view . '.php'; ?>
+                        <?php include  $view . '.php'; ?>
                     </div>
                 </div>
             </div>
