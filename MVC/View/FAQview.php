@@ -6,10 +6,12 @@ class FAQView {
        <!DOCTYPE html>
 <html lang="fr">
 <head>
+        <link rel="stylesheet" type="text/css" href="../css/style.css" />
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FAQ – LogeMangue</title>
-
+<?php include "../php/db2withoutlogin.php"  ; ?>
 <style>
     body {
         font-family: 'Segoe UI', sans-serif;
@@ -19,7 +21,7 @@ class FAQView {
     }
 
     .faq-header {
-        background: linear-gradient(135deg, #ff7a00, #ff9a3c);
+        background: linear-gradient(135deg, #ff7a00, #ffce3cff);
         color: white;
         padding: 60px 20px;
         text-align: center;
@@ -107,7 +109,37 @@ class FAQView {
         font-weight: 600;
     }
 </style>
-</head>
+</head> 
+<header class="topbar">
+    <a href="index" class="topbar-logo">
+      <img src="../png/topbar.png" onresize="3000" alt="Logo" />
+    </a>
+  <div class="burger-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+    <nav class="topbar-nav">
+      <a class="nav-link" href="index">Accueil</a>
+      <a class="nav-link" href="logements">Recherche</a>
+        <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="publish">Publier une annonce</a>
+        <?php endif; ?>
+      <?php if (!$isEtudiant): ?>
+      <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>        
+      <?php endif; ?>
+      <?php if ($isEtudiant): ?>
+      <a class="nav-link" href="candidatures">Mes candidatures</a>        
+      <?php endif; ?>      
+
+      <a class="nav-link" href="listemessagerie">Ma messagerie</a>
+      <?php if ($isAdmin): ?> 
+          <a class="nav-link" href="admin">Admin ⚙️</a>
+      <?php endif; ?>
+
+      <a class="nav-link " href="profil">Mon profil</a>
+    </nav>
+  </header>
 
 <body>
 
@@ -170,9 +202,6 @@ class FAQView {
 
 </main>
 
-<footer>
-    <a href="index.php">← Retour à l’accueil</a>
-</footer>
 
 <script>
     document.querySelectorAll('.faq-question').forEach(question => {
