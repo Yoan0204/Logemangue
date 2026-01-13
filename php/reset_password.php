@@ -12,9 +12,13 @@ $stmt->execute([$token]);
 $user = $stmt->fetch();
 
 if (!$user) {
+<<<<<<< HEAD
     $error = true;
     $message = "Lien invalide ou expiré.";
     $message_type = "error";
+=======
+    $message = "Lien invalide ou expiré.";
+>>>>>>> 4038c14523fc0f4b8f6a28b3e6828a4cc8d237c9
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && $user) {
@@ -32,6 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $user) {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mot de passe oublié</title>
@@ -168,5 +173,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $user) {
             });
         }
     </script>
+=======
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nouveau mot de passe</title>
+  <link rel="stylesheet" href="../css/style.css?v=1">
+</head>
+
+<body>
+    <main
+      style="font-family: Arial;"
+      >
+  <div class="auth-container">
+    <div class="auth-card">
+      <h2>Nouveau mot de passe</h2>
+      <p class="subtitle">Choisissez un nouveau mot de passe pour votre compte.</p>
+
+      <form method="post">
+        <input type="password" name="password" placeholder="Nouveau mot de passe" required>
+        <button type="submit">Changer</button>
+      </form>
+
+      <?php if (!empty($message)) : ?>
+        <p class="message"><?= $message ?></p>
+      <?php endif; ?>
+
+      <div class="auth-links">
+        <a href="login.html" class="small-link">← Retour à la connexion</a>
+      </div>
+    </div>
+  </div>
+>>>>>>> 4038c14523fc0f4b8f6a28b3e6828a4cc8d237c9
 </body>
 </html>

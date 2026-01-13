@@ -2,7 +2,11 @@
 require_once 'db2withoutlogin.php';
 
 $message = "";
+<<<<<<< HEAD
 $message_type = "";
+=======
+$user = null; 
+>>>>>>> 4038c14523fc0f4b8f6a28b3e6828a4cc8d237c9
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'];
@@ -19,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             "UPDATE users SET reset_token = ?, reset_expires = ? WHERE email = ?"
         );
         $stmt->execute([$token, $expires, $email]);
+<<<<<<< HEAD
 
         $link = "reset_password.php?token=$token";
         
@@ -28,18 +33,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $message = "Aucun compte trouvé avec cet email.";
         $message_type = "error";
     }
+=======
+        
+        $link = "http://localhost/PROJET-LOGEMANGUE/Logemangue/php/reset_password.php?token=$token";
+        $message = "Un lien de réinitialisation a été généré.";
+        } else {
+            $message = "Aucun compte trouvé avec cet email.";
+            }
+>>>>>>> 4038c14523fc0f4b8f6a28b3e6828a4cc8d237c9
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mot de passe oublié</title>
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/password.css" rel="stylesheet">
+=======
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mot de passe oublié</title>
+  <link rel="stylesheet" href="../css/style.css">
+>>>>>>> 4038c14523fc0f4b8f6a28b3e6828a4cc8d237c9
 </head>
   <header class="topbar">
     <a href="index" class="topbar-logo">
@@ -64,6 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </nav>
   </header>
 <body>
+<<<<<<< HEAD
     <div class="container" style="margin-top: 50px;">
         <h2>Mot de passe oublié</h2>
         <p class="subtitle">Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.</p>
@@ -88,3 +109,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 </body>
 </html>
+=======
+    <main
+      style="font-family: Arial;"
+      >
+
+  <div class="auth-container">
+    <div class="auth-card">
+      <h2>Mot de passe oublié</h2>
+      <p class="subtitle">Entrez votre email pour recevoir un lien de réinitialisation.</p>
+      
+      <form method="post">
+        <input type="email" name="email" placeholder="Votre email" required>
+        <button type="submit">Envoyer le lien</button>
+      </form>
+      
+      <?php if (!empty($message)) : ?>
+        <p class="message"><?= $message ?></p>
+        <?php endif; ?>
+        <?php if (!empty($link)) : ?>
+          <div class="reset-link-box">
+            <p>Lien de réinitialisation :</p>
+            <a class="reset-link-btn" href="<?= $link ?>" target="_blank">
+              Ouvrir le lien de réinitialisation
+            </a>
+          </div>
+          <?php endif; ?>
+        </div>
+      </div>
+    </body>
+>>>>>>> 4038c14523fc0f4b8f6a28b3e6828a4cc8d237c9
