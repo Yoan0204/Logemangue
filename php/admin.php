@@ -170,6 +170,7 @@ foreach ($userTypes as $type) {
           <hr>
           <?php if (isset($user["is_admin"]) && $user["is_admin"] == 1): ?>
             <li><a class="nav-link active-link " href="admin">Admin ⚙️</a></li>
+            <li><a class="nav-link" href="admin_faq.php">Gestion FAQ ❓</a></li>
           <?php endif; ?> 
           <a class="nav-link " href="profil">Mon profil</a>
           <a class="nav-link" href="login.html">Connexion</a>

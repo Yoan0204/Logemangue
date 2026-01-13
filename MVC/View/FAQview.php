@@ -13,6 +13,7 @@ class FAQView {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FAQ – LogeMangue</title>
 <?php include "../php/db2withoutlogin.php"  ; ?>
+
 <style>
     body {
         font-family: 'Segoe UI', sans-serif;
@@ -151,55 +152,41 @@ class FAQView {
 
 <main>
 
-    <div class="faq-item">
-        <div class="faq-question">
-            Comment créer un compte ?
-            <span>＋</span>
-        </div>
-        <div class="faq-answer">
-            <p>Inscrivez-vous en quelques secondes via le bouton “Inscription” et confirmez votre adresse e-mail.</p>
-        </div>
-    </div>
+<?php
+// Inclusion du fichier de connexion à la base de données
+require_once '../php/db2withoutlogin.php'; // Ajustez le chemin si nécessaire
 
-    <div class="faq-item">
-        <div class="faq-question">
-            Comment trouver un logement ?
-            <span>＋</span>
-        </div>
-        <div class="faq-answer">
-            <p>Utilisez les filtres intelligents pour trouver rapidement le logement qui vous correspond.</p>
-        </div>
-    </div>
+try {
+    // Récupération de toutes les FAQ
+    $query = "SELECT question, reponse FROM faq ORDER BY id_faq";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $faqs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+} catch(PDOException $e) {
+    echo "Erreur de récupération des FAQ : " . $e->getMessage();
+    $faqs = [];
+}
+?>
 
-    <div class="faq-item">
-        <div class="faq-question">
-            Comment réserver un logement ?
-            <span>＋</span>
+<!-- Affichage des FAQ -->
+<?php if (!empty($faqs)): ?>
+    <?php foreach ($faqs as $faq): ?>
+        <div class="faq-item">
+            <div class="faq-question">
+                <?php echo htmlspecialchars($faq['question']); ?>
+                <span>＋</span>
+            </div>
+            <div class="faq-answer">
+                <p><?php echo nl2br(htmlspecialchars($faq['reponse'])); ?></p>
+            </div>
         </div>
-        <div class="faq-answer">
-            <p>Cliquez sur “Réserver” depuis l’annonce et suivez les étapes de confirmation.</p>
-        </div>
-    </div>
+    <?php endforeach; ?>
+<?php else: ?>
+    <p>Aucune FAQ disponible pour le moment.</p>
+<?php endif; ?>
 
-    <div class="faq-item">
-        <div class="faq-question">
-            Publier une annonce ?
-            <span>＋</span>
-        </div>
-        <div class="faq-answer">
-            <p>Connectez-vous à votre compte propriétaire et publiez votre annonce en quelques clics.</p>
-        </div>
-    </div>
-
-    <div class="faq-item">
-        <div class="faq-question">
-            Mot de passe oublié ?
-            <span>＋</span>
-        </div>
-        <div class="faq-answer">
-            <p>Utilisez le lien “Mot de passe oublié” pour le réinitialiser instantanément.</p>
-        </div>
-    </div>
+    
 
 </main>
 
