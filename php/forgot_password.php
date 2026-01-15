@@ -1,17 +1,26 @@
 <?php
 require_once 'db2withoutlogin.php';
 
+/* ===== PHPMailer ===== */
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../PHPMailer-7.0.2/src/Exception.php';
+require '../PHPMailer-7.0.2/src/PHPMailer.php';
+require '../PHPMailer-7.0.2/src/SMTP.php';
+
 $message = "";
 $user = null; 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $email = $_POST['email'];
+    $email = trim($_POST['email']);
 
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch();
 
     if ($user) {
+        // Génération du token
         $token = bin2hex(random_bytes(32));
         $expires = date("Y-m-d H:i:s", time() + 3600);
 
@@ -19,12 +28,58 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             "UPDATE users SET reset_token = ?, reset_expires = ? WHERE email = ?"
         );
         $stmt->execute([$token, $expires, $email]);
-        
-        $link = "http://localhost/PROJET-LOGEMANGUE/Logemangue/php/reset_password.php?token=$token";
-        $message = "Un lien de réinitialisation a été généré.";
-        } else {
-            $message = "Aucun compte trouvé avec cet email.";
-            }
+
+        // Lien absolu (IMPORTANT)
+        $link = "localhost/Logemangue/php/reset_password.php?token=$token";
+
+        // Envoi email
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'etoiledemortlaguerredesclans@gmail.com';
+            $mail->Password = 'xhft atkl wfjz elsq
+';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+
+            $mail->CharSet = 'UTF-8';
+
+            // IMPORTANT : même email que le SMTP
+            $mail->setFrom('tonemail@gmail.com', 'Logemangue Support');
+            $mail->addAddress($email);
+
+            $mail->isHTML(true);
+            $mail->Subject = 'Réinitialisation de votre mot de passe';
+            $mail->Body = "
+                <p>Bonjour,</p>
+                <p>Vous avez demandé la réinitialisation de votre mot de passe.</p>
+                <p>
+                    <a href='$link' style='color:#ff7a00;font-weight:bold;'>
+                        Cliquez ici pour réinitialiser votre mot de passe
+                    </a>
+                </p>
+                <p>Ce lien est valable 1 heure.</p>
+                <p>Si vous n'êtes pas à l'origine de cette demande, ignorez cet email.</p>
+            ";
+
+            $mail->send();
+
+            $message = "Un lien de réinitialisation a été envoyé à votre adresse email.";
+            $message_type = "success";
+
+        } catch (Exception $e) {
+            $message = "Erreur lors de l'envoi de l'email.";
+            $message_type = "error";
+        }
+
+    } else {
+        // Message volontairement vague (sécurité)
+        $message = "Si un compte existe avec cet email, un lien a été envoyé.";
+        $message_type = "success";
+    }
 }
 ?>
 
