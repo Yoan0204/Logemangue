@@ -1,14 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-class Adminview
-{
-    public function render() {
-        include 'MVC/View/Adminview.php';
-    }
-}
-?>
-=======
 class AdminView {
     public function renderDashboard(array $data) {
         // Provide access to session/global user info used in templates
@@ -28,7 +19,6 @@ class AdminView {
         $organismes = $data['organismes'];
         
         ?>
->>>>>>> 8fd62e40ed8f3650e69f3f1e820e980156c8259b
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -44,48 +34,6 @@ class AdminView {
 <button id="menu-toggle" class="hamburger">☰</button>
 
 <div class="d-flex">
-<<<<<<< HEAD
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-      <div>
-        <a href="index">
-          <img class="sidebar-logo" src="../png/Aberent.png" alt="Logo">
-        </a>
-        <nav class="nav flex-column">
-          <a class="nav-link" href="index">Accueil</a>
-          <a class="nav-link" href="logements">Recherche</a>
-
-          <hr>
-          <?php if (
-              isset($user["type_utilisateur"]) &&
-                  $user["type_utilisateur"] == "Proprietaire" or
-              $user["type_utilisateur"] == "Organisme"
-          ): ?>
-            <li><a class="nav-link" href="publish">Publier une annonce</a></li>
-          <?php endif; ?>  
-          <?php if (
-              isset($user["type_utilisateur"]) &&
-                  $user["type_utilisateur"] == "Proprietaire" or
-              $user["type_utilisateur"] == "Organisme"
-          ): ?>
-            <li><a class="nav-link" href="logements?view=mesannonces">Mes annonces</a></li>
-          <?php endif; ?>  
-          <a class="nav-link" href="listemessagerie">Ma messagerie</a>
-
-          <hr>
-          <a class="nav-link" href="#">FAQ</a>
-          <a class="nav-link" href="#">Contact</a>
-
-          <hr>
-          <?php if (isset($user["is_admin"]) && $user["is_admin"] == 1): ?>
-            <li><a class="nav-link active-link " href="admin">Admin ⚙️</a></li>
-            <li><a class="nav-link" href="admin_faq.php">Gestion FAQ ❓</a></li>
-          <?php endif; ?> 
-          <a class="nav-link " href="profil">Mon profil</a>
-          <a class="nav-link" href="login.html">Connexion</a>
-        </nav>
-      </div>
-=======
         <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
         <div>
@@ -124,7 +72,6 @@ class AdminView {
                 <a class="nav-link" href="login.html">Connexion</a>
             </nav>
         </div>
->>>>>>> 8fd62e40ed8f3650e69f3f1e820e980156c8259b
     </div>
   
     <!-- CONTENU PRINCIPAL -->
@@ -441,11 +388,8 @@ toggle.addEventListener("click", () => {
     </script>
 </body>
 </html>
-<<<<<<< HEAD
-=======
 
 
 <?php
     }
 }
->>>>>>> 8fd62e40ed8f3650e69f3f1e820e980156c8259b
