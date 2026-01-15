@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute([$token, $expires, $email]);
 
         // Lien absolu (IMPORTANT)
-        $link = "localhost/Logemangue/php/reset_password.php?token=$token";
+        $link = "logemangue.gt.tc/php/reset_password.php?token=$token";
 
         // Envoi email
         $mail = new PHPMailer(true);
@@ -39,9 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'etoiledemortlaguerredesclans@gmail.com';
-            $mail->Password = 'xhft atkl wfjz elsq
-';
+            $mail->Username = 'mc.carruette@gmail.com';
+            $mail->Password = 'cwta uhgq kuyb fiug';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
@@ -54,15 +53,99 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $mail->isHTML(true);
             $mail->Subject = 'Réinitialisation de votre mot de passe';
             $mail->Body = "
-                <p>Bonjour,</p>
-                <p>Vous avez demandé la réinitialisation de votre mot de passe.</p>
-                <p>
-                    <a href='$link' style='color:#ff7a00;font-weight:bold;'>
-                        Cliquez ici pour réinitialiser votre mot de passe
-                    </a>
-                </p>
-                <p>Ce lien est valable 1 heure.</p>
-                <p>Si vous n'êtes pas à l'origine de cette demande, ignorez cet email.</p>
+<!DOCTYPE html>
+<html lang='fr'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Réinitialisation mot de passe</title>
+</head>
+<body style='margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,sans-serif;background-color:#f5f5f5;'>
+    <table width='100%' cellpadding='0' cellspacing='0' style='background-color:#f5f5f5;padding:40px 20px;'>
+        <tr>
+            <td align='center'>
+                <table width='600' cellpadding='0' cellspacing='0' style='background:linear-gradient(135deg,#ff9a56 0%,#ff6a00 50%,#ff4500 100%);border-radius:16px;overflow:hidden;box-shadow:0 10px 40px rgba(255,106,0,0.3);'>
+                    <!-- Header avec dégradé -->
+                    <tr>
+                        <td style='padding:50px 40px;text-align:center;'>
+                            <h1 style='margin:0;color:#ffffff;font-size:32px;font-weight:700;text-shadow:0 2px 10px rgba(0,0,0,0.2);'>
+                                🔐 Réinitialisation
+                            </h1>
+                        </td>
+                    </tr>
+                    
+                    <!-- Corps du message avec fond blanc -->
+                    <tr>
+                        <td style='background-color:#ffffff;padding:50px 40px;'>
+                            <p style='margin:0 0 20px;color:#333;font-size:18px;line-height:1.6;'>
+                                Bonjour,
+                            </p>
+                            
+                            <p style='margin:0 0 30px;color:#666;font-size:16px;line-height:1.6;'>
+                                Vous avez demandé la réinitialisation de votre mot de passe. Pour continuer, cliquez sur le bouton ci-dessous :
+                            </p>
+                            
+                            <!-- Bouton CTA -->
+                            <table width='100%' cellpadding='0' cellspacing='0'>
+                                <tr>
+                                    <td align='center' style='padding:10px 0 30px;'>
+                                        <a href='$link' style='display:inline-block;background:linear-gradient(135deg,#ff9a56,#ff6a00);color:#ffffff;text-decoration:none;padding:16px 40px;border-radius:50px;font-size:16px;font-weight:600;box-shadow:0 4px 15px rgba(255,106,0,0.4);transition:all 0.3s ease;'>
+                                            Réinitialiser mon mot de passe
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            <!-- Info box -->
+                            <table width='100%' cellpadding='0' cellspacing='0' style='background-color:#fff5ed;border-left:4px solid #ff6a00;border-radius:8px;margin:20px 0;'>
+                                <tr>
+                                    <td style='padding:20px;'>
+                                        <p style='margin:0;color:#d65a00;font-size:14px;line-height:1.5;'>
+                                            ⏱️ <strong>Ce lien est valable pendant 1 heure</strong>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            <p style='margin:0 0 10px;color:#999;font-size:14px;line-height:1.6;'>
+                                Si le bouton ne fonctionne pas, copiez et collez ce lien dans votre navigateur :
+                            </p>
+                            <p style='margin:0 0 30px;color:#ff6a00;font-size:13px;word-break:break-all;'>
+                                $link
+                            </p>
+                            
+                            <p style='margin:0;color:#999;font-size:14px;line-height:1.6;'>
+                                Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet email en toute sécurité.
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style='background-color:#2d2d2d;padding:30px 40px;text-align:center;'>
+                            <p style='margin:0 0 10px;color:#ffffff;font-size:16px;font-weight:600;'>
+                                Logemangue Support
+                            </p>
+                            <p style='margin:0;color:#999;font-size:13px;'>
+                                © 2025 Logemangue. Tous droits réservés.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+                
+                <!-- Note sous l'email -->
+                <table width='600' cellpadding='0' cellspacing='0' style='margin-top:20px;'>
+                    <tr>
+                        <td style='text-align:center;color:#999;font-size:12px;line-height:1.5;'>
+                            Cet email a été envoyé automatiquement, merci de ne pas y répondre.
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
             ";
 
             $mail->send();
