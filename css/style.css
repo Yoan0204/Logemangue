@@ -558,7 +558,7 @@
   margin-right: 8px;
 }
 
-/* Bouton retour en haut (n'affecte que cette page) */
+/* Bouton retour en haut */
 .page-cgu #backToTop {
   position: fixed;
   bottom: 18px;
