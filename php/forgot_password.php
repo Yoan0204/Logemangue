@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         );
         $stmt->execute([$token, $expires, $email]);
         
-        $link = "http://localhost/PROJET-LOGEMANGUE/Logemangue/php/reset_password.php?token=$token";
+        $link = "http://localhost/Logemangue/php/reset_password.php?token=$token";
         $message = "Un lien de réinitialisation a été généré.";
         } else {
             $message = "Aucun compte trouvé avec cet email.";
