@@ -298,10 +298,17 @@ emailInput.addEventListener('input', () => {
 
     timeout = setTimeout(() => {
         const email = emailInput.value;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!email) {
             status.textContent = '';
             status.className = 'email-status';
+            return;
+        }
+
+        if (!emailRegex.test(email)) {
+            status.textContent = '❌ Format email invalide';
+            status.className = 'email-status error';
             return;
         }
 
