@@ -16,6 +16,9 @@ class MessagerieController
         $userId     = $_SESSION['user_id'];
 
         $destinataires = $this->model->getConversations($userId);
+        
+        $isAdmin = isset($user['is_admin']) ? $user['is_admin'] : 1;   
+        $isEtudiant = (isset($user['type_utilisateur']) && $user['type_utilisateur'] === 'Etudiant') ? true : false; 
 
         require __DIR__ . '/../View/ListeMessagerie.php';
     }

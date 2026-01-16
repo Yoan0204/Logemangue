@@ -87,15 +87,16 @@ class LogementController {
         ];
     }
 
-    //Traite la suppression d'un logement
+    // Traite la suppression d'un logement
     public function handleDelete() {
         if (isset($_POST['delete']) && isset($_POST['logement_id'])) {
             $logementId = $_POST['logement_id'];
             $this->model->deleteLogement($logementId);
-            return "Le logement a été marqué comme supprimé !";
+            return "Le logement a été supprimé de la base de données !";
         }
         return null;
     }
+
 
     //Affiche la vue appropriée (mes annonces ou recherche)
     public function render($view, $data = []) {

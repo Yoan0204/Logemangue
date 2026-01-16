@@ -1,6 +1,3 @@
-<?php require_once __DIR__ . '/../../php/db2.php';
-$isAdmin = isset($user['is_admin']) ? $user['is_admin'] : 0;   
-$isEtudiant = (isset($user['type_utilisateur']) && $user['type_utilisateur'] === 'Etudiant') ? true : false;  ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -45,7 +42,7 @@ $isEtudiant = (isset($user['type_utilisateur']) && $user['type_utilisateur'] ===
 
     <div>
         <div class="header-box mb-4 items-center">
-            <h1 class="fw-bold">Ma messagerie</h1>
+            <h1 class="fw-bold">Ma messagerie </h1>
         </div>
 
         <!-- Barre de recherche -->
