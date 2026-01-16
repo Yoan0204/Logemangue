@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../Model/MessagerieModel.php';
-require_once __DIR__ . '/../../php/db2.php';
 class MessagerieController
 {
     private MessagerieModel $model;
@@ -16,10 +15,7 @@ class MessagerieController
         $userId     = $_SESSION['user_id'];
 
         $destinataires = $this->model->getConversations($userId);
-        
-        $isAdmin = isset($user['is_admin']) ? $user['is_admin'] : 1;   
-        $isEtudiant = (isset($user['type_utilisateur']) && $user['type_utilisateur'] === 'Etudiant') ? true : false; 
-
+        include __DIR__ . '/../../php/db2.php';
         require __DIR__ . '/../View/ListeMessagerie.php';
     }
 }
