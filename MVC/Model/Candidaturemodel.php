@@ -10,8 +10,7 @@ class CandidatureModel {
 
     public function getCandidatures($userId) {
 
-        $stmt = $this->pdo->prepare("
-            SELECT r.id, r.date_debut, r.date_fin, r.statut, r.montant, l.adresse, l.ville, l.code_postal, l.id AS logement_id
+        $stmt = $this->pdo->prepare("SELECT r.id, r.date_debut, r.date_fin, r.statut, r.montant, l.adresse, l.ville, l.code_postal, l.id AS logement_id
             FROM reservation r
             JOIN logement l on r.id_logement = l.id
             WHERE r.id_etudiant = ?
