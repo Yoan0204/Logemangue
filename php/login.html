@@ -666,18 +666,14 @@ emailInput.addEventListener('input', () => {
     }, 500);
 });
 </script>
-
-    <!-- CALENDRIER SCRIPT -->
     <script>
       let currentDate = new Date();
       let selectedDate = null;
       const months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
 
-      // Date maximale (aujourd'hui - 16 ans)
       const today = new Date();
       const maxDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
 
-      // Ouvrir le calendrier
       document.getElementById('register-birthdate').addEventListener('click', function() {
         document.getElementById('calendar-modal').classList.add('active');
         populateYearSelector();
@@ -742,7 +738,7 @@ emailInput.addEventListener('input', () => {
           
           const cellDate = new Date(year, month, day);
           
-          // Désactiver les dates futures et celles qui donnent moins de 16 ans
+          //désactiver dates > 16
           if (cellDate > maxDate) {
             dayCell.classList.add('disabled');
           } else {
