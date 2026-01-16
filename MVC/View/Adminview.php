@@ -59,7 +59,7 @@ class AdminView {
 
                 <hr>
 
-                <a class="nav-link" href="faq.php">FAQ</a>
+                <a class="nav-link" href="index?page=faq">FAQ</a>
                 <a class="nav-link" href="#">Contact</a>
 
                 <hr>

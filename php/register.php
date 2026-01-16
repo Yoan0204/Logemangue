@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($name);
     $phone = $_POST['phone'];
     $genre = $_POST['genre'];
-    $birthdate = $_POST['birthdate'];
+    $birthdate = $_POST['birthdate_value'];
     $type_utilisateur = $_POST['type_utilisateur'];
 
 if (!preg_match('/^[a-zA-Z0-9 _-]+$/', $name)) {

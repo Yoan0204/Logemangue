@@ -28,7 +28,10 @@ try {
 ?>
 <!--  ON OBTIENT LES INFORMATIONS DE LUTILISATEUR DE LA SESSION ACTIVE -->
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $userId = $_SESSION['user_id'];
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
