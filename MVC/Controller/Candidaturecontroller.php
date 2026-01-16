@@ -1,26 +1,16 @@
 <?php
 
 class Candidaturecontroller {
-    private $Candidaturemodel;
+    private $model;
 
-    public function __construct($Candidaturemodel) {
-        $this->Candidaturemodel = $Candidaturemodel;
+    public function __construct($model) {
+        $this->model = $model;
     }
 
-    public function showCandidatures() {
-        session_start();
-        if (!isset($_SESSION['user_id'])) {
-            header('Location: login');
-            exit();
-        }
-
-        $userId = $_SESSION['user_id'];
-        $candidatures = $this->candidatureModel->getCandidaturesByUserId($userId);
-        $user = $this->userModel->getUserById($userId);
-
-        $isEtudiant = $user['role'] === 'etudiant';
-        $isAdmin = $user['role'] === 'admin';
-
-        require_once 'MVC/View/Candidatureview.php';
+    public function showCandidatures($userId) {
+        $candidatures = $this->model->getCandidatures($userId);
+        require_once __DIR__ . '/../View/Candidatureview.php';
+        $view = new CandidatureView();
+        $view->render($candidatures);
     }
 }

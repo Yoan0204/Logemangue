@@ -2,16 +2,15 @@
 
 class CandidatureModel {
 
-    private $conn;
+    private $pdo;
 
-    public function __construct($conn) {
-        $this->conn = $conn;
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
     }
 
     public function getCandidatures($userId) {
 
-        $stmt = $this->conn->prepare("
-            SELECT r.id, r.date_debut, r.date_fin, r.statut, r.montant, l.adresse, l.ville, l.code_postal, l.id AS logement_id
+        $stmt = $this->pdo->prepare("SELECT r.id, r.date_debut, r.date_fin, r.statut, r.montant, l.adresse, l.ville, l.code_postal, l.id AS logement_id
             FROM reservation r
             JOIN logement l on r.id_logement = l.id
             WHERE r.id_etudiant = ?

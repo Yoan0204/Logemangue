@@ -1,8 +1,8 @@
 <?php
 
 class CandidatureView {
-    public function render($candidatures) {
-        include 'header.php';
+    public function render(array $candidatures) {
+        
         ?>
 
 <!DOCTYPE html>
@@ -162,11 +162,12 @@ class CandidatureView {
                            
 </div>
 
-
-        
-
 </body>
       <footer class="text-center py-3">
         <?php include 'footer.php'; ?>
       </footer>
 </html>
+
+        <?php
+    }
+}

@@ -69,7 +69,6 @@ class AdminView {
                 <a class="nav-link" href="admin_faq.php">Gestion FAQ</a>
 
                 <a class="nav-link" href="profil">Mon profil</a>
-                <a class="nav-link" href="login.html">Connexion</a>
             </nav>
         </div>
     </div>
