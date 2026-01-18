@@ -6,9 +6,9 @@ if (!isset($user["is_admin"]) || $user["is_admin"] != 1) {
     exit();
 }
 
-require_once __DIR__ . "/../MVC/Controller/Candidaturecontroller.php";
+require_once __DIR__ . "/../MVC/View/Candidatureview.php";
 
-$controller = new Candidaturecontroller($pdo);
+$controller = new CandidatureView($pdo);
 $controller->manage();
 exit;
 
