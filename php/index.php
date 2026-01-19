@@ -55,6 +55,21 @@ if ($page === "messagerie" || $page === "listemessagerie") {
     $controller->showMessagerie($userId);
     exit();
 }
+
+if ($page === "candidatures") {
+    require_once __DIR__ . "/db.php";
+    $userId = $_SESSION["user_id"] ?? 1;
+    require_once __DIR__ . "/../MVC/Model/CandidaturesModel.php";
+    require_once __DIR__ . "/../MVC/Controller/CandidaturesController.php";
+    require_once __DIR__ . "/../MVC/View/Candidaturesview.php";
+    $model = new CandidaturesModel($pdo);
+    $controller = new CandidaturesController($model);
+    $candidatures = $controller->showCandidatures($userId);
+    $view = new CandidaturesView();
+    $view->render($candidatures);
+    exit();
+}
+
 if ($page === "admin") {
     require_once __DIR__ . "/db2.php";
 

@@ -10,52 +10,87 @@ if (isset($_POST["logout"])) {
 }
 
 if (isset($_POST["valider"])) {
-    $nom = $_POST["nom"];
-    $telephone = $_POST["telephone"];
+    $nom = trim($_POST["nom"]);
+    $telephone = trim($_POST["telephone"]);
     $genre = $_POST["genre"];
     $date_naissance = $_POST["date_naissance_value"] ?? null;
     $type_utilisateur = $_POST["type_utilisateur"];
-    $biography = $_POST["biography"];
-    $facile = $_POST["facile"];
+    $biography = trim($_POST["biography"]);
+    $facile = trim($_POST["facile"]);
 
+    // Validation du nom (lettres, espaces, tirets et apostrophes uniquement)
+    if (!preg_match("/^[a-zA-ZÀ-ÿ\s'-]+$/u", $nom)) {
+        header("Location: profil?erreur=nom_invalide");
+        exit();
+    }
+
+    // Validation du téléphone (10 chiffres exactement)
     if (!preg_match("/^[0-9]{10}$/", $telephone)) {
-        echo "<p>Le numéro de téléphone doit contenir exactement 10 chiffres.</p>";
-    } elseif (empty($date_naissance)) {
-        echo "<p>La date de naissance est requise.</p>";
-    } elseif (
-        !str_starts_with(
-            $facile,
-            "locataire.dossierfacile.logement.gouv.fr/public-file/"
-        ) &&
-        !$facile == null
-    ) {
+        header("Location: profil?erreur=telephone_invalide");
+        exit();
+    }
+
+    // Validation de la date de naissance
+    if (empty($date_naissance)) {
+        header("Location: profil?erreur=date_manquante");
+        exit();
+    }
+
+    // Validation de l'URL FACILE
+    if (!empty($facile) && !str_starts_with($facile, "locataire.dossierfacile.logement.gouv.fr/public-file/")) {
         header("Location: profil?erreur=badurl");
         exit();
-    } elseif (empty($type_utilisateur)) {
-        echo "<p>Le type d'utilisateur est requis.</p>";
-    } else {
-        $updateSql =
-            "UPDATE users SET nom=?, telephone=?, genre=?, date_naissance=?, type_utilisateur=?,biography=?, facile=? WHERE id=?";
-        $stmt = $conn->prepare($updateSql);
-        $stmt->bind_param(
-            "sssssssi",
-            $nom,
-            $telephone,
-            $genre,
-            $date_naissance,
-            $type_utilisateur,
-            $biography,
-            $facile,
-            $userId
-        );
-
-        if ($stmt->execute()) {
-            header("Location: profil?update=success");
-        } else {
-            echo "<p>Erreur lors de la mise à jour des informations.</p>";
-        }
     }
+
+    // Validation du type d'utilisateur
+    if (empty($type_utilisateur)) {
+        header("Location: profil?erreur=type_manquant");
+        exit();
+    }
+
+    // Validation de la biographie (caractères alphanumériques et ponctuation basique uniquement)
+    if (!empty($biography) && !preg_match("/^[a-zA-Z0-9À-ÿ\s.,!?;:()\-'\"]+$/u", $biography)) {
+        header("Location: profil?erreur=biography_invalide");
+        exit();
+    }
+
+    // Protection XSS supplémentaire
+    $nom = htmlspecialchars($nom, ENT_QUOTES, 'UTF-8');
+    $biography = htmlspecialchars($biography, ENT_QUOTES, 'UTF-8');
+
+    $updateSql = "UPDATE users SET nom=?, telephone=?, genre=?, date_naissance=?, type_utilisateur=?, biography=?, facile=? WHERE id=?";
+    $stmt = $conn->prepare($updateSql);
+    $stmt->bind_param(
+        "sssssssi",
+        $nom,
+        $telephone,
+        $genre,
+        $date_naissance,
+        $type_utilisateur,
+        $biography,
+        $facile,
+        $userId
+    );
+
+    if ($stmt->execute()) {
+        header("Location: profil?update=success");
+    } else {
+        header("Location: profil?erreur=update_failed");
+    }
+    exit();
 }
+
+// Gestion des messages d'erreur
+$errorMessages = [
+    'nom_invalide' => 'Le nom ne peut contenir que des lettres, espaces, tirets et apostrophes.',
+    'telephone_invalide' => 'Le numéro de téléphone doit contenir exactement 10 chiffres.',
+    'date_manquante' => 'La date de naissance est requise.',
+    'badurl' => 'L\'URL de votre dossier FACILE n\'est pas valide.',
+    'type_manquant' => 'Le type d\'utilisateur est requis.',
+    'biography_invalide' => 'La biographie contient des caractères non autorisés.',
+    'update_failed' => 'Erreur lors de la mise à jour des informations.'
+];
+
 if (isset($_GET["update"]) && $_GET["update"] == "success") {
     echo "
     <script>
@@ -384,32 +419,26 @@ if (isset($_GET["update"]) && $_GET["update"] == "success") {
       <div class="container">
         <div class="profile-header">
           <div class="avatar">C</div>
-          <div><?php echo $user["nom"]; ?></div>
+          <div><?php echo htmlspecialchars($user["nom"], ENT_QUOTES, 'UTF-8'); ?></div>
         </div>
 
             <div class="info-box">
               <div class="info-title text-center">Mes informations</div>
-              <?php if (
-                  isset($_GET["erreur"]) &&
-                  $_GET["erreur"] == "badurl"
-              ) { ?>
-      <div style="margin: 20px; margin-top: 20px;" class="alert alert-danger alert-dismissible fade show" role="alert">
-              L'URL de votre dossier FACILE n'est pas bonne.                    
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div> 
-        <?php } ?>
+              
+              <?php if (isset($_GET["erreur"]) && isset($errorMessages[$_GET["erreur"]])): ?>
+                <div style="margin: 20px; margin-top: 20px;" class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <?php echo htmlspecialchars($errorMessages[$_GET["erreur"]], ENT_QUOTES, 'UTF-8'); ?>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div> 
+              <?php endif; ?>
 
-              <form method="post" action="">
+              <form method="post" action="" id="profileForm">
                 <div class="row g-3 mb-3">
                   <div class="col-md-6">
-                    <input type="text" name="nom" class="form-control" placeholder="Nom" value="<?php echo $user[
-                        "nom"
-                    ]; ?>" required>
+                    <input type="text" name="nom" id="nom" class="form-control" placeholder="Nom" value="<?php echo htmlspecialchars($user["nom"], ENT_QUOTES, 'UTF-8'); ?>" required pattern="[a-zA-ZÀ-ÿ\s'\-]+" title="Seules les lettres, espaces, tirets et apostrophes sont autorisés">
                   </div>
                   <div class="col-md-6">
-                    <input type="text" name="telephone" class="form-control" placeholder="Numéro de téléphone" value="<?php echo $user[
-                        "telephone"
-                    ]; ?>" required>
+                    <input type="text" name="telephone" id="telephone" class="form-control" placeholder="Numéro de téléphone" value="<?php echo htmlspecialchars($user["telephone"], ENT_QUOTES, 'UTF-8'); ?>" required pattern="[0-9]{10}" title="Le numéro de téléphone doit contenir exactement 10 chiffres" maxlength="10">
                   </div>
                 </div>
 
@@ -417,66 +446,33 @@ if (isset($_GET["update"]) && $_GET["update"] == "success") {
                   <div class="col-md-6">
                     <select name="genre" class="form-select" required>
                         <option value="">Sélectionnez un genre</option>
-                        <option value="Homme" <?php if (
-                            $user["genre"] == "Homme"
-                        ) {
-                            echo "selected";
-                        } ?>>Homme</option>
-                        <option value="Femme" <?php if (
-                            $user["genre"] == "Femme"
-                        ) {
-                            echo "selected";
-                        } ?>>Femme</option>
-                        <option value="Autre" <?php if (
-                            $user["genre"] == "Autre"
-                        ) {
-                            echo "selected";
-                        } ?>>Autre</option>
+                        <option value="Homme" <?php if ($user["genre"] == "Homme") echo "selected"; ?>>Homme</option>
+                        <option value="Femme" <?php if ($user["genre"] == "Femme") echo "selected"; ?>>Femme</option>
+                        <option value="Autre" <?php if ($user["genre"] == "Autre") echo "selected"; ?>>Autre</option>
                     </select>
                   </div>
                   <div class="col-md-6">
-                    <input type="text" name="date_naissance" id="date_naissance" class="form-control" placeholder="Date de naissance (cliquez pour choisir)" value="<?php echo $user[
-                        "date_naissance"
-                    ]; ?>" readonly required>
-                    <input type="hidden" id="date-hidden" name="date_naissance_value" value="<?php echo $user[
-                        "date_naissance"
-                    ]; ?>">
+                    <input type="text" name="date_naissance" id="date_naissance" class="form-control" placeholder="Date de naissance (cliquez pour choisir)" value="<?php echo htmlspecialchars($user["date_naissance"], ENT_QUOTES, 'UTF-8'); ?>" readonly required>
+                    <input type="hidden" id="date-hidden" name="date_naissance_value" value="<?php echo htmlspecialchars($user["date_naissance"], ENT_QUOTES, 'UTF-8'); ?>">
                   </div>
                 </div>
                 <div class="row g-3 mb-3">
                   <div class="col-md-6">
                     <select name="type_utilisateur" class="form-select" required>
                         <option value="">Sélectionnez un type</option>
-                        <option value="Etudiant" <?php if (
-                            $user["type_utilisateur"] == "Etudiant"
-                        ) {
-                            echo "selected";
-                        } ?>>Étudiant</option>
-                        <option value="Proprietaire" <?php if (
-                            $user["type_utilisateur"] == "Proprietaire"
-                        ) {
-                            echo "selected";
-                        } ?>>Propriétaire</option>
-                        <option value="Organisme" <?php if (
-                            $user["type_utilisateur"] == "Organisme"
-                        ) {
-                            echo "selected";
-                        } ?>>Organisme</option>
+                        <option value="Etudiant" <?php if ($user["type_utilisateur"] == "Etudiant") echo "selected"; ?>>Étudiant</option>
+                        <option value="Proprietaire" <?php if ($user["type_utilisateur"] == "Proprietaire") echo "selected"; ?>>Propriétaire</option>
+                        <option value="Organisme" <?php if ($user["type_utilisateur"] == "Organisme") echo "selected"; ?>>Organisme</option>
                     </select>
                   </div>
                 </div>
-                <?php if ($user["type_utilisateur"] == "Etudiant") { ?>
+                <?php if ($user["type_utilisateur"] == "Etudiant"): ?>
                   <div>
-                    <input type="text" name="facile" class="form-control" placeholder="URL de votre dossier FACILE ( locataire.dossierfacile.logement.gouv.fr/public-file/... )" value=<?php if (
-                        isset($user["facile"])
-                    ) {
-                        echo $user["facile"];
-                    } ?>>
+                    <input type="text" name="facile" id="facile" class="form-control" placeholder="URL de votre dossier FACILE ( locataire.dossierfacile.logement.gouv.fr/public-file/... )" value="<?php echo isset($user["facile"]) ? htmlspecialchars($user["facile"], ENT_QUOTES, 'UTF-8') : ''; ?>">
                   </div>                  
-                <?php } ?> <br>
-                <textarea class="form-control text-center mb-3" name="biography" placeholder="<?php echo $user[
-                    "biography"
-                ]; ?>"></textarea> 
+                <?php endif; ?> 
+                <br>
+                <textarea class="form-control text-center mb-3" name="biography" id="biography" placeholder="<?php echo htmlspecialchars($user["biography"], ENT_QUOTES, 'UTF-8'); ?>" maxlength="500"></textarea> 
                 
                 <div class="d-flex justify-content-between align-items-center">
                   <button type="submit" class="btn-login" name="valider">Valider</button> 
@@ -553,13 +549,61 @@ if (isset($_GET["update"]) && $_GET["update"] == "success") {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     const toggle = document.getElementById("menu-toggle");
-const sidebar = document.getElementById("sidebar");
+    const sidebar = document.getElementById("sidebar");
 
-if (toggle && sidebar) {
-  toggle.addEventListener("click", () => {
-    sidebar.classList.toggle("active");
-  });
-}
+    if (toggle && sidebar) {
+      toggle.addEventListener("click", () => {
+        sidebar.classList.toggle("active");
+      });
+    }
+
+    // VALIDATION CÔTÉ CLIENT
+    document.getElementById('profileForm').addEventListener('submit', function(e) {
+      const nom = document.getElementById('nom').value;
+      const telephone = document.getElementById('telephone').value;
+      const biography = document.getElementById('biography').value;
+
+      // Validation du nom
+      const nomPattern = /^[a-zA-ZÀ-ÿ\s'\-]+$/;
+      if (!nomPattern.test(nom)) {
+        e.preventDefault();
+        alert('Le nom ne peut contenir que des lettres, espaces, tirets et apostrophes.');
+        return false;
+      }
+
+      // Validation du téléphone
+      const telPattern = /^[0-9]{10}$/;
+      if (!telPattern.test(telephone)) {
+        e.preventDefault();
+        alert('Le numéro de téléphone doit contenir exactement 10 chiffres.');
+        return false;
+      }
+
+      // Validation de la biographie
+      if (biography.length > 0) {
+        const bioPattern = /^[a-zA-Z0-9À-ÿ\s.,!?;:()\-'"]+$/;
+        if (!bioPattern.test(biography)) {
+          e.preventDefault();
+          alert('La biographie contient des caractères non autorisés. Seuls les lettres, chiffres et la ponctuation de base sont acceptés.');
+          return false;
+        }
+      }
+    });
+
+    // Empêcher la saisie de caractères spéciaux dans le nom
+    document.getElementById('nom').addEventListener('input', function(e) {
+      this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s'\-]/g, '');
+    });
+
+    // Empêcher la saisie de caractères non numériques dans le téléphone
+    document.getElementById('telephone').addEventListener('input', function(e) {
+      this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+    });
+
+    // Empêcher les caractères dangereux dans la biographie
+    document.getElementById('biography').addEventListener('input', function(e) {
+      this.value = this.value.replace(/[<>{}[\]\\]/g, '');
+    });
   </script>
 
   <!-- CALENDRIER SCRIPT -->
@@ -706,7 +750,3 @@ if (toggle && sidebar) {
     });
   </script>
 </body>
-<footer class="text-center py-3">
-  <?php include "footer.php"; ?>
-</footer>
-</html>
