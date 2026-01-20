@@ -8,7 +8,7 @@ if (isset($_GET["publish"]) && $_GET["publish"] === "success") {?>
 
 if (isset($_GET["registered"]) && $_GET["registered"] === "1") {?>
             <div style="margin: 20px; margin-top: 20px;" class="alert alert-success alert-dismissible fade show" role="alert">
-                    Inscription réussie ! Vous pouvez maintenant vous <a class="alert-link" href="login.html">connecter</a>.                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    Un email de confirmation vous a été adressé, merci de confirmer votre compte puis de vous <a class="alert-link" href="login.html">connecter</a>.                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
 <?php
 };

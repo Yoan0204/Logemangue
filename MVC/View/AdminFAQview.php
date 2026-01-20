@@ -49,7 +49,7 @@ class AdminFAQview {
 
                 <hr>
 
-                <a class="nav-link" href="faq.php">FAQ</a>
+                <a class="nav-link" href="index?page=faq">FAQ</a>
                 <a class="nav-link" href="#">Contact</a>
 
                 <hr>
@@ -61,7 +61,6 @@ class AdminFAQview {
                 <?php endif; ?>
 
                 <a class="nav-link" href="profil">Mon profil</a>
-                <a class="nav-link" href="login.html">Connexion</a>
             </nav>
         </div>
     </div>

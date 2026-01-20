@@ -73,7 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mail->Host = 'smtp.gmail.com'; // ou autre SMTP
         $mail->SMTPAuth = true;
         $mail->Username = 'mc.carruette@gmail.com';
-        $mail->Password = 'pliq jmre fqfj wcjg';
+        $mail->Password = 'onjc vnyy epfo bomd
+';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
@@ -81,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mail->setFrom('mc.carruette@gmail.com', 'Logemangue');
         $mail->addAddress($email, $name);
 
-        $verificationLink = "http://localhost/verify_email.php?token=$token";
+        $verificationLink = "http://localhost/Logemangue/php/verify_email.php?token=$token";
 
 $mail->isHTML(true);
 $mail->Subject = 'Vérifiez votre adresse email - Logemangue';
