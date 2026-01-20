@@ -100,7 +100,7 @@ $min_rating = $_GET['min_rating'] ?? '0';
                     <button type="submit" class="btn btn-filters w-100">Appliquer les filtres</button>
                 </div>
                 <div class="col-md-4">
-                    <a style="    display: inline-flex; align-items: center;justify-content: center;" href="logements" class="btn btn-filters-secondary w-100 mb-2">Réinitialiser</a>
+                    <a style="    display: inline-flex; align-items: center;justify-content: center;" href="logements" class="btn btn-filters-secondary w-100">Réinitialiser</a>
                 </div>
             </div>
         </div>

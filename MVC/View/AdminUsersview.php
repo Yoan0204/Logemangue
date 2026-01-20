@@ -51,7 +51,7 @@ class AdminUsersview {
                 <hr>
 
                 <a class="nav-link" href="index?page=faq">FAQ</a>
-                <a class="nav-link" href="#">Contact</a>
+                <a class="nav-link" href="admin_contact">Contact</a>
 
                 <hr>
 

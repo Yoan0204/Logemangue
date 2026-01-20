@@ -11,6 +11,7 @@ $controller = new LogementController($model, __DIR__ . '/views/');
 // Déterminer quelle vue afficher
 $view = isset($_GET['view']) ? $_GET['view'] : 'recherche';
 $message = $controller->handleDelete();
+$message = $controller->handleTotalDelete();
 
 // Valider la vue demandée
 $allowed_views = ['recherche', 'mesannonces'];

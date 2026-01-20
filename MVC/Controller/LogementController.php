@@ -92,6 +92,15 @@ class LogementController {
         if (isset($_POST['delete']) && isset($_POST['logement_id'])) {
             $logementId = $_POST['logement_id'];
             $this->model->deleteLogement($logementId);
+            return "Le logement a été retiré des annonces approuvées !";
+        }
+        return null;
+    }
+
+        public function handleTotalDelete() {
+        if (isset($_POST['totaldelete']) && isset($_POST['logement_id'])) {
+            $logementId = $_POST['logement_id'];
+            $this->model->totalDeleteLogement($logementId);
             return "Le logement a été supprimé de la base de données !";
         }
         return null;
