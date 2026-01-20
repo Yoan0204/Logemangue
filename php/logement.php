@@ -173,7 +173,7 @@ while ($photoRow = $result->fetch_assoc()) {
           <div class="tab-content">
               <div class="tab-pane fade show active info-box" id="description">
     <h2>
-        <?php echo htmlspecialchars($row["titre"]); ?> 
+        <?php echo htmlspecialchars_decode($row["titre"]); ?> 
         <img src="../png/verified.png" alt="Certifié" title="Ce contenu est certifié et vérifié par les administrateurs de Logemangue."
             style="width: 20px; height: 20px; vertical-align: middle; margin-left: 5px; margin-bottom:5px; cursor: pointer;">
     </h2> 

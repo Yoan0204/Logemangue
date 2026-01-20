@@ -267,7 +267,7 @@ if (
 
             <div class="col-12">
               <label class="form-label fw-semibold">Description</label>
-              <textarea class="form-control form-field" rows="4" placeholder="Décrivez votre logement..." id="description" name="description" required ><?php echo $editMode ? htmlspecialchars($logement['description']) : ''; ?></textarea>
+              <textarea pattern="[A-Za-z0-9' ]+"  class="form-control form-field" rows="4" placeholder="Décrivez votre logement..." id="description" name="description" required ><?php echo $editMode ? htmlspecialchars($logement['description']) : ''; ?></textarea>
             </div>
 
           <input type="file" name="photos[]" multiple accept="image/*">
