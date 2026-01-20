@@ -32,7 +32,7 @@
                                     $color = 'text-muted'; // gris par défaut
                                 }
                             ?>
-                            Status : <span class="<?php echo $color; ?> fw-bold"><?php echo htmlspecialchars($status); ?></span>
+                            Status : <span class="<?php echo $color; ?> fw-bold"><?php echo htmlspecialchars_decode($status); ?></span>
                         </p>
 
                         <!-- Formulaire de suppression -->

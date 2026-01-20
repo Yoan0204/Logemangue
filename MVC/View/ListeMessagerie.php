@@ -61,7 +61,7 @@
                             <a href="messagerie?dest=<?= $dest['id'] ?>" style="text-decoration: none; color: inherit;">
                 <div class="conversation d-flex align-items-center justify-content-between <?php echo $nonLus > 0 ? 'conversation-unread' : ''; ?>">
                     <div class="d-flex align-items-center">
-                        <div class="profile-circle"><?php echo htmlspecialchars($initiale); ?></div>
+                        <div class="profile-circle"><?php echo htmlspecialchars_decode($initiale); ?></div>
 
                         <div class="ms-3">
                             <h4 class="m-0 fw-bold">

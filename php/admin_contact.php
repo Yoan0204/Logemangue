@@ -185,12 +185,12 @@ $contacts = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <?php foreach ($contacts as $contact): ?>
                         <tr>
                             <td><?php echo $contact['id']; ?></td>
-                            <td><?php echo htmlspecialchars($contact['nom']); ?></td>
-                            <td><?php echo htmlspecialchars($contact['email']); ?></td>
-                            <td><?php echo htmlspecialchars($contact['sujet']); ?>...</td>
+                            <td><?php echo htmlspecialchars_decode($contact['nom']); ?></td>
+                            <td><?php echo htmlspecialchars_decode($contact['email']); ?></td>
+                            <td><?php echo htmlspecialchars_decode($contact['sujet']); ?>...</td>
                             <td><?php echo date('d/m/Y H:i', strtotime($contact['date_creation'])); ?></td>
                             <td>
-                                <button class="btn btn-view" onclick="showPopup('<?php echo htmlspecialchars($contact['message']); ?>')">Voir</button>
+                                <button class="btn btn-view" onclick="showPopup('<?php echo htmlspecialchars_decode($contact['message']); ?>')">Voir</button>
                                 <button class="btn btn-delete" onclick="deleteContact(<?php echo $contact['id']; ?>)">Supprimer</button>
                             </td>
                         </tr>

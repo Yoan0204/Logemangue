@@ -161,7 +161,7 @@ $stmt->close();
                         <tr>
                             <td>
                                 <strong>
-                                    <?php echo htmlspecialchars(
+                                    <?php echo htmlspecialchars_decode(
                                         $candidature['adresse'] . ', ' .
                                         $candidature['ville'] . ' ' .
                                         $candidature['code_postal']
@@ -172,20 +172,20 @@ $stmt->close();
                                     Voir le logement
                                 </a>
                             </td>
-                            <td><?php echo htmlspecialchars($candidature['date_debut']); ?></td>
-                            <td><?php echo htmlspecialchars($candidature['date_fin']); ?></td>
+                            <td><?php echo htmlspecialchars_decode($candidature['date_debut']); ?></td>
+                            <td><?php echo htmlspecialchars_decode($candidature['date_fin']); ?></td>
                             <td>
                                 <?php if ($candidature['statut'] === 'Refusée'): ?>
-                                    <span class="status-badge red"><?php echo htmlspecialchars($candidature['statut']); ?></span>
+                                    <span class="status-badge red"><?php echo htmlspecialchars_decode($candidature['statut']); ?></span>
                                 <?php elseif ($candidature['statut'] === 'Approuvée'): ?>
-                                    <span class="status-badge green"><?php echo htmlspecialchars($candidature['statut']); ?></span>
+                                    <span class="status-badge green"><?php echo htmlspecialchars_decode($candidature['statut']); ?></span>
                                 <?php else: ?>
-                                    <span class="status-badge"><?php echo htmlspecialchars($candidature['statut']); ?></span>
+                                    <span class="status-badge"><?php echo htmlspecialchars_decode($candidature['statut']); ?></span>
                                 <?php endif; ?>
                                 
                             </td>
                             <td class="fw-bold">
-                                <?php echo htmlspecialchars($candidature['montant']); ?> €
+                                <?php echo htmlspecialchars_decode($candidature['montant']); ?> €
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -173,7 +173,7 @@ try {
     <?php foreach ($faqs as $faq): ?>
         <div class="faq-item">
             <div class="faq-question">
-                <?php echo htmlspecialchars($faq['question']); ?>
+                <?php echo htmlspecialchars_decode($faq['question']); ?>
                 <span>＋</span>
             </div>
             <div class="faq-answer">

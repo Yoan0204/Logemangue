@@ -216,11 +216,11 @@ if ($page === "profil") {
               <?php if (!empty($carouselLogements)): ?>
                 <?php foreach ($carouselLogements as $i => $lg): ?>
                   <div class="carousel-item <?php echo $i === 0 ? 'active' : ''; ?>">
-                    <a href="logement?id=<?php echo intval($lg['ID']); ?>" title="<?php echo htmlspecialchars($lg['titre'] ?: 'Voir le logement'); ?>" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
-                      <img src="<?php echo htmlspecialchars($lg['photo_url'] ?: 'https://via.placeholder.com/1000x500?text=No+Photo'); ?>" class="d-block w-100" alt="<?php echo htmlspecialchars($lg['titre'] ?: 'Logement'); ?>" />
+                    <a href="logement?id=<?php echo intval($lg['ID']); ?>" title="<?php echo htmlspecialchars_decode($lg['titre'] ?: 'Voir le logement'); ?>" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
+                      <img src="<?php echo htmlspecialchars_decode($lg['photo_url'] ?: 'https://via.placeholder.com/1000x500?text=No+Photo'); ?>" class="d-block w-100" alt="<?php echo htmlspecialchars_decode($lg['titre'] ?: 'Logement'); ?>" />
                       <div class="carousel-caption">
-                        <h5 class="property-title"><?php echo htmlspecialchars($lg['titre'] ?: 'Titre'); ?></h5>
-                        <p class="property-info"><?php echo htmlspecialchars($lg['ville'] ?? ''); ?> • <?php echo htmlspecialchars($lg['surface'] ?? ''); ?>m² • <?php echo htmlspecialchars($lg['loyer'] ?? ''); ?>€/mois</p>
+                        <h5 class="property-title"><?php echo htmlspecialchars_decode($lg['titre'] ?: 'Titre'); ?></h5>
+                        <p class="property-info"><?php echo htmlspecialchars_decode($lg['ville'] ?? ''); ?> • <?php echo htmlspecialchars_decode($lg['surface'] ?? ''); ?>m² • <?php echo htmlspecialchars_decode($lg['loyer'] ?? ''); ?>€/mois</p>
                       </div>
                     </a>
                   </div>
@@ -356,12 +356,12 @@ if ($page === "profil") {
                   <div class="col-md-4">
                     <a href="logement?id=<?php echo intval($row['ID']); ?>" class="logement-link">
                       <div class="logement-card">
-                        <img src="<?php echo htmlspecialchars($photoUrl); ?>" alt="<?php echo htmlspecialchars($row['titre'] ?? 'Logement'); ?>" />
+                        <img src="<?php echo htmlspecialchars_decode($photoUrl); ?>" alt="<?php echo htmlspecialchars_decode($row['titre'] ?? 'Logement'); ?>" />
                         <div class="info">
-                          <h6 class="fw-bold mb-1"><?php echo htmlspecialchars($row['titre'] ?? 'Titre'); ?></h6>
-                          <p class="text-muted mb-0"><?php echo htmlspecialchars($row['loyer'] ?? 'Loyer'); ?> € / mois</p>
+                          <h6 class="fw-bold mb-1"><?php echo htmlspecialchars_decode($row['titre'] ?? 'Titre'); ?></h6>
+                          <p class="text-muted mb-0"><?php echo htmlspecialchars_decode($row['loyer'] ?? 'Loyer'); ?> € / mois</p>
                           <p class="small text-muted mb-0">Disponible : <?php echo (isset($row['disponible']) && $row['disponible'] == 1) ? 'Oui' : 'Non'; ?></p>
-                          <p class="small text-muted mb-0"><?php echo htmlspecialchars($row['surface'] ?? 'Surface'); ?> m² - <?php echo htmlspecialchars($row['TYPE'] ?? 'Type'); ?></p>
+                          <p class="small text-muted mb-0"><?php echo htmlspecialchars_decode($row['surface'] ?? 'Surface'); ?> m² - <?php echo htmlspecialchars_decode($row['TYPE'] ?? 'Type'); ?></p>
                         </div>
                       </div>
                     </a>
