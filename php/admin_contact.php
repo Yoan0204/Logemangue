@@ -126,7 +126,10 @@ $contacts = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 </head>
 <body>
-    <!-- SIDEBAR -->
+<button id="menu-toggle" class="hamburger">☰</button>
+
+<div class="d-flex">
+        <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
         <div>
             <a href="index">
@@ -164,7 +167,9 @@ $contacts = mysqli_fetch_all($result, MYSQLI_ASSOC);
             </nav>
         </div>
     </div>
-    <div class="container">
+    <!-- CONTENU PRINCIPAL -->
+    <main class="flex-grow-1 p-2">
+    <div class="dashboard-container">
         <h1 style="margin-top: 30px;">📧 Demandes de Contact</h1>
         
         <?php if (count($contacts) > 0): ?>
