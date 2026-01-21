@@ -215,11 +215,30 @@ $contacts = mysqli_fetch_all($result, MYSQLI_ASSOC);
             .then(data => alert(data.message))
             .catch(error => console.error('Error:', error));
         }
-        function deleteContact(id) {
-            if (confirm('Êtes-vous sûr ?')) {
-                // window.location.href = 'delete.php?id=' + id;
+function deleteContact(id) {
+    if (confirm('Êtes-vous sûr de vouloir supprimer ce contact ?')) {
+        fetch('deletecontact.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'id=' + encodeURIComponent(id)
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data === 'success') {
+                alert('Contact supprimé');
+                location.reload(); // ou supprimer la ligne du tableau
+            } else {
+                alert('Erreur lors de la suppression');
             }
-        }
+        })
+        .catch(error => {
+            console.error(error);
+            alert('Erreur serveur');
+        });
+    }
+}
 
 function showPopup(message) {
     const popup = document.createElement('div');

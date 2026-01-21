@@ -37,7 +37,7 @@ function nettoyer_input($data) {
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     foreach ($_POST as $key => $value) {
-        $_POST[$key] = nettoyer_input($value);
+        $_POST[$key] = preg_replace('/[^a-zA-Z0-9À-ÿ _\-\'’]/u', '', $value);
     }
 }
 
