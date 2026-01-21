@@ -31,6 +31,15 @@ class Adminuserscontroller {
                 exit();
             }
         }
+        // Handle ban/unban user
+        if (isset($_POST['ban_user'])) {
+            $id = (int)($_POST['id'] ?? 0);
+            if ($id > 0) {
+                $this->model->toggleBan($id);
+                header('Location: admin_users.php');
+                exit();
+            }
+        }
 
         $q = isset($_GET['q']) ? trim((string)$_GET['q']) : '';
         $users = $this->model->searchUsers($q);

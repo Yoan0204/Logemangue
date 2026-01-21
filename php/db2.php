@@ -40,15 +40,25 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 }
 
 $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-$sql = "SELECT nom, telephone, genre, date_naissance,is_admin, type_utilisateur, biography, facile FROM users WHERE id = $userId";
+$sql = "SELECT nom, telephone, genre, date_naissance,is_admin, type_utilisateur, biography, facile, banned FROM users WHERE id = $userId";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
+    //Check si l'utilisateur est banni
+    if (isset($_SESSION["banned"]) && $_SESSION["banned"] == 1 || $user['banned'] == 1) {
+        //Déconnecter l'utilisateur
+        session_unset();
+        session_destroy();
+        //Rediriger vers la page de login avec message d'erreur
+        header('Location: login.html?banned=1');
+        exit();
+    }
     
 } else {
     echo "Aucun utilisateur trouvé";
 }
 $isAdmin = isset($user['is_admin']) ? $user['is_admin'] : 0;   
 $isEtudiant = (isset($user['type_utilisateur']) && $user['type_utilisateur'] === 'Etudiant') ? true : false; 
+
 ?>

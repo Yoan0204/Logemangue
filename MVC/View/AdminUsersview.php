@@ -131,12 +131,19 @@ class AdminUsersview {
                                 <form method="post"
                                       onsubmit="return confirm('Supprimer cet utilisateur ?');">
                                     <input type="hidden" name="id" value="<?= $u['id'] ?>">
-                                    <button class="btn btn-sm btn-unapproved" name="delete_user">
+                                    <button class="btn btn-sm btn-okayed" name="delete_user">
                                         Supprimer
                                     </button>
                                 </form>
                             <?php endif; ?>
-
+                            <form method="post">
+                                <input type="hidden" name="id" value="<?= $u['id'] ?>">
+                                <button class="btn btn-sm btn-unapproved"
+                                        name="ban_user">
+                                    <?= $u['banned'] ? 'Débannir' : 'Bannir' ?>
+                                </button>
+                            </form>                             
+                                
                         </td>
                     </tr>
                 <?php endforeach; ?>

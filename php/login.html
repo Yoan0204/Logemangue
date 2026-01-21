@@ -552,6 +552,9 @@
         <div id="msg-email-valide" style="display:none; color:green;">
             <strong>Succès :</strong> Votre compte a bien été validé. Vous pouvez maintenant vous connecter.
         </div>
+        <div id="msg-banned" style="display:none; color:red;">
+            <strong>Votre compte a été banni de Logemangue.</strong><br>
+        </div>        <br>
         <form id="login-form" action="login.php" method="post">
           <div class="form-group">
             <label for="login-email">Adresse email</label>
@@ -708,6 +711,9 @@
   }
    if (params.get('verified') === '1') {
     document.getElementById('msg-email-valide').style.display = 'block';
+  }
+  if (params.get('banned') === '1') {
+    document.getElementById('msg-banned').style.display = 'block';
   }
 </script>
     <script>

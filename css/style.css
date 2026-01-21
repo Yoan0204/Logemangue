@@ -919,6 +919,22 @@
   transform: translateY(-2px);
 } 
 
+.btn-okayed {
+  background-color: rgb(4, 10, 95);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  height: 38px;
+  border-radius: 10px;
+  padding: 0 7px 0 7px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-okayed:hover {
+  background-color: rgb(20, 102, 31);
+  transform: translateY(-2px);
+} 
 
 .btn-midapproved {
   background: linear-gradient(to right,var(--bs-primary),var(--yellow));
