@@ -37,7 +37,7 @@ function nettoyer_input($data) {
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     foreach ($_POST as $key => $value) {
-        $_POST[$key] = nettoyer_input($value);
+          $_POST[$key] = preg_replace('/[^a-zA-Z0-9À-ÿ _-]/u', '', $value);
     }
 }
 
@@ -49,6 +49,9 @@ if (
     isset($_POST['titre'], $_POST['type'], $_POST['adresse'], $_POST['ville'],
           $_POST['code'], $_POST['surface'], $_POST['loyer'], $_POST['description'])
 ) {
+  foreach ($_POST as $key => $value) {
+    $_POST[$key] = filter_var($value, FILTER_SANITIZE_SPECIAL_CHARS);
+}
 
     $titre = $_POST['titre'];
     $type = $_POST['type'];

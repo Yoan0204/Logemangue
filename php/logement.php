@@ -181,7 +181,7 @@ while ($photoRow = $result->fetch_assoc()) {
     <h3><strong><?php echo htmlspecialchars_decode($row["loyer"]); ?> € / mois</strong></h3>
 
     <div class="infos-grid">
-        <p><?php echo nl2br(htmlspecialchars($row["description"])); ?></p>
+        <p><?php echo nl2br(htmlspecialchars_decode($row["description"])); ?></p>
         <p><strong>Adresse :</strong> <?php echo htmlspecialchars_decode($row["adresse"]); ?> - <?php echo htmlspecialchars_decode($row["ville"]); ?></p>
         <p><strong>Type de logement :</strong> <?php echo htmlspecialchars_decode($row["TYPE"]); ?></p>
         <p><strong>Surface :</strong> <?php echo htmlspecialchars_decode($row["surface"]); ?> m²</p>
