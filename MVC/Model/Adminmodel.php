@@ -95,8 +95,12 @@ class AdminModel {
 
     public function toggleBan(int $id): bool {
         // Update ban status
+        $stmt = $this->pdo->prepare("UPDATE logement SET status = 'Waiting' WHERE id_proprietaire = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT); 
+        $stmt->execute();       
         $stmt = $this->pdo->prepare("UPDATE users SET banned = NOT banned WHERE id = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
         return $stmt->execute();
     }
 
