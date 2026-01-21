@@ -750,3 +750,7 @@ if (isset($_GET["update"]) && $_GET["update"] == "success") {
     });
   </script>
 </body>
+
+      <footer class="text-center">
+        <?php include "footer.php"; ?>
+      </footer>
