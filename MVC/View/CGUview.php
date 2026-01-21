@@ -49,7 +49,7 @@ class CGUView {
     <div class="hero-section">
         <div class="container">
             <div class="hero-content text-center">
-                <h1 class="hero-title">Conditions Générales d'Utilisation</h1>
+                <h1 style="font-size :2.6rem;" class="hero-title">Conditions Générales d'Utilisation</h1>
                 <p class="hero-subtitle">Dernière mise à jour : Janvier 2026</p>
             </div>
         </div>
