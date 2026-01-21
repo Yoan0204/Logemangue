@@ -419,7 +419,7 @@ if ($page === "profil") {
       </section>
 
 
-      <footer class="text-center py-3">
+      <footer class="text-center">
         <?php include "footer.php"; ?>
       </footer>
     </div>

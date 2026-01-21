@@ -192,10 +192,10 @@ $contacts = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             <td><?php echo $contact['id']; ?></td>
                             <td><?php echo htmlspecialchars_decode($contact['nom']); ?></td>
                             <td><?php echo htmlspecialchars_decode($contact['email']); ?></td>
-                            <td><?php echo htmlspecialchars_decode($contact['sujet']); ?>...</td>
+                            <td><?php echo htmlspecialchars_decode($contact['sujet']); ?></td>
                             <td><?php echo date('d/m/Y H:i', strtotime($contact['date_creation'])); ?></td>
                             <td>
-                                <button class="btn btn-view" onclick="showPopup('<?php echo htmlspecialchars_decode($contact['message']); ?>')">Voir</button>
+                                <button class="btn btn-view" onclick="showPopup('<?php echo htmlspecialchars_decode($contact['sujet']); ?>', '<?php echo htmlspecialchars_decode($contact['message']); ?>')">Voir</button>
                                 <button class="btn btn-delete" onclick="deleteContact(<?php echo $contact['id']; ?>)">Supprimer</button>
                             </td>
                         </tr>
@@ -215,13 +215,32 @@ $contacts = mysqli_fetch_all($result, MYSQLI_ASSOC);
             .then(data => alert(data.message))
             .catch(error => console.error('Error:', error));
         }
-        function deleteContact(id) {
-            if (confirm('Êtes-vous sûr ?')) {
-                // window.location.href = 'delete.php?id=' + id;
+function deleteContact(id) {
+    if (confirm('Êtes-vous sûr de vouloir supprimer ce contact ?')) {
+        fetch('deletecontact.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'id=' + encodeURIComponent(id)
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data === 'success') {
+                alert('Contact supprimé');
+                location.reload(); // ou supprimer la ligne du tableau
+            } else {
+                alert('Erreur lors de la suppression');
             }
-        }
+        })
+        .catch(error => {
+            console.error(error);
+            alert('Erreur serveur');
+        });
+    }
+}
 
-function showPopup(message) {
+function showPopup(sujet,message) {
     const popup = document.createElement('div');
     popup.className = 'popup-message';
     popup.style.position = 'fixed';
@@ -235,6 +254,7 @@ function showPopup(message) {
 
     popup.innerHTML = `
         <h5 style="margin-bottom:15px;color:#ff8c00;">Message</h5>
+        <h4>Sujet : ${sujet}</h4>
         <p style="white-space:pre-line;">${message}</p>
         <div style="text-align:right;margin-top:20px;">
             <button class="btn btn-delete" onclick="this.closest('.popup-message').remove()">Fermer</button>
