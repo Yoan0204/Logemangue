@@ -13,7 +13,14 @@ class AdminModel {
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
     }
-
+    
+    public function totalDeleteLogement($logementId) {
+        $sql = 'DELETE FROM logement WHERE id = :id';
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([
+            ':id' => $logementId
+        ]);
+    }
     public function countWaitingLogements(string $q = ''): int {
         $params = [];
         $searchClause = '';

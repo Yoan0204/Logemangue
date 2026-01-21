@@ -142,7 +142,7 @@ $min_rating = $_GET['min_rating'] ?? '0';
                             ?>
                             <form method="post">
                                 <input type="hidden" name="logement_id" value="<?php echo $row['ID']; ?>">
-                                <button type="submit" class="btn-unapproved" name="delete">Supprimer</button>
+                                <button type="submit" class="btn-unapproved" name="delete">Enlever l'approbation</button>
                             </form>
                             <?php
                             }
