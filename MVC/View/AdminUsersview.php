@@ -50,17 +50,16 @@ class AdminUsersview {
 
                 <hr>
 
-                <a class="nav-link" href="faq.php">FAQ</a>
-                <a class="nav-link" href="#">Contact</a>
+                <a class="nav-link" href="index?page=faq">FAQ</a>
+                <a class="nav-link" href="admin_contact">Contact</a>
 
                 <hr>
 
-                <a class="nav-link" href="admin.php">Admin ⚙️</a>
-                <a class="nav-link active-link" href="admin_users.php">Gestion utilisateurs</a>
-                <a class="nav-link" href="admin_faq.php">Gestion FAQ</a>
+                <a class="nav-link" href="admin">Admin ⚙️</a>
+                <a class="nav-link active-link" href="admin_users">Gestion utilisateurs</a>
+                <a class="nav-link" href="admin_faq">Gestion FAQ</a>
 
                 <a class="nav-link" href="profil">Mon profil</a>
-                <a class="nav-link" href="login.html">Connexion</a>
             </nav>
         </div>
     </div>

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mon profil - Logemangue</title>
+  <title>Logement - Logemangue</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/logement.css">
@@ -173,29 +173,29 @@ while ($photoRow = $result->fetch_assoc()) {
           <div class="tab-content">
               <div class="tab-pane fade show active info-box" id="description">
     <h2>
-        <?php echo htmlspecialchars($row["titre"]); ?> 
+        <?php echo htmlspecialchars_decode($row["titre"]); ?> 
         <img src="../png/verified.png" alt="Certifié" title="Ce contenu est certifié et vérifié par les administrateurs de Logemangue."
             style="width: 20px; height: 20px; vertical-align: middle; margin-left: 5px; margin-bottom:5px; cursor: pointer;">
     </h2> 
 
-    <h3><strong><?php echo htmlspecialchars($row["loyer"]); ?> € / mois</strong></h3>
+    <h3><strong><?php echo htmlspecialchars_decode($row["loyer"]); ?> € / mois</strong></h3>
 
     <div class="infos-grid">
         <p><?php echo nl2br(htmlspecialchars($row["description"])); ?></p>
-        <p><strong>Adresse :</strong> <?php echo htmlspecialchars($row["adresse"]); ?> - <?php echo htmlspecialchars($row["ville"]); ?></p>
-        <p><strong>Type de logement :</strong> <?php echo htmlspecialchars($row["TYPE"]); ?></p>
-        <p><strong>Surface :</strong> <?php echo htmlspecialchars($row["surface"]); ?> m²</p>
+        <p><strong>Adresse :</strong> <?php echo htmlspecialchars_decode($row["adresse"]); ?> - <?php echo htmlspecialchars_decode($row["ville"]); ?></p>
+        <p><strong>Type de logement :</strong> <?php echo htmlspecialchars_decode($row["TYPE"]); ?></p>
+        <p><strong>Surface :</strong> <?php echo htmlspecialchars_decode($row["surface"]); ?> m²</p>
         <p><strong>Meublé :</strong> <?php echo $row["meuble"] ? "Oui" : "Non"; ?></p>
         <p><strong>Colocation :</strong> <?php echo $row["colocation"] ? "Oui" : "Non"; ?></p>
-        <p><strong>Statut de l'annonce :</strong> <?php echo htmlspecialchars($row["status"]); ?></p>
+        <p><strong>Statut de l'annonce :</strong> <?php echo htmlspecialchars_decode($row["status"]); ?></p>
         <p><strong>Charges incluses :</strong> <?php echo $row["charges_incluses"] ? "Oui" : "Non"; ?></p>
-        <p><strong>Note :</strong> <?php echo htmlspecialchars($row["note"]); ?>/5</p>
+        <p><strong>Note :</strong> <?php echo htmlspecialchars_decode($row["note"]); ?>/5</p>
     </div>
 </div>
 
 
 <div class="tab-pane fade info-box" id="localisation">
-    <p><strong>Adresse :</strong> <?php echo htmlspecialchars(
+    <p><strong>Adresse :</strong> <?php echo htmlspecialchars_decode(
         $row["adresse"]
     ); ?></p>
 
@@ -215,13 +215,13 @@ while ($photoRow = $result->fetch_assoc()) {
 
               <div class="tab-pane fade info-box" id="message">
                     <h4>Propriétaire du logement</h4> <br>
-                    <p><strong>Nom :</strong> <?php echo htmlspecialchars(
+                    <p><strong>Nom :</strong> <?php echo htmlspecialchars_decode(
                         $owner["nom"]
                     ); ?></p>
-                    <p><strong>Email :</strong> <?php echo htmlspecialchars(
+                    <p><strong>Email :</strong> <?php echo htmlspecialchars_decode(
                         $owner["email"]
                     ); ?></p>
-                    <p><strong>Téléphone :</strong> <?php echo htmlspecialchars(
+                    <p><strong>Téléphone :</strong> <?php echo htmlspecialchars_decode(
                         $owner["telephone"]
                     ); ?></p>
                 <?php if (
@@ -265,13 +265,13 @@ while ($photoRow = $result->fetch_assoc()) {
                             if (count($candidatures) > 0):
                                 foreach ($candidatures as $candidature): ?>
                                     <div class="candidature-item mb-3 p-3 border rounded">
-                                        <p><strong>Nom :</strong> <?php echo htmlspecialchars(
+                                        <p><strong>Nom :</strong> <?php echo htmlspecialchars_decode(
                                             $candidature["nom"]
                                         ); ?></p>
-                                        <p><strong>Email :</strong> <?php echo htmlspecialchars(
+                                        <p><strong>Email :</strong> <?php echo htmlspecialchars_decode(
                                             $candidature["email"]
                                         ); ?></p>
-                                        <p><strong>Téléphone :</strong> <?php echo htmlspecialchars(
+                                        <p><strong>Téléphone :</strong> <?php echo htmlspecialchars_decode(
                                             $candidature["telephone"]
                                         ); ?></p>
                                         <?php if (
@@ -279,7 +279,7 @@ while ($photoRow = $result->fetch_assoc()) {
                                         ) { ?>
                                             <p><strong>Dossier FACILE</strong> <a href="https://<?php echo $candidature[
                                                 "facile"
-                                            ]; ?> "><?php echo htmlspecialchars(
+                                            ]; ?> "><?php echo htmlspecialchars_decode(
      $candidature["facile"]
  ); ?></a></p>
                                         <?php } ?>

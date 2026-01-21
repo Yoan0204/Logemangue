@@ -32,13 +32,13 @@
                                     $color = 'text-muted'; // gris par défaut
                                 }
                             ?>
-                            Status : <span class="<?php echo $color; ?> fw-bold"><?php echo htmlspecialchars($status); ?></span>
+                            Status : <span class="<?php echo $color; ?> fw-bold"><?php echo htmlspecialchars_decode($status); ?></span>
                         </p>
 
                         <!-- Formulaire de suppression -->
                         <form method="post">
                             <input type="hidden" name="logement_id" value="<?php echo $row['ID']; ?>">
-                            <button type="submit" class="btn-unapproved" name="delete">Supprimer</button>
+                            <button type="submit" class="btn-unapproved" name="totaldelete" onclick="return confirm('Voulez-vous vraiment supprimer ce logement ? Cette action est irréversible.');">Supprimer</button>
                         </form>
                     </div>
                 </div>

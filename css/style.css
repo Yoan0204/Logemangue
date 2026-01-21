@@ -218,7 +218,7 @@
   .burger-menu.active span:nth-child(3) {
     transform: rotate(-45deg) translate(8px, -8px);
   }
-}
+
 
 /* Overlay sombre en arrière-plan quand le menu est ouvert (élément séparé) */
 .menu-overlay {

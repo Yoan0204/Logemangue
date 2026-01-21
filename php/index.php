@@ -8,7 +8,7 @@ if (isset($_GET["publish"]) && $_GET["publish"] === "success") {?>
 
 if (isset($_GET["registered"]) && $_GET["registered"] === "1") {?>
             <div style="margin: 20px; margin-top: 20px;" class="alert alert-success alert-dismissible fade show" role="alert">
-                    Inscription réussie ! Vous pouvez maintenant vous <a class="alert-link" href="login.html">connecter</a>.                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    Un email de confirmation vous a été adressé, merci de confirmer votre compte puis de vous <a class="alert-link" href="login.html">connecter</a>.                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
 <?php
 };
@@ -55,6 +55,21 @@ if ($page === "messagerie" || $page === "listemessagerie") {
     $controller->showMessagerie($userId);
     exit();
 }
+
+if ($page === "candidatures") {
+    require_once __DIR__ . "/db.php";
+    $userId = $_SESSION["user_id"] ?? 1;
+    require_once __DIR__ . "/../MVC/Model/CandidaturesModel.php";
+    require_once __DIR__ . "/../MVC/Controller/CandidaturesController.php";
+    require_once __DIR__ . "/../MVC/View/Candidaturesview.php";
+    $model = new CandidaturesModel($pdo);
+    $controller = new CandidaturesController($model);
+    $candidatures = $controller->showCandidatures($userId);
+    $view = new CandidaturesView();
+    $view->render($candidatures);
+    exit();
+}
+
 if ($page === "admin") {
     require_once __DIR__ . "/db2.php";
 
@@ -201,11 +216,11 @@ if ($page === "profil") {
               <?php if (!empty($carouselLogements)): ?>
                 <?php foreach ($carouselLogements as $i => $lg): ?>
                   <div class="carousel-item <?php echo $i === 0 ? 'active' : ''; ?>">
-                    <a href="logement?id=<?php echo intval($lg['ID']); ?>" title="<?php echo htmlspecialchars($lg['titre'] ?: 'Voir le logement'); ?>" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
-                      <img src="<?php echo htmlspecialchars($lg['photo_url'] ?: 'https://via.placeholder.com/1000x500?text=No+Photo'); ?>" class="d-block w-100" alt="<?php echo htmlspecialchars($lg['titre'] ?: 'Logement'); ?>" />
+                    <a href="logement?id=<?php echo intval($lg['ID']); ?>" title="<?php echo htmlspecialchars_decode($lg['titre'] ?: 'Voir le logement'); ?>" style="display:block; color:inherit; text-decoration:none; cursor:pointer;">
+                      <img src="<?php echo htmlspecialchars_decode($lg['photo_url'] ?: 'https://via.placeholder.com/1000x500?text=No+Photo'); ?>" class="d-block w-100" alt="<?php echo htmlspecialchars_decode($lg['titre'] ?: 'Logement'); ?>" />
                       <div class="carousel-caption">
-                        <h5 class="property-title"><?php echo htmlspecialchars($lg['titre'] ?: 'Titre'); ?></h5>
-                        <p class="property-info"><?php echo htmlspecialchars($lg['ville'] ?? ''); ?> • <?php echo htmlspecialchars($lg['surface'] ?? ''); ?>m² • <?php echo htmlspecialchars($lg['loyer'] ?? ''); ?>€/mois</p>
+                        <h5 class="property-title"><?php echo htmlspecialchars_decode($lg['titre'] ?: 'Titre'); ?></h5>
+                        <p class="property-info"><?php echo htmlspecialchars_decode($lg['ville'] ?? ''); ?> • <?php echo htmlspecialchars_decode($lg['surface'] ?? ''); ?>m² • <?php echo htmlspecialchars_decode($lg['loyer'] ?? ''); ?>€/mois</p>
                       </div>
                     </a>
                   </div>
@@ -341,12 +356,12 @@ if ($page === "profil") {
                   <div class="col-md-4">
                     <a href="logement?id=<?php echo intval($row['ID']); ?>" class="logement-link">
                       <div class="logement-card">
-                        <img src="<?php echo htmlspecialchars($photoUrl); ?>" alt="<?php echo htmlspecialchars($row['titre'] ?? 'Logement'); ?>" />
+                        <img src="<?php echo htmlspecialchars_decode($photoUrl); ?>" alt="<?php echo htmlspecialchars_decode($row['titre'] ?? 'Logement'); ?>" />
                         <div class="info">
-                          <h6 class="fw-bold mb-1"><?php echo htmlspecialchars($row['titre'] ?? 'Titre'); ?></h6>
-                          <p class="text-muted mb-0"><?php echo htmlspecialchars($row['loyer'] ?? 'Loyer'); ?> € / mois</p>
+                          <h6 class="fw-bold mb-1"><?php echo htmlspecialchars_decode($row['titre'] ?? 'Titre'); ?></h6>
+                          <p class="text-muted mb-0"><?php echo htmlspecialchars_decode($row['loyer'] ?? 'Loyer'); ?> € / mois</p>
                           <p class="small text-muted mb-0">Disponible : <?php echo (isset($row['disponible']) && $row['disponible'] == 1) ? 'Oui' : 'Non'; ?></p>
-                          <p class="small text-muted mb-0"><?php echo htmlspecialchars($row['surface'] ?? 'Surface'); ?> m² - <?php echo htmlspecialchars($row['TYPE'] ?? 'Type'); ?></p>
+                          <p class="small text-muted mb-0"><?php echo htmlspecialchars_decode($row['surface'] ?? 'Surface'); ?> m² - <?php echo htmlspecialchars_decode($row['TYPE'] ?? 'Type'); ?></p>
                         </div>
                       </div>
                     </a>

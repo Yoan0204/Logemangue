@@ -14,20 +14,20 @@ class Profilview {
         <body>
             <h1>Profil</h1>
             <?php if ($message): ?>
-                <p><?php echo htmlspecialchars($message); ?></p>
+                <p><?php echo htmlspecialchars_decode($message); ?></p>
             <?php endif; ?>
             <form method="POST" action="">
                 <label for="nom">Nom:</label>
-                <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($profileData['name']); ?>" required><br>
+                <input type="text" id="name" name="name" value="<?php echo htmlspecialchars_decode($profileData['name']); ?>" required><br>
 
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($profileData['email']); ?>" required><br>
+                <input type="email" id="email" name="email" value="<?php echo htmlspecialchars_decode($profileData['email']); ?>" required><br>
 
                 <label for="telephone">Telephone:</label>
-                <input type="text" id="telephone" name="telephone" value="<?php echo htmlspecialchars($profileData['telephone']); ?>" required><br>
+                <input type="text" id="telephone" name="telephone" value="<?php echo htmlspecialchars_decode($profileData['telephone']); ?>" required><br>
 
                 <label for="date_de_naissance">Date de naissance:</label>
-                <input type="date" id="date_de_naissance" name="date_de_naissance" value="<?php echo htmlspecialchars($profileData['date_de_naissance']); ?>" required><br>
+                <input type="date" id="date_de_naissance" name="date_de_naissance" value="<?php echo htmlspecialchars_decode($profileData['date_de_naissance']); ?>" required><br>
 
                 <label for="genre">Genre:</label>
                 <select id="genre" name="genre" required>

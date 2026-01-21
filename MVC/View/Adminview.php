@@ -60,7 +60,7 @@ class AdminView {
                 <hr>
 
                 <a class="nav-link" href="index?page=faq">FAQ</a>
-                <a class="nav-link" href="#">Contact</a>
+                <a class="nav-link" href="admin_contact">Contact</a>
 
                 <hr>
 
@@ -139,7 +139,7 @@ class AdminView {
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h1 class="text-center mb-0">Liste des Logements à approuver</h1>
                                 <form method="get" class="d-flex" role="search">
-                                    <input class="form-control me-2" style="width: 500px;" type="search" name="q" placeholder="Recherche (titre, adresse...)" aria-label="Search" value="<?php echo htmlspecialchars($q); ?>">
+                                    <input class="form-control me-2" style="width: 500px;" type="search" name="q" placeholder="Recherche (titre, adresse...)" aria-label="Search" value="<?php echo htmlspecialchars_decode($q); ?>">
                                     <button class="btn btn-outline-primary" type="submit">Rechercher</button>
                                 </form>
                             </div>

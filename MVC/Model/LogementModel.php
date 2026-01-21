@@ -94,14 +94,18 @@ class LogementModel {
     }
 
     // Supprime définitivement un logement
+    //Supprime un logement (marque comme supprimé)
     public function deleteLogement($logementId) {
-        $sql = "DELETE FROM logement WHERE id_logement = :id";
-        $stmt = $this->db->prepare($sql);
+        return $this->updateLogementStatus($logementId, 'Waiting');
+    }
+
+    public function totalDeleteLogement($logementId) {
+        $sql = 'DELETE FROM logement WHERE id = :id';
+        $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([
             ':id' => $logementId
         ]);
     }
-
 
     //Récupère un logement par ID
     public function getLogementById($logementId) {

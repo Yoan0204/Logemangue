@@ -1,28 +1,14 @@
-<?php require 'db2.php';?>
 <?php
-// Récupération des candidatures de l'utlilisateur 
-$stmt = $conn->prepare("
-    SELECT r.id, r.date_debut, r.date_fin, r.statut, r.montant, l.adresse, l.ville, l.code_postal, l.id AS logement_id
-    FROM reservation r
-    JOIN logement l on r.id_logement = l.id
-    WHERE r.id_etudiant = ?
-    ORDER BY r.date_debut DESC
-    ");
-$stmt->bind_param("i", $userId);
-$stmt->execute();
-$result = $stmt->get_result();
-$candidatures = [];
-while ($row = $result->fetch_assoc()) {
-    $candidatures[] = $row;
-}
-$stmt->close();
-?>
+
+class CandidaturesView {
+    public function render($candidatures) {
+        ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ma Messagerie</title>
+    <title>Mes Candidatures</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/listmessagerie.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -118,20 +104,20 @@ $stmt->close();
       <a class="nav-link " href="index">Accueil</a>
       <a class="nav-link" href="logements">Recherche</a>
 
-      <?php if (!$isEtudiant): ?>
+      <?php if (!$GLOBALS['isEtudiant']): ?>
       <a class="nav-link" href="publish">Publier une annonce</a>
       <?php endif; ?>
-      <?php if (!$isEtudiant): ?>
+      <?php if (!$GLOBALS['isEtudiant']): ?>
       <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>        
       <?php endif; ?>
-      <?php if ($isEtudiant): ?>
-      <a class="nav-link active-link" href="candidatures">Mes candidatures</a>        
+      <?php if ($GLOBALS['isEtudiant']): ?>
+      <a class="nav-link active-link" href="index?page=candidatures">Mes candidatures</a>        
       <?php endif; ?>
       <a class="nav-link" href="listemessagerie">Ma messagerie</a>
-        <?php if ($isAdmin): ?>
-      <a class="nav-link" href="admin">Admin ⚙️</a>
+        <?php if ($GLOBALS['isAdmin']): ?>
+      <a class="nav-link" href="index?page=admin">Admin ⚙️</a>
         <?php endif; ?>
-      <a class="nav-link " href="profil">Mon profil</a>
+      <a class="nav-link " href="index?page=profil">Mon profil</a>
     </nav>
   </header>
 <body>
@@ -168,7 +154,7 @@ $stmt->close();
                                     ); ?>
                                 </strong>
                                 <br>
-                                <a class="logement-link" href="../php/logement?id=<?php echo $candidature['logement_id']; ?>">
+                                <a class="logement-link" href="logement?id=<?php echo $candidature['logement_id']; ?>">
                                     Voir le logement
                                 </a>
                             </td>
@@ -203,3 +189,6 @@ $stmt->close();
         <?php include 'footer.php'; ?>
       </footer>
 </html>
+        <?php
+    }
+}

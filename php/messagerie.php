@@ -185,7 +185,7 @@ $nom_destinataire = $destinataire
                         ? "message message-right mb-4"
                         : "message message-left mb-4"; ?>
                 <div class="<?php echo $class; ?>">
-                    <p><?php echo htmlspecialchars($message["contenu"]); ?></p>
+                    <p><?php echo htmlspecialchars_decode($message["contenu"]); ?></p>
                     <small><?php echo $message["date_envoi"]; ?></small>
                 </div>
             <?php endforeach; ?>

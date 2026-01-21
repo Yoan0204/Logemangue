@@ -19,9 +19,9 @@ $min_rating = $_GET['min_rating'] ?? '0';
         <div class="search-bar p-3 rounded-14 shadow-sm mb-4">
             <div class="search-grid">
                 <input type="text" name="search" class="form-control search-input-filters"
-                    value="<?php echo htmlspecialchars($search); ?>" placeholder="Recherche...">
+                    value="<?php echo htmlspecialchars_decode($search); ?>" placeholder="Recherche...">
                 <input type="text" name="ville" class="form-control" placeholder="Ville" 
-                    value="<?php echo htmlspecialchars($ville); ?>">
+                    value="<?php echo htmlspecialchars_decode($ville); ?>">
                 <select name="type" class="form-select">
                     <option value="">Type</option>
                     <option value="Studio" <?php echo $type === 'Studio' ? 'selected' : ''; ?>>Studio</option>
@@ -41,22 +41,22 @@ $min_rating = $_GET['min_rating'] ?? '0';
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Budget max (€)</label>
                     <input type="range" name="budget_max" class="form-range custom-range" min="0" max="2000" step="25" 
-                        id="rangeBudget" value="<?php echo htmlspecialchars($budget_max); ?>">
+                        id="rangeBudget" value="<?php echo htmlspecialchars_decode($budget_max); ?>">
                     <div class="d-flex justify-content-between small fw-semibold">
                         <span>0€</span>
-                        <span id="budgetValue"><?php echo htmlspecialchars($budget_max); ?>€</span>
+                        <span id="budgetValue"><?php echo htmlspecialchars_decode($budget_max); ?>€</span>
                         <span>2000€</span>  
                     </div>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label fw-semibold">Date de disponibilité</label>
                     <input type="date" name="date_dispo" class="form-control" 
-                        value="<?php echo htmlspecialchars($date_dispo); ?>">
+                        value="<?php echo htmlspecialchars_decode($date_dispo); ?>">
                 </div>
                 <div class="col-md-3">
                     <label class="form-label fw-semibold">Surface min (m²)</label>
                     <input type="number" name="surface_min" class="form-control" placeholder="Surface (m²)"
-                        value="<?php echo htmlspecialchars($surface_min); ?>">
+                        value="<?php echo htmlspecialchars_decode($surface_min); ?>">
                 </div>
             </div>
 
@@ -80,7 +80,7 @@ $min_rating = $_GET['min_rating'] ?? '0';
                 </div>
                 <div class="col-md-4">
                     <input type="text" name="keywords" class="form-control" placeholder="Mots-clés"
-                        value="<?php echo htmlspecialchars($keywords); ?>">
+                        value="<?php echo htmlspecialchars_decode($keywords); ?>">
                 </div>
             </div>
 
@@ -94,13 +94,13 @@ $min_rating = $_GET['min_rating'] ?? '0';
                         <span class="star" data-value="4" <?php echo $min_rating >= 4 ? 'data-selected="true"' : ''; ?>>★</span>
                         <span class="star" data-value="5" <?php echo $min_rating >= 5 ? 'data-selected="true"' : ''; ?>>★</span>
                     </div>
-                    <input type="hidden" name="min_rating" id="minRatingValue" value="<?php echo htmlspecialchars($min_rating); ?>">
+                    <input type="hidden" name="min_rating" id="minRatingValue" value="<?php echo htmlspecialchars_decode($min_rating); ?>">
                 </div>
                 <div class="col-md-4">
                     <button type="submit" class="btn btn-filters w-100">Appliquer les filtres</button>
                 </div>
                 <div class="col-md-4">
-                    <a style="    display: inline-flex; align-items: center;justify-content: center;" href="logements" class="btn btn-filters-secondary w-100 mb-2">Réinitialiser</a>
+                    <a style="    display: inline-flex; align-items: center;justify-content: center;" href="logements" class="btn btn-filters-secondary w-100">Réinitialiser</a>
                 </div>
             </div>
         </div>

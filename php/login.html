@@ -455,10 +455,16 @@
         <!-- Formulaire de connexion -->
         <div id="msg-erreur" style="display:none; color:red;">
             <strong>Erreur :</strong> Les identifiants sont incorrects. Veuillez réessayer.
-        </div>         
+        </div>  
+        <div id="msg-erreur-email" style="display:none; color:red;">
+            <strong>Erreur :</strong> Votre compte n'a pas été vérifié. Veuillez vérifier votre email.
+        </div>       
         <div id="msg-erreur-car" style="display:none; color:red;">
             <strong>Erreur :</strong> Vous avez utilisé des caractères non autorisés.
         </div>         
+        <div id="msg-email-valide" style="display:none; color:green;">
+            <strong>Succès :</strong> Votre compte a bien été validé. Vous pouvez maintenant vous connecter.
+        </div>
         <form id="login-form" action="login.php" method="post">
             <div class="form-group">
                 <label for="login-email">Adresse email</label>
@@ -583,6 +589,12 @@
   }
     if (params.get('error') === 'carun') {
     document.getElementById('msg-erreur-car').style.display = 'block';
+  }
+    if (params.get('erreur') === '2') {
+    document.getElementById('msg-erreur-email').style.display = 'block';
+  }
+   if (params.get('verified') === '1') {
+    document.getElementById('msg-email-valide').style.display = 'block';
   }
 </script>
     <script>
