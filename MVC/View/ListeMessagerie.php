@@ -3,6 +3,7 @@
 <head>
     <link rel="icon" type="image/x-icon" href="../png/icon.png" />
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ma messagerie</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/listmessagerie.css">
