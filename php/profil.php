@@ -557,7 +557,7 @@ if (isset($_GET["update"]) && $_GET["update"] == "success") {
               </form>
                 </div>
             </div>
-            <br><br>
+            <br>
 <div class="info-box-delete">
               <div class="info-title-delete text-center">Supprimer mon compte</div>
               
