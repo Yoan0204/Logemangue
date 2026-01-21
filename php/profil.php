@@ -9,6 +9,79 @@ if (isset($_POST["logout"])) {
     exit();
 }
 
+// GESTION DE LA SUPPRESSION DE COMPTE
+if (isset($_POST["delete_account"])) {
+    // Vérifier que la checkbox est cochée
+    if (!isset($_POST["confirm_delete"])) {
+        header("Location: profil?erreur=checkbox_manquante");
+        exit();
+    }
+
+    // Vérifier que le mot de passe est fourni
+    if (empty($_POST["confirm_password"])) {
+        header("Location: profil?erreur=password_manquant");
+        exit();
+    }
+
+    $confirm_password = $_POST["confirm_password"];
+
+    // Récupérer le mot de passe haché de l'utilisateur
+    $stmt = $conn->prepare("SELECT password FROM users WHERE id = ?");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user_data = $result->fetch_assoc();
+
+    // Vérifier que le mot de passe est correct
+    if (!password_verify($confirm_password, $user_data["password"])) {
+        header("Location: profil?erreur=password_incorrect");
+        exit();
+    }
+
+    // Commencer une transaction pour garantir l'intégrité des données
+    $conn->begin_transaction();
+
+    try {
+        // Supprimer les candidatures de l'utilisateur
+        $stmt = $conn->prepare("DELETE FROM reservation WHERE id_etudiant = ?");
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+
+        // Supprimer les messages de l'utilisateur
+        $stmt = $conn->prepare("DELETE FROM message WHERE id_expediteur = ? OR id_destinataire = ?");
+        $stmt->bind_param("ii", $userId, $userId);
+        $stmt->execute();
+
+        // Supprimer les annonces de l'utilisateur (si propriétaire)
+        $stmt = $conn->prepare("DELETE FROM logement WHERE id_proprietaire = ?");
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+
+        // Supprimer l'utilisateur
+        $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+
+        // Valider la transaction
+        $conn->commit();
+
+        // Détruire la session
+        session_start();
+        $_SESSION = [];
+        session_destroy();
+
+        // Rediriger vers la page de connexion avec un message de confirmation
+        header("Location: login.html?message=compte_supprime");
+        exit();
+
+    } catch (Exception $e) {
+        // En cas d'erreur, annuler la transaction
+        $conn->rollback();
+        header("Location: profil?erreur=suppression_failed");
+        exit();
+    }
+}
+
 if (isset($_POST["valider"])) {
     $nom = trim($_POST["nom"]);
     $telephone = trim($_POST["telephone"]);
@@ -88,7 +161,11 @@ $errorMessages = [
     'badurl' => 'L\'URL de votre dossier FACILE n\'est pas valide.',
     'type_manquant' => 'Le type d\'utilisateur est requis.',
     'biography_invalide' => 'La biographie contient des caractères non autorisés.',
-    'update_failed' => 'Erreur lors de la mise à jour des informations.'
+    'update_failed' => 'Erreur lors de la mise à jour des informations.',
+    'checkbox_manquante' => 'Vous devez cocher la case de confirmation pour supprimer votre compte.',
+    'password_manquant' => 'Le mot de passe est requis pour supprimer votre compte.',
+    'password_incorrect' => 'Le mot de passe saisi est incorrect.',
+    'suppression_failed' => 'Erreur lors de la suppression du compte. Veuillez réessayer.'
 ];
 
 if (isset($_GET["update"]) && $_GET["update"] == "success") {
@@ -480,6 +557,64 @@ if (isset($_GET["update"]) && $_GET["update"] == "success") {
               </form>
                 </div>
             </div>
+            <br>
+<div class="info-box-delete">
+              <div class="info-title-delete text-center">Supprimer mon compte</div>
+              
+              <?php if (isset($_GET["erreur"]) && isset($errorMessages[$_GET["erreur"]])): ?>
+                <div style="margin: 20px; margin-top: 20px;" class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <?php echo htmlspecialchars($errorMessages[$_GET["erreur"]], ENT_QUOTES, 'UTF-8'); ?>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div> 
+              <?php endif; ?>
+
+              <div class="alert alert-warning mb-4" role="alert">
+                <strong>⚠️ Attention !</strong> Cette action est irréversible. Toutes vos données seront définitivement supprimées.
+              </div>
+
+              <form method="post" action="" id="deleteAccountForm">
+                <div class="mb-4">
+                  <label for="confirm_password" class="form-label fw-bold">
+                    Confirmez votre mot de passe pour continuer
+                  </label>
+                  <input 
+                    type="password" 
+                    class="form-control" 
+                    id="confirm_password" 
+                    name="confirm_password" 
+                    placeholder="Entrez votre mot de passe actuel"
+                    required
+                  >
+                </div>
+
+                <div class="mb-4">
+                  <div class="danger-checkbox">
+                    <input 
+                      type="checkbox"
+                      id="confirm_delete"
+                      name="confirm_delete"
+                      required
+                    >
+                    <label for="confirm_delete">
+                      Je comprends que cette action est irréversible et que toutes mes données seront supprimées définitivement.
+                    </label>
+                  </div>
+
+                </div>
+
+                <div class="d-grid gap-2">
+                  <button 
+                    type="submit" 
+                    name="delete_account" 
+                    class="btn-unapproved "
+                    onclick="return confirm('Êtes-vous absolument sûr(e) de vouloir supprimer votre compte ? Cette action ne peut pas être annulée.');"
+                  >
+                    🗑️ Supprimer définitivement mon compte
+                  </button>
+                </div>
+              </form>
+            </div>
+            </div>            
 
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -750,3 +885,7 @@ if (isset($_GET["update"]) && $_GET["update"] == "success") {
     });
   </script>
 </body>
+
+      <footer class="text-center">
+        <?php include "footer.php"; ?>
+      </footer>

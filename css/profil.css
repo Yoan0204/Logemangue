@@ -125,6 +125,89 @@
     height: 120px;
     line-height: 1.6;
 }
+.info-box-delete {
+    background: linear-gradient(135deg, #fef2f2 0%, #fefbfb 100%);
+    border: 2px solid #ef4444;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(239, 68, 68, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.info-box-delete::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.info-box-delete:hover {
+    border-color: #dc2626;
+    box-shadow: 0 8px 32px rgba(220, 38, 38, 0.15);
+    transform: translateY(-4px);
+}
+
+.info-box-delete:hover::before {
+    opacity: 0.05;
+}
+
+.info-box-delete input,
+.info-box-delete select,
+.info-box-delete textarea {
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+    background-color: #fff;
+    padding: 12px 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.info-box-delete input:focus,
+.info-box-delete select:focus,
+.info-box-delete textarea:focus {
+    outline: none;
+    border-color: #dc2626;
+    background-color: #fff;
+    box-shadow: 0 4px 16px rgba(220, 38, 38, 0.15);
+    transform: translateY(-2px);
+}
+
+.info-box-delete input:hover,
+.info-box-delete select:hover,
+.info-box-delete textarea:hover {
+    border-color: #ef4444;
+}
+
+.info-box-delete textarea {
+    resize: none;
+    height: 120px;
+    line-height: 1.6;
+}
+
+.info-title-delete {
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #333;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.info-title-delete::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
+    background: linear-gradient(180deg, #ef4444, #dc2626);
+    border-radius: 2px;
+}
 
 .info-title {
     font-weight: 700;
@@ -251,4 +334,69 @@
     .info-title {
         font-size: 1.1rem;
     }
+}
+.danger-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Cache la checkbox native mais reste accessible */
+.danger-checkbox input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Faux checkbox */
+.danger-checkbox label {
+  position: relative;
+  padding-left: 32px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Carré */
+.danger-checkbox label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 2px solid #dc3545;
+  background-color: #fff;
+  transition: all 0.2s ease;
+}
+
+/* Check */
+.danger-checkbox label::after {
+  content: "✓";
+  position: absolute;
+  left: 4px;
+  top: 0px;
+  font-size: 16px;
+  color: #fff;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.2s ease;
+}
+
+/* État coché */
+.danger-checkbox input:checked + label::before {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.danger-checkbox input:checked + label::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Focus clavier */
+.danger-checkbox input:focus-visible + label::before {
+  box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.3);
 }

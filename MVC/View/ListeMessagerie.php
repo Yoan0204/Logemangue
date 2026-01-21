@@ -91,6 +91,9 @@
     </div>
 </div>
 
+      <footer class="text-center">
+        <?php include "footer.php"; ?>
+      </footer>
 <script src="/js/messagerie-search.js"></script>
 
 

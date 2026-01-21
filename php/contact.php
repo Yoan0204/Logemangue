@@ -140,9 +140,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['envoyer'])) {
     <?php if (!empty($message)): ?>
       <div class="alert-<?php echo $messageType; ?>-custom">
         <?php if ($messageType === 'success'): ?>
-          ✓ <?php echo htmlspecialchars_decode($message, ENT_QUOTES, 'UTF-8'); ?>
+          ✓ <?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?>
         <?php else: ?>
-          ❌ <?php echo $message; ?>
+          ❌ <?php echo $message; ?>  
         <?php endif; ?>
       </div>
     <?php endif; ?>
@@ -156,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['envoyer'])) {
 
       <?php if ($isConnected && !empty($userData)): ?>
         <div class="user-info-badge">
-          ✓ Connecté en tant que <?php echo htmlspecialchars_decode($userData['prenom'] . ' ' . $userData['nom'], ENT_QUOTES, 'UTF-8'); ?>
+          ✓ Connecté en tant que <?php echo htmlspecialchars($userData['nom'], ENT_QUOTES, 'UTF-8'); ?>
         </div>
       <?php endif; ?>
 
@@ -166,9 +166,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['envoyer'])) {
             <label for="nom">Nom complet<span class="required">*</span></label>
             <input type="text" id="nom" name="nom" class="form-control" placeholder="Jean Dupont" required pattern="[a-zA-ZÀ-ÿ\s'\-]+" title="Seules les lettres, espaces, tirets et apostrophes sont autorisés" value="<?php 
               if (isset($_POST['nom'])) {
-                echo htmlspecialchars_decode($_POST['nom'], ENT_QUOTES, 'UTF-8');
+                echo htmlspecialchars($_POST['nom'], ENT_QUOTES, 'UTF-8');
               } elseif ($isConnected && !empty($userData)) {
-                echo htmlspecialchars_decode(($userData['prenom'] ?? '') . ' ' . ($userData['nom'] ?? ''), ENT_QUOTES, 'UTF-8');
+                echo htmlspecialchars(($userData['prenom'] ?? '') . ' ' . ($userData['nom'] ?? ''), ENT_QUOTES, 'UTF-8');
               }
             ?>" <?php echo $isConnected ? 'readonly' : ''; ?>>
           </div>
@@ -176,9 +176,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['envoyer'])) {
             <label for="email">Email<span class="required">*</span></label>
             <input type="email" id="email" name="email" class="form-control" placeholder="jean.dupont@example.com" required value="<?php 
               if (isset($_POST['email'])) {
-                echo htmlspecialchars_decode($_POST['email'], ENT_QUOTES, 'UTF-8');
+                echo htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
               } elseif ($isConnected && !empty($userData)) {
-                echo htmlspecialchars_decode($userData['email'], ENT_QUOTES, 'UTF-8');
+                echo htmlspecialchars($userData['email'], ENT_QUOTES, 'UTF-8');
               }
             ?>" <?php echo $isConnected ? 'readonly' : ''; ?>>
           </div>
@@ -189,9 +189,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['envoyer'])) {
             <label for="telephone">Téléphone</label>
             <input type="tel" id="telephone" name="telephone" class="form-control" placeholder="0612345678" pattern="[0-9]{10}" title="Le numéro de téléphone doit contenir exactement 10 chiffres" maxlength="10" value="<?php 
               if (isset($_POST['telephone'])) {
-                echo htmlspecialchars_decode($_POST['telephone'], ENT_QUOTES, 'UTF-8');
+                echo htmlspecialchars($_POST['telephone'], ENT_QUOTES, 'UTF-8');
               } elseif ($isConnected && !empty($userData) && !empty($userData['telephone'])) {
-                echo htmlspecialchars_decode($userData['telephone'], ENT_QUOTES, 'UTF-8');
+                echo htmlspecialchars($userData['telephone'], ENT_QUOTES, 'UTF-8');
               }
             ?>">
           </div>
@@ -219,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['envoyer'])) {
     </div>
   </div>
 
-      <footer class="text-center py-3">
+      <footer class="text-center">
         <?php include "footer.php"; ?>
       </footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
