@@ -120,6 +120,12 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
+      .btn:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+        transform: none;
+      }
+
       .link {
         color: #F5A623;
         text-decoration: none;
@@ -147,6 +153,87 @@
       .email-status.loading {
         color: #999;
         font-style: italic;
+      }
+
+      /* CRITÈRES MOT DE PASSE */
+      .password-requirements {
+        background: #f8f9fa;
+        border-left: 4px solid #ffa500;
+        padding: 12px;
+        border-radius: 6px;
+        margin-top: 8px;
+        font-size: 13px;
+        text-align: left;
+      }
+
+      .password-requirements h4 {
+        font-size: 14px;
+        margin-bottom: 8px;
+        color: #333;
+      }
+
+      .requirement {
+        display: flex;
+        align-items: center;
+        margin: 4px 0;
+        color: #666;
+        transition: color 0.3s ease;
+      }
+
+      .requirement .icon {
+        margin-right: 8px;
+        font-weight: bold;
+      }
+
+      .requirement.valid {
+        color: #2ecc71;
+      }
+
+      .requirement.invalid {
+        color: #e74c3c;
+      }
+
+      .password-strength {
+        margin-top: 8px;
+        height: 4px;
+        background: #e0e0e0;
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      .password-strength-bar {
+        height: 100%;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+      }
+
+      .strength-weak {
+        width: 33%;
+        background: #e74c3c;
+      }
+
+      .strength-medium {
+        width: 66%;
+        background: #f39c12;
+      }
+
+      .strength-strong {
+        width: 100%;
+        background: #2ecc71;
+      }
+
+      .password-match {
+        margin-top: 6px;
+        font-size: 13px;
+        text-align: left;
+      }
+
+      .password-match.valid {
+        color: #2ecc71;
+      }
+
+      .password-match.invalid {
+        color: #e74c3c;
       }
 
       /* CALENDRIER PERSONNALISÉ */
@@ -490,10 +577,37 @@
           <div class="form-group">
             <label for="register-password">Mot de passe</label>
             <input type="password" id="register-password" name="password" required />
+            <div class="password-requirements">
+              <h4>Critères de sécurité :</h4>
+              <div class="requirement" id="req-length">
+                <span class="icon">○</span>
+                <span>Au moins 8 caractères</span>
+              </div>
+              <div class="requirement" id="req-uppercase">
+                <span class="icon">○</span>
+                <span>Au moins une majuscule</span>
+              </div>
+              <div class="requirement" id="req-lowercase">
+                <span class="icon">○</span>
+                <span>Au moins une minuscule</span>
+              </div>
+              <div class="requirement" id="req-number">
+                <span class="icon">○</span>
+                <span>Au moins un chiffre</span>
+              </div>
+              <div class="requirement" id="req-special">
+                <span class="icon">○</span>
+                <span>Au moins un caractère spécial (!@#$%^&*)</span>
+              </div>
+              <div class="password-strength">
+                <div class="password-strength-bar" id="strength-bar"></div>
+              </div>
+            </div>
           </div>
           <div class="form-group">
             <label for="register-confirm-password">Confirmer le mot de passe</label>
             <input type="password" id="register-confirm-password" name="confirm_password" required />
+            <div class="password-match" id="password-match"></div>
           </div>
           <div class="form-group">
             <label for="register-name">Nom complet</label>
@@ -527,7 +641,7 @@
               <option value="Autre">Autre</option>
             </select>
           </div>         
-          <button type="submit" class="btn">S'inscrire</button>
+          <button type="submit" class="btn" id="submit-btn" disabled>S'inscrire</button>
         </form>
         
         <a href="logements" class="link">→ Je veux simplement voir les logements</a>
@@ -580,6 +694,180 @@
       </div>
     </div>
 
+    <script>
+  const params = new URLSearchParams(window.location.search);
+
+  if (params.get('erreur') === '1') {
+    document.getElementById('msg-erreur').style.display = 'block';
+  }
+    if (params.get('error') === 'carun') {
+    document.getElementById('msg-erreur-car').style.display = 'block';
+  }
+    if (params.get('erreur') === '2') {
+    document.getElementById('msg-erreur-email').style.display = 'block';
+  }
+   if (params.get('verified') === '1') {
+    document.getElementById('msg-email-valide').style.display = 'block';
+  }
+</script>
+    <script>
+      const loginTab = document.getElementById("login-tab");
+      const registerTab = document.getElementById("register-tab");
+      const loginForm = document.getElementById("login-form");
+      const registerForm = document.getElementById("register-form");
+
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('active');
+            registerTab.classList.remove('active');
+            loginForm.style.display = 'block';
+            registerForm.style.display = 'none';
+        });
+
+        registerTab.addEventListener('click', () => {
+            registerTab.classList.add('active');
+            loginTab.classList.remove('active');
+            registerForm.style.display = 'block';
+            loginForm.style.display = 'none';
+        });
+    </script>
+    <script>
+const emailInput = document.getElementById('register-email');
+const status = document.getElementById('email-status');
+
+let timeout = null;
+
+emailInput.addEventListener('input', () => {
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+        const email = emailInput.value;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!email) {
+            status.textContent = '';
+            status.className = 'email-status';
+            return;
+        }
+
+        if (!emailRegex.test(email)) {
+            status.textContent = '❌ Format email invalide';
+            status.className = 'email-status error';
+            return;
+        }
+
+        status.textContent = 'Vérification...';
+        status.className = 'email-status loading';
+
+        fetch('check_email.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.exists) {
+                status.textContent = '❌ Email déjà utilisé';
+                status.className = 'email-status error';
+            } else {
+                status.textContent = '✅ Email disponible';
+                status.className = 'email-status success';
+            }
+        });
+    }, 500);
+});
+</script>
+
+    <!-- VALIDATION MOT DE PASSE -->
+    <script>
+      const passwordInput = document.getElementById('register-password');
+      const confirmPasswordInput = document.getElementById('register-confirm-password');
+      const submitBtn = document.getElementById('submit-btn');
+
+      const requirements = {
+        length: { regex: /.{8,}/, element: document.getElementById('req-length') },
+        uppercase: { regex: /[A-Z]/, element: document.getElementById('req-uppercase') },
+        lowercase: { regex: /[a-z]/, element: document.getElementById('req-lowercase') },
+        number: { regex: /[0-9]/, element: document.getElementById('req-number') },
+        special: { regex: /[!@#$%^&*(),.?":{}|<>]/, element: document.getElementById('req-special') }
+      };
+
+      function checkPasswordStrength(password) {
+        let validCount = 0;
+
+        for (const [key, req] of Object.entries(requirements)) {
+          if (req.regex.test(password)) {
+            req.element.classList.add('valid');
+            req.element.classList.remove('invalid');
+            req.element.querySelector('.icon').textContent = '✓';
+            validCount++;
+          } else {
+            req.element.classList.add('invalid');
+            req.element.classList.remove('valid');
+            req.element.querySelector('.icon').textContent = '✗';
+          }
+        }
+
+        const strengthBar = document.getElementById('strength-bar');
+        strengthBar.className = 'password-strength-bar';
+
+        if (validCount <= 2) {
+          strengthBar.classList.add('strength-weak');
+        } else if (validCount <= 4) {
+          strengthBar.classList.add('strength-medium');
+        } else {
+          strengthBar.classList.add('strength-strong');
+        }
+
+        return validCount === 5;
+      }
+
+      function checkPasswordMatch() {
+        const password = passwordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
+        const matchDiv = document.getElementById('password-match');
+
+        if (!confirmPassword) {
+          matchDiv.textContent = '';
+          matchDiv.className = 'password-match';
+          return false;
+        }
+
+        if (password === confirmPassword) {
+          matchDiv.textContent = '✓ Les mots de passe correspondent';
+          matchDiv.className = 'password-match valid';
+          return true;
+        } else {
+          matchDiv.textContent = '✗ Les mots de passe ne correspondent pas';
+          matchDiv.className = 'password-match invalid';
+          return false;
+        }
+      }
+
+      function updateSubmitButton() {
+        const passwordValid = checkPasswordStrength(passwordInput.value);
+        const passwordsMatch = checkPasswordMatch();
+        submitBtn.disabled = !(passwordValid && passwordsMatch);
+      }
+
+      passwordInput.addEventListener('input', () => {
+        updateSubmitButton();
+      });
+
+      confirmPasswordInput.addEventListener('input', () => {
+        updateSubmitButton();
+      });
+
+      // Validation lors de la soumission
+      document.getElementById('register-form').addEventListener('submit', (e) => {
+        const passwordValid = checkPasswordStrength(passwordInput.value);
+        const passwordsMatch = checkPasswordMatch();
+
+        if (!passwordValid || !passwordsMatch) {
+          e.preventDefault();
+          alert('Veuillez corriger les erreurs dans le formulaire avant de soumettre.');
+        }
+      });
+    </script> 
     <script>
   const params = new URLSearchParams(window.location.search);
 
