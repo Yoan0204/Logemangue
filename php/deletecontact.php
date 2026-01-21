@@ -1,5 +1,5 @@
 <?php
-require 'db2.php'; // fichier qui crée $pdo
+require 'db2withoutlogin.php'; // fichier qui crée $pdo
 
 if (isset($_POST['id'])) {
     $id = (int) $_POST['id'];
