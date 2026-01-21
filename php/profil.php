@@ -183,6 +183,7 @@ if (isset($_GET["update"]) && $_GET["update"] == "success") {
 <html lang="fr">
 
 <head>
+    <link rel="icon" type="image/x-icon" href="../png/icon.png" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mon profil - Logemangue</title>

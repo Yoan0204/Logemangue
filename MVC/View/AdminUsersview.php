@@ -11,6 +11,7 @@ class AdminUsersview {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <link rel="icon" type="image/x-icon" href="../png/icon.png" />
     <meta charset="UTF-8">
     <title>Admin – Gestion Utilisateurs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

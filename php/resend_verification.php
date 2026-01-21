@@ -36,6 +36,7 @@ if (isset($_POST["resend"])) {
         $message = "
         <html>
         <head>
+    <link rel="icon" type="image/x-icon" href="../png/icon.png" />
             <style>
                 body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
                 .container { background: white; max-width: 600px; margin: 0 auto; padding: 30px; border-radius: 10px; }
@@ -69,6 +70,7 @@ if (isset($_POST["resend"])) {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <link rel="icon" type="image/x-icon" href="../png/icon.png" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Renvoyer la vérification - Logemangue</title>

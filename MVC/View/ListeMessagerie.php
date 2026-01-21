@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <link rel="icon" type="image/x-icon" href="../png/icon.png" />
     <meta charset="UTF-8">
     <title>Ma messagerie</title>
     <link rel="stylesheet" href="../css/style.css">

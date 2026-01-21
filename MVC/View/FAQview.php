@@ -6,6 +6,7 @@ class FAQView {
        <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <link rel="icon" type="image/x-icon" href="../png/icon.png" />
         <link rel="stylesheet" type="text/css" href="../css/style.css" />
 
 <meta charset="UTF-8">
