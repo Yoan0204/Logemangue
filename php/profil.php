@@ -430,7 +430,7 @@ if (isset($_GET["update"]) && $_GET["update"] == "success") {
 
     .age-warning {
       background: linear-gradient(135deg, #fff5e6, #ffe6cc);
-      border-left: 4px solid #ffa500;
+      border: 2px solid #ffa500;
       padding: 12px;
       border-radius: 6px;
       margin-top: 15px;
@@ -441,7 +441,7 @@ if (isset($_GET["update"]) && $_GET["update"] == "success") {
 
     .age-error {
       background: #ffe6e6;
-      border-left: 4px solid #e74c3c;
+      border: 2px solid #e74c3c;
       padding: 12px;
       border-radius: 6px;
       margin-top: 15px;

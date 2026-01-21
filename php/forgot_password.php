@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             </table>
                             
                             <!-- Info box -->
-                            <table width='100%' cellpadding='0' cellspacing='0' style='background-color:#fff5ed;border-left:4px solid #ff6a00;border-radius:8px;margin:20px 0;'>
+                            <table width='100%' cellpadding='0' cellspacing='0' style='background-color:#fff5ed;border:2px solid #ff6a00;border-radius:8px;margin:20px 0;'>
                                 <tr>
                                     <td style='padding:20px;'>
                                         <p style='margin:0;color:#d65a00;font-size:14px;line-height:1.5;'>
