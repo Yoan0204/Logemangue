@@ -196,8 +196,9 @@ $contacts = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             <td><?php echo htmlspecialchars_decode($contact['sujet']); ?></td>
                             <td><?php echo date('d/m/Y H:i', strtotime($contact['date_creation'])); ?></td>
                             <td>
-                                <button class="btn btn-view" onclick="showPopup('<?php echo htmlspecialchars_decode($contact['sujet']); ?>', '<?php echo htmlspecialchars_decode($contact['message']); ?>')">Voir</button>
-                                <button class="btn btn-delete" onclick="deleteContact(<?php echo $contact['id']; ?>)">Supprimer</button>
+                                <button class="btn btn-approved" onclick="showPopup('<?php echo htmlspecialchars_decode($contact['sujet']); ?>', '<?php echo htmlspecialchars_decode($contact['message']); ?>')">Voir</button>
+                                <button class="btn btn-unapproved" onclick="deleteContact(<?php echo $contact['id']; ?>)">Supprimer</button>
+                                <a class="btn btn-midapproved" href="mailto:<?php echo htmlspecialchars_decode($contact['email']); ?>" class="btn btn-view">Répondre</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

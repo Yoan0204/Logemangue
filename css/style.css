@@ -908,7 +908,7 @@
 }
 
 .btn-okayed:hover {
-  background-color: rgb(20, 102, 31);
+  background-color: rgb(98, 63, 195);
   transform: translateY(-2px);
 } 
 
@@ -1036,3 +1036,7 @@
   margin-top: 6px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 72da3a23813a97367c1b05faa382682126276e0d
