@@ -218,7 +218,7 @@ if (
               <label class="form-label fw-semibold">Type</label>
               <select class="form-select form-field" id="type" name="type" value="<?php echo $editMode ? htmlspecialchars($logement['type']) : ''; ?>" required>
                 <option>Studio</option>
-                <option>T1</option>
+                <option>T1</option> 
                 <option>T2</option>
                 <option>T3</option>
                 <option>T4+</option>
@@ -271,10 +271,17 @@ if (
 
             <div class="col-12">
               <label class="form-label fw-semibold">Description</label>
-              <textarea pattern="[A-Za-z0-9' ]+"  class="form-control form-field" rows="4" placeholder="Décrivez votre logement..." id="description" name="description" required ><?php echo $editMode ? htmlspecialchars($logement['description']) : ''; ?></textarea>
+              <textarea class="form-control form-field" rows="4" placeholder="Décrivez votre logement..." id="description" name="description" required title="Caractères spéciaux non autorisés"><?php echo $editMode ? htmlspecialchars($logement['description']) : ''; ?></textarea>
             </div>
 
-          <input type="file" name="photos[]" multiple accept="image/*">
+<label class="file-input">
+  Choisir des images
+  <input type="file" name="photos[]" multiple accept="image/*" id="photosInput">
+</label>
+
+<div id="file-names"></div>
+
+
           </div>
 
           <!-- Boutons -->
