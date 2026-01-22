@@ -2,6 +2,7 @@
 <html lang="fr">
 
 <head>
+    <link rel="icon" type="image/x-icon" href="../png/icon.png" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Logement - Logemangue</title>
@@ -181,7 +182,7 @@ while ($photoRow = $result->fetch_assoc()) {
     <h3><strong><?php echo htmlspecialchars_decode($row["loyer"]); ?> € / mois</strong></h3>
 
     <div class="infos-grid">
-        <p><?php echo nl2br(htmlspecialchars($row["description"])); ?></p>
+        <p><?php echo nl2br(htmlspecialchars_decode($row["description"])); ?></p>
         <p><strong>Adresse :</strong> <?php echo htmlspecialchars_decode($row["adresse"]); ?> - <?php echo htmlspecialchars_decode($row["ville"]); ?></p>
         <p><strong>Type de logement :</strong> <?php echo htmlspecialchars_decode($row["TYPE"]); ?></p>
         <p><strong>Surface :</strong> <?php echo htmlspecialchars_decode($row["surface"]); ?> m²</p>
@@ -189,7 +190,14 @@ while ($photoRow = $result->fetch_assoc()) {
         <p><strong>Colocation :</strong> <?php echo $row["colocation"] ? "Oui" : "Non"; ?></p>
         <p><strong>Statut de l'annonce :</strong> <?php echo htmlspecialchars_decode($row["status"]); ?></p>
         <p><strong>Charges incluses :</strong> <?php echo $row["charges_incluses"] ? "Oui" : "Non"; ?></p>
-        <p><strong>Note :</strong> <?php echo htmlspecialchars_decode($row["note"]); ?>/5</p>
+        <p><strong>Note :</strong> <?php 
+        if ($row["note"] == 0) {
+            echo "Non noté";
+        } else {
+            echo $row["note"];
+            echo " ⭐";
+        }
+        ?></p>
     </div>
 </div>
 
@@ -248,14 +256,59 @@ while ($photoRow = $result->fetch_assoc()) {
                         $hasApprovedCandidature = $rowCheck["count"] > 0;
 
                         if ($hasApprovedCandidature):
-                            echo "<p>Une candidature a déjà été approuvée pour ce logement.</p>";
-                        endif;
-
-                        if (!$hasApprovedCandidature):
+                            echo "<p>Une candidature a déjà été approuvée pour ce logement :</p>";
+                            //Afficher les détails de l'étudiant approuvé 
                             $sql = "SELECT u.ID, u.nom, u.email, u.telephone, u.facile
                                     FROM reservation r 
                                     JOIN users u ON r.id_etudiant = u.ID
-                                    WHERE r.id_logement = '$logementId' AND r.statut = 'En Attente'";
+                                    WHERE r.id_logement = '$logementId' AND r.statut = 'Approuvée'";
+                            $result = $conn->query($sql);
+                            $candidatures = [];
+                            while ($candidatureRow = $result->fetch_assoc()) {
+                                $candidatures[] = $candidatureRow;
+                            }     
+                            foreach ($candidatures as $candidature): ?>
+                                    <div class="candidature-item mb-3 p-3 border rounded">
+                                        <p><strong>Nom :</strong> <?php echo htmlspecialchars_decode(
+                                            $candidature["nom"]
+                                        ); ?></p>
+                                        <p><strong>Email :</strong> <?php echo htmlspecialchars_decode(
+                                            $candidature["email"]
+                                        ); ?></p>
+                                        <p><strong>Téléphone :</strong> <?php echo htmlspecialchars_decode(
+                                            $candidature["telephone"]
+                                        ); ?></p>
+                                        <?php if (
+                                            !$candidature["facile"] == null
+                                        ) { ?>
+                                            <p><strong>Dossier FACILE</strong> <a href="https://<?php echo $candidature[
+                                                "facile"
+                                            ]; ?> "><?php echo htmlspecialchars_decode(
+                                            $candidature["facile"]
+                                        ); ?></a></p>
+                                        <?php } ?>
+                                        
+                                        <a style="display: inline-flex; align-items: center; justify-content: center;" href="messagerie?dest=<?php echo $candidature[
+                                            "ID"
+                                        ]; ?>" class="btn btn-medium">Contacter</a>
+                                        <form method="POST" action="supprimercandidature.php" style="display: inline;">
+                                            <input type="hidden" name="etudiant_id" value="<?php echo $candidature[
+                                                "ID"
+                                            ]; ?>">
+                                            <input type="hidden" name="logement_id" value="<?php echo $logementId; ?>">
+                                            <button type="submit" style="height: 40px; align-itself: right;" class="btn btn-unapproved">Refuser la candidature</button>
+                                        </form>
+                                    </div>
+                        <?php endforeach;                       
+                        else:     
+                            echo "<p>Aucune candidature n'a encore été approuvée pour ce logement. Voici la liste des candidatures en attente :</p>";
+                        endif;
+
+                        if (!$hasApprovedCandidature):
+                            $sql = "SELECT u.ID, u.nom, u.email, u.telephone, u.facile, r.statut
+                                    FROM reservation r 
+                                    JOIN users u ON r.id_etudiant = u.ID
+                                    WHERE r.id_logement = '$logementId' AND r.statut = 'En Attente' OR r.statut = 'Refusée'";
                             $result = $conn->query($sql);
                             $candidatures = [];
                             while ($candidatureRow = $result->fetch_assoc()) {
@@ -265,6 +318,9 @@ while ($photoRow = $result->fetch_assoc()) {
                             if (count($candidatures) > 0):
                                 foreach ($candidatures as $candidature): ?>
                                     <div class="candidature-item mb-3 p-3 border rounded">
+                                        <?php if ($candidature['statut'] == 'Refusée'): ?>
+                                            <span class="badge bg-danger mb-2">Refusée</span>
+                                        <?php endif; ?>
                                         <p><strong>Nom :</strong> <?php echo htmlspecialchars_decode(
                                             $candidature["nom"]
                                         ); ?></p>

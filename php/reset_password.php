@@ -31,6 +31,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && $user) {
 <html lang="fr">
 <head>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    <link rel="icon" type="image/x-icon" href="../png/icon.png" />
+>>>>>>> 574325583e166dc1926510e3abb9520059be18ca
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mot de passe oublié</title>

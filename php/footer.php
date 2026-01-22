@@ -12,6 +12,10 @@
             <a class="footer-link" href="contact">
                 <span>Contact</span>
             </a>
+            <span class="separator">•</span>
+            <a class="footer-link" href="profil">
+                <span>Connexion/Profil</span>
+            </a>            
         </div>
         
         <div class="footer-copyright">

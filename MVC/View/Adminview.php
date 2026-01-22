@@ -1,6 +1,7 @@
 <?php
 
 class AdminView {
+    
     public function renderDashboard(array $data) {
         // Provide access to session/global user info used in templates
         $user = $GLOBALS['user'] ?? null;
@@ -18,14 +19,16 @@ class AdminView {
         $etudiants = $data['etudiants'];
         $organismes = $data['organismes'];
         
+    
         ?>
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
+    <link rel="icon" type="image/x-icon" href="../png/icon.png" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recherche de logements - Logemangue</title>
+  <title>Admin - Logemangue</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="../css/style.css">
   <link rel="stylesheet" type="text/css" href="../css/admin.css">
@@ -160,9 +163,7 @@ class AdminView {
                         <img src="<?php echo $row['photo_url'] ?: 'placeholder.jpg'; ?>" 
      alt="<?php echo $row['titre']; ?>">                                
                         <div class="info">                                    
-                          <h6 class="fw-bold mb-1"><?php echo $row[
-                              "titre"
-                          ]; ?></h6>                                    
+                          <h6 class="fw-bold mb-1"><?php echo htmlspecialchars_decode($row['titre']); ?></h6>                                    
                           <p class="text-muted mb-0"><?php echo $row[
                               "loyer"
                           ]; ?> € / mois</p>                                    
@@ -171,13 +172,22 @@ class AdminView {
                                 ? "Oui"
                                 : "Non"; ?>                                    
                           </p>     
-                        <form method="post">
+                        
+                          <div class="d-flex justify-content-between mt-3">
+                        <!-- Formulaire d'approbation -->
+                          <form method="post">
                           <input type="hidden" name="logement_id" value=<?php echo $row[
                               "ID"
                           ]; ?>> <!-- Remplace 1 par l'ID du logement -->
                           <button type="submit" class="btn-approved" name="approve">Approuver</button>
-                        </form>                                                      
-                        </div>                           
+                        </form>    
+                                                <!-- Formulaire de suppression -->
+                        <form method="post">
+                            <input type="hidden" name="logement_id" value="<?php echo $row['ID']; ?>">
+                            <button type="submit" class="btn-unapproved" name="totaldelete" onclick="return confirm('Voulez-vous vraiment supprimer ce logement ? Cette action est irréversible.');">Supprimer</button>
+                        </form>                                            
+                        </div>
+                    </div>                           
                       </div>                        
                     </a>                    
                   </div>                  

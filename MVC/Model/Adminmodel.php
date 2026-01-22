@@ -13,7 +13,14 @@ class AdminModel {
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
     }
-
+    
+    public function totalDeleteLogement($logementId) {
+        $sql = 'DELETE FROM logement WHERE id = :id';
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([
+            ':id' => $logementId
+        ]);
+    }
     public function countWaitingLogements(string $q = ''): int {
         $params = [];
         $searchClause = '';
@@ -73,7 +80,7 @@ class AdminModel {
             $params[':q'] = "%$q%";
         }
 
-        $sql = "SELECT id, nom, prenom, email, type_utilisateur, is_admin, created_at FROM users $where ORDER BY created_at DESC LIMIT :limit";
+        $sql = "SELECT id, nom, prenom, email, type_utilisateur, is_admin, created_at, banned FROM users $where ORDER BY created_at DESC LIMIT :limit";
         $stmt = $this->pdo->prepare($sql);
         foreach ($params as $k => $v) $stmt->bindValue($k, $v, PDO::PARAM_STR);
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
@@ -90,6 +97,17 @@ class AdminModel {
     public function deleteUser(int $id): bool {
         $stmt = $this->pdo->prepare("DELETE FROM users WHERE id = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function toggleBan(int $id): bool {
+        // Update ban status
+        $stmt = $this->pdo->prepare("UPDATE logement SET status = 'Waiting' WHERE id_proprietaire = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT); 
+        $stmt->execute();       
+        $stmt = $this->pdo->prepare("UPDATE users SET banned = NOT banned WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
         return $stmt->execute();
     }
 

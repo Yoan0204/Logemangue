@@ -125,7 +125,7 @@ $min_rating = $_GET['min_rating'] ?? '0';
      alt="<?php echo $row['titre']; ?>">
 
                         <div class="info">
-                            <h6 class="fw-bold mb-1"><?php echo $row['titre']; ?></h6>
+                            <h6 class="fw-bold mb-1"><?php echo htmlspecialchars_decode($row['titre']); ?></h6>
                             <p class="text-muted mb-0"><?php echo $row['loyer']; ?> € / mois</p>
                             <p class="small text-muted mb-0">
                                 <?php echo $row['ville']; ?>
@@ -142,7 +142,7 @@ $min_rating = $_GET['min_rating'] ?? '0';
                             ?>
                             <form method="post">
                                 <input type="hidden" name="logement_id" value="<?php echo $row['ID']; ?>">
-                                <button type="submit" class="btn-unapproved" name="delete">Supprimer</button>
+                                <button type="submit" class="btn-unapproved" name="delete">Enlever l'approbation</button>
                             </form>
                             <?php
                             }
@@ -163,7 +163,7 @@ $min_rating = $_GET['min_rating'] ?? '0';
     <!-- Pagination / Voir plus -->
     <?php
     // Défauts si les variables ne sont pas fournies
-    $limit = isset($limit) ? intval($limit) : 10;
+    $limit = isset($limit) ? intval($limit) : 6;
     $offset = isset($offset) ? intval($offset) : 0;
     $total = isset($total) ? intval($total) : 0;
 
@@ -174,7 +174,7 @@ $min_rating = $_GET['min_rating'] ?? '0';
 
     <div class="container mt-4 mb-5 text-center">
         <?php if ($total > 0): ?>
-            <p id="resultRange" class="small text-muted">Affichage <?php echo $start; ?> - <?php echo $end; ?> sur <?php echo $total; ?> logements</p>
+            <p id="resultRange" class="small text-muted">Affichage <span id="displayStart"><?php echo $start; ?></span> - <span id="displayEnd"><?php echo $end; ?></span> sur <span id="displayTotal"><?php echo $total; ?></span> logements</p>
         <?php endif; ?>
 
         <div class="d-flex justify-content-center gap-2">
@@ -182,7 +182,7 @@ $min_rating = $_GET['min_rating'] ?? '0';
                 $prevOffset = max(0, $offset - $limit);
                 $q = $_GET; $q['offset'] = $prevOffset; $q['limit'] = $limit;
             ?>
-                <a href="logements?<?php echo http_build_query($q); ?>" class="btn btn-outline-secondary">Précédent</a>
+                <a href="logements?<?php echo http_build_query($q); ?>" class="btn btn-outline-secondary">← Précédent</a>
             <?php endif; ?>
 
             <?php if ($offset + $limit < $total):
@@ -191,7 +191,7 @@ $min_rating = $_GET['min_rating'] ?? '0';
                 $q = $_GET; $q['offset'] = $nextOffset; $q['limit'] = $limit;
             ?>
                 <a id="loadMoreLink" href="logements?<?php echo http_build_query($q); ?>" class="btn btn-primary d-none">Voir plus</a>
-                <button id="loadMoreBtn" class="btn btn-login" data-offset="<?php echo $offset + $limit; ?>" data-limit="<?php echo $limit; ?>" data-total="<?php echo $total; ?>">Voir plus</button>
+                <button id="loadMoreBtn" class="btn btn-login" data-offset="<?php echo $offset; ?>" data-limit="<?php echo $limit; ?>" data-total="<?php echo $total; ?>">Voir plus →</button>
                 <noscript>
                     <a href="logements?<?php echo http_build_query($q); ?>" class="btn btn-login">Voir plus</a>
                 </noscript>
@@ -243,11 +243,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadBtn = document.getElementById('loadMoreBtn');
     const container = document.getElementById('logementsContainer');
     const resultRange = document.getElementById('resultRange');
+    const displayStart = document.getElementById('displayStart');
+    const displayEnd = document.getElementById('displayEnd');
+    const displayTotal = document.getElementById('displayTotal');
 
     if (!loadBtn) return;
 
     loadBtn.addEventListener('click', async () => {
-        let offset = parseInt(loadBtn.dataset.offset, 10) || 0;
+        let currentOffset = parseInt(loadBtn.dataset.offset, 10) || 0;
         const limit = parseInt(loadBtn.dataset.limit, 10) || 6;
         const total = parseInt(loadBtn.dataset.total, 10) || 0;
 
@@ -257,33 +260,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const params = new URLSearchParams(window.location.search);
-            params.set('offset', offset);
+            const nextOffset = currentOffset + limit;
+            params.set('offset', nextOffset);
             params.set('limit', limit);
 
-            const res = await fetch('fetch_logements?' + params.toString());
-            if (!res.ok) throw new Error('Network error');
-            const data = await res.json();
-            if (!data.success) throw new Error('Server error');
+            const url = 'fetch_logements?' + params.toString();
+            console.log('Requête AJAX:', url);
+            
+            const res = await fetch(url);
+            console.log('Status réponse:', res.status);
+            
+            if (!res.ok) {
+                throw new Error(`HTTP Error: ${res.status} ${res.statusText}`);
+            }
+            
+            const text = await res.text();
+            console.log('Réponse brute:', text);
+            
+            const data = JSON.parse(text);
+            console.log('Données JSON:', data);
+            
+            if (!data.success) {
+                throw new Error(data.error || 'Server error');
+            }
 
             if (data.added && data.html) {
                 container.insertAdjacentHTML('beforeend', data.html);
+                
+                // Mettre à jour l'offset pour le prochain clic
+                loadBtn.dataset.offset = nextOffset;
+                
+                // Mettre à jour l'affichage du nombre de logements
+                const newEnd = Math.min(nextOffset + limit, total);
+                if (displayStart) displayStart.textContent = '1';
+                if (displayEnd) displayEnd.textContent = newEnd;
+                if (displayTotal) displayTotal.textContent = total;
+                
+                console.log('Logements ajoutés:', data.added);
             }
 
-            // Update offset and range
-            loadBtn.dataset.offset = data.nextOffset;
-            if (resultRange) {
-                const start = total > 0 ? 1 : 0;
-                const currentEnd = Math.min(data.nextOffset, total);
-                resultRange.textContent = `Affichage ${start} - ${currentEnd} sur ${total} logements`;
-            }
-
-            if (!data.hasMore) {
+            // Masquer le bouton si pas de résultats supplémentaires
+            if (!data.hasMore || nextOffset >= total) {
                 loadBtn.style.display = 'none';
+                console.log('Fin pagination - plus de logements à afficher');
             }
 
         } catch (err) {
-            console.error(err);
-            alert('Impossible de charger plus de logements.');
+            console.error('Erreur pagination:', err);
+            alert('Impossible de charger plus de logements.\nErreur: ' + err.message);
         } finally {
             loadBtn.disabled = false;
             loadBtn.textContent = originalText;

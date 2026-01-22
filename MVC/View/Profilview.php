@@ -6,6 +6,7 @@ class Profilview {
         <!DOCTYPE html>
         <html lang="fr">
         <head>
+    <link rel="icon" type="image/x-icon" href="../png/icon.png" />
            <meta charset="UTF-8">
             <title>Mon profil</title>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">

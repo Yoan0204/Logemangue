@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             </table>
                             
                             <!-- Info box -->
-                            <table width='100%' cellpadding='0' cellspacing='0' style='background-color:#fff5ed;border-left:4px solid #ff6a00;border-radius:8px;margin:20px 0;'>
+                            <table width='100%' cellpadding='0' cellspacing='0' style='background-color:#fff5ed;border:2px solid #ff6a00;border-radius:8px;margin:20px 0;'>
                                 <tr>
                                     <td style='padding:20px;'>
                                         <p style='margin:0;color:#d65a00;font-size:14px;line-height:1.5;'>
@@ -170,10 +170,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<<<<<<< HEAD
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mot de passe oublié</title>
   <link rel="stylesheet" href="../css/style.css">
+=======
+    <link rel="icon" type="image/x-icon" href="../png/icon.png" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mot de passe oublié</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/password.css" rel="stylesheet">
+>>>>>>> 574325583e166dc1926510e3abb9520059be18ca
 </head>
   <header class="topbar">
     <a href="index" class="topbar-logo">

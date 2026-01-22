@@ -49,6 +49,9 @@ if (
     isset($_POST['titre'], $_POST['type'], $_POST['adresse'], $_POST['ville'],
           $_POST['code'], $_POST['surface'], $_POST['loyer'], $_POST['description'])
 ) {
+  foreach ($_POST as $key => $value) {
+    $_POST[$key] = filter_var($value, FILTER_SANITIZE_SPECIAL_CHARS);
+}
 
     $titre = $_POST['titre'];
     $type = $_POST['type'];
@@ -151,6 +154,7 @@ if (
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <link rel="icon" type="image/x-icon" href="../png/icon.png" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Publier une annonce - Logemangue</title>

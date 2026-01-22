@@ -32,6 +32,23 @@ class Admincontroller {
             }
         }
 
+        //Handle delete POST
+        if (isset($_POST['totaldelete'])) {
+            $id = (int)($_POST['logement_id'] ?? 0);
+            if ($id > 0) {
+                $this->model->totalDeleteLogement($id);
+                // Redirect to avoid form resubmission preserving params
+                $redirect = 'admin.php';
+                $params = [];
+                if (!empty($_GET['q'])) $params['q'] = $_GET['q'];
+                if (!empty($_GET['page'])) $params['page'] = (int)$_GET['page'];
+                $params['message'] = 'deleted';
+                if (!empty($params)) $redirect .= '?' . http_build_query($params);
+                header('Location: ' . $redirect);
+                exit();
+            }
+        }
+
         $q = isset($_GET['q']) ? trim((string)$_GET['q']) : '';
         $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
         $perPage = 6;

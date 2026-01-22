@@ -14,7 +14,7 @@
                 <div class="logement-card">
                     <img src="<?php echo $row['photo_url'] ?: 'placeholder.jpg'; ?>" alt="<?php echo $row['titre']; ?>">      
                     <div class="info">
-                        <h6 class="fw-bold mb-1"><?php echo $row['titre']; ?></h6>
+                        <h6 class="fw-bold mb-1"><?php echo htmlspecialchars_decode($row['titre']); ?></h6>
                         <p class="text-muted mb-0"><?php echo $row['loyer']; ?> € / mois</p>
                         <p class="small text-muted mb-0">
                             Disponible : <?php echo ($row['disponible'] == 1) ? 'Oui' : 'Non'; ?>
