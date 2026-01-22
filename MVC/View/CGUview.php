@@ -173,26 +173,6 @@ class CGUView {
 
     <!-- Footer -->
 
-<<<<<<< HEAD
-      <h2>9. Modifications des CGU</h2>
-      <p>
-        L’équipe se réserve le droit de modifier les CGU à tout moment. Une
-        notification sera affichée en cas de changement important.
-      </p>
-
-      <h2>10. Contact</h2>
-      <p>
-        Pour toute question concernant les CGU, veuillez nous contacter via
-        l’onglet “Contact”.
-      </p>
-
-</main>
-
-<footer>
-    <a href="/">Retour à l’accueil</a>
-</footer>
-=======
->>>>>>> 574325583e166dc1926510e3abb9520059be18ca
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 </body>

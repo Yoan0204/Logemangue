@@ -1,16 +1,15 @@
 <?php
 
-class CandidatureView {
-    public function render(array $candidatures) {
-        
+class CandidaturesView {
+    public function render($candidatures) {
         ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <link rel="icon" type="image/x-icon" href="../png/icon.png" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ma Messagerie</title>
+    <title>Mes Candidatures</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/listmessagerie.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -106,20 +105,20 @@ class CandidatureView {
       <a class="nav-link " href="index">Accueil</a>
       <a class="nav-link" href="logements">Recherche</a>
 
-      <?php if (!$isEtudiant): ?>
+      <?php if (!$GLOBALS['isEtudiant']): ?>
       <a class="nav-link" href="publish">Publier une annonce</a>
       <?php endif; ?>
-      <?php if (!$isEtudiant): ?>
+      <?php if (!$GLOBALS['isEtudiant']): ?>
       <a class="nav-link" href="logements?view=mesannonces">Mes annonces</a>        
       <?php endif; ?>
-      <?php if ($isEtudiant): ?>
-      <a class="nav-link active-link" href="candidatures">Mes candidatures</a>        
+      <?php if ($GLOBALS['isEtudiant']): ?>
+      <a class="nav-link active-link" href="index?page=candidatures">Mes candidatures</a>        
       <?php endif; ?>
       <a class="nav-link" href="listemessagerie">Ma messagerie</a>
-        <?php if ($isAdmin): ?>
-      <a class="nav-link" href="admin">Admin ⚙️</a>
+        <?php if ($GLOBALS['isAdmin']): ?>
+      <a class="nav-link" href="index?page=admin">Admin ⚙️</a>
         <?php endif; ?>
-      <a class="nav-link " href="profil">Mon profil</a>
+      <a class="nav-link " href="index?page=profil">Mon profil</a>
     </nav>
   </header>
 <body>
@@ -149,25 +148,48 @@ class CandidatureView {
                         <tr>
                             <td>
                                 <strong>
-                                    <?php echo htmlspecialchars(
+                                    <?php echo htmlspecialchars_decode(
                                         $candidature['adresse'] . ', ' .
                                         $candidature['ville'] . ' ' .
                                         $candidature['code_postal']
                                     ); ?>
                                 </strong>
                                 <br>
-                                <a class="logement-link" href="../php/logement?id=<?php echo $candidature['logement_id']; ?>">
+                                <a class="logement-link" href="logement?id=<?php echo $candidature['logement_id']; ?>">
                                     Voir le logement
                                 </a>
-                           
+                            </td>
+                            <td><?php echo htmlspecialchars_decode($candidature['date_debut']); ?></td>
+                            <td><?php echo htmlspecialchars_decode($candidature['date_fin']); ?></td>
+                            <td>
+                                <?php if ($candidature['statut'] === 'Refusée'): ?>
+                                    <span class="status-badge red"><?php echo htmlspecialchars_decode($candidature['statut']); ?></span>
+                                <?php elseif ($candidature['statut'] === 'Approuvée'): ?>
+                                    <span class="status-badge green"><?php echo htmlspecialchars_decode($candidature['statut']); ?></span>
+                                <?php else: ?>
+                                    <span class="status-badge"><?php echo htmlspecialchars_decode($candidature['statut']); ?></span>
+                                <?php endif; ?>
+                                
+                            </td>
+                            <td class="fw-bold">
+                                <?php echo htmlspecialchars_decode($candidature['montant']); ?> €
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php endif; ?>
 </div>
 
+
+        
+
 </body>
-      <footer class="text-center py-3">
+      <footer class="text-center">
         <?php include 'footer.php'; ?>
       </footer>
 </html>
-
         <?php
     }
 }

@@ -811,8 +811,8 @@
 }
 
 .btn-approved:hover {
-  background-color: lightgreen;
-  transform: translateY(-2px);
+  background-color: rgb(10, 74, 10);
+  transform: translateY(-2px);  
 }
 
 .btn-medium {
@@ -873,19 +873,7 @@
 .btn-unapproved:hover {
   background-color: rgb(203, 20, 20);
   transform: translateY(-2px);
-<<<<<<< HEAD
-<<<<<<< HEAD
 }
-/* === MASCOTTE PAGE CGU === */
-.mascotte-wrapper {
-    display: flex;
-    justify-content: center;
-    margin: 25px 0;
-=======
-} 
-=======
-}
->>>>>>> 574325583e166dc1926510e3abb9520059be18ca
 
 /* Mobile : bouton pleine largeur */
 @media (max-width: 480px) {
@@ -960,231 +948,91 @@
   padding: 15px;
   margin-bottom: 15px;
   box-shadow: var(--shadow);
->>>>>>> 8fd62e40ed8f3650e69f3f1e820e980156c8259b
 }
 
-.mascotte-cgu {
-    width: 160px;
-    height: auto;
-    opacity: 0.95;
-}
-
-/** === STYLE DU CGU === */
-
-.page-cgu .cgu-intro {
-  margin-bottom: 18px;
-}
-
-/* Sommaire */
-.page-cgu .cgu-summary {
-  background: #fff7f0;
-  border: 1px solid #ffd7b3;
-  border-radius: 10px;
-  padding: 14px 16px;
-  margin: 18px 0 25px;
-}
-
-.page-cgu .cgu-summary h2 {
-  font-size: 18px;
-  margin: 0 0 8px;
-}
-
-.page-cgu .cgu-summary a {
-  color: #ff7a00;
-  text-decoration: none;
-}
-
-.page-cgu .cgu-summary a:hover {
-  text-decoration: underline;
-}
-
-/* TABLEAU CGU */
-.page-cgu .cgu-table {
-  width: 100%;
-  border-collapse: collapse;
-  border: 1px solid #e8e8e8;
+.alert.alert-info {
+  background: rgba(255, 183, 0, 0.08);
+  color: #0a2540;
   border-radius: 12px;
-  overflow: hidden;
-  margin-top: 20px;
+  padding: 14px 18px;
+  border: 1px solid rgba(0, 122, 255, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-weight: 500;
+  transition: 
+    background-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
 }
 
-.page-cgu .cgu-table th,
-.page-cgu .cgu-table td {
-  padding: 14px;
-  border-bottom: 1px solid #efefef;
-  vertical-align: top;
-}
-
-.page-cgu .cgu-table th {
-  background: #f7f7f7;
-  text-align: left;
-}
-
-/* Colonne titre cliquable */
-.page-cgu .cgu-title {
-  font-weight: bold;
-  cursor: pointer;
-  background: #fff3e6;
-  user-select: none;
-  width: 32%;
-}
-
-.page-cgu .cgu-title:hover {
-  background: #ffe6cc;
-}
-
-/* Contenu caché par défaut */
-.page-cgu .cgu-content {
-  display: none;
-  background: white;
-}
-
-/* Affichage si actif */
-.page-cgu .cgu-row.active .cgu-content {
-  display: table-cell;
-}
-
-/* Flèche */
-.page-cgu .cgu-title .arrow {
-  display: inline-block;
-  width: 18px;
-  margin-right: 8px;
-}
-
-/* Bouton retour en haut (n'affecte que cette page) */
-.page-cgu #backToTop {
-  position: fixed;
-  bottom: 18px;
-  right: 18px;
-  padding: 10px 12px;
-  border: none;
-  border-radius: 999px;
-  cursor: pointer;
-  background: #ff7a00;
-  color: white;
-  display: none;
-}
-
-/* Bouton Retour Accueil */ 
-.page-cgu .cgu-footer {
-  text-align: center;
-  padding: 25px 0 40px;
-}
-
-.page-cgu .btn-home {
-  display: inline-block;
-  background: #ff7a00;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 700;
-  padding: 12px 18px;
-  border-radius: 12px;
-  box-shadow: 0 10px 18px rgba(0,0,0,0.12);
-}
-
-.page-cgu .btn-home:hover {
-  filter: brightness(0.95);
+.alert.alert-info:hover {
+  background: rgba(255, 183, 0, 0.14);
+  box-shadow: 0 8px 24px rgba(0, 122, 255, 0.12);
   transform: translateY(-1px);
 }
-.page-cgu .btn-home {
-  background: #ff7a00;
+
+.user-reviews {
+  background: linear-gradient(135deg, var(--orange), var(--yellow));
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 50px;
+  margin-bottom: 15px;
+  box-shadow: var(--shadow);
+  color: white;
+}
+
+.review-card {
+  background-color: #fffdf8;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow);
+  color: black
+}
+
+.review-card .text-muted{
+  color:white
+}
+
+.file-input {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 500;
   color: #fff;
-  text-decoration: none;
+  background: linear-gradient(135deg, #FFD54F, #FF9800);
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(255, 152, 0, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* Page mot de passe oublié */ 
-
-.auth-container{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
-  background: linear-gradient(135deg, #FFD700, #FFA500);
+.file-input:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(255, 152, 0, 0.35);
 }
 
-.auth-card{
-  width: 380px;
-  background:#fff;
-  padding:30px;
-  border-radius:12px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.15);
-  text-align:center;
+.file-input:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(255, 152, 0, 0.25);
 }
 
-.auth-card h2{
-  color:#F5A623;
-  margin-bottom:10px;
+.file-input input[type="file"] {
+  display: none;
 }
 
-.subtitle{
-  color:#666;
-  font-size:14px;
-  margin-bottom:20px;
-}
-
-.auth-card input{
-  width:100%;
-  padding:12px;
-  border:1px solid #ccc;
-  border-radius:6px;
-  margin-bottom:12px;
-}
-
-.auth-card button{
-  width:100%;
-  padding:12px;
-  background:#F5A623;
-  color:white;
-  font-weight:bold;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-}
-
-.auth-card button:hover{
-  background:#e0951d;
-}
-
-.message{
-  margin-top:15px;
-  font-size:14px;
-}
-/* Page mot de passe oublié - Lien de réinitialisation */
-.reset-link-btn{
-  display:inline-block;
-  margin-top:8px;
-  padding:10px 14px;
-  background:#F5A623;
-  color:white;
-  text-decoration:none;
-  border-radius:8px;
-  font-weight:700;
-}
-
-.reset-link-btn:hover{
-  background:#e0951d;
-}
-
-.reset-link-small{
-  margin-top:8px;
-  font-size:12px;
-  color:#777;
-}
-
-/* Page réinitialisation mot de passe */
-
-.auth-links{
-  margin-top: 15px;
-  text-align: center;
-}
-
-.small-link{
+#file-names {
+  margin-top: 10px;
   font-size: 13px;
-  color: #F5A623;
-  text-decoration: none;
-  font-weight: 700;
+  color: #444;
 }
 
-.small-link:hover{
-  text-decoration: underline;
+#file-names div {
+  background: #fff7ed;
+  border-radius: 12px;
+  padding: 6px 12px;
+  margin-top: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
