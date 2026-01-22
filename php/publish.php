@@ -274,12 +274,12 @@ if (
               <textarea class="form-control form-field" rows="4" placeholder="Décrivez votre logement..." id="description" name="description" required title="Caractères spéciaux non autorisés"><?php echo $editMode ? htmlspecialchars($logement['description']) : ''; ?></textarea>
             </div>
 
-<label class="file-input">
-  Choisir des images
-  <input type="file" name="photos[]" multiple accept="image/*" id="photosInput">
-</label>
+            <label class="file-input">
+              Choisir des images
+              <input type="file" name="photos[]" multiple accept="image/*" id="photosInput">
+            </label>
 
-<div id="file-names"></div>
+            <div id="file-names"></div>
 
 
           </div>

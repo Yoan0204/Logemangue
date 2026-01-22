@@ -303,12 +303,12 @@ while ($photoRow = $result->fetch_assoc()) {
                         else:     
                             echo "<p>Aucune candidature n'a encore été approuvée pour ce logement. Voici la liste des candidatures en attente :</p>";
                         endif;
-
+                        
                         if (!$hasApprovedCandidature):
                             $sql = "SELECT u.ID, u.nom, u.email, u.telephone, u.facile, r.statut
                                     FROM reservation r 
                                     JOIN users u ON r.id_etudiant = u.ID
-                                    WHERE r.id_logement = '$logementId' AND r.statut = 'En Attente' OR r.statut = 'Refusée'";
+                                    WHERE r.id_logement = '$logementId' AND (r.statut = 'En Attente' OR r.statut = 'Refusée')";
                             $result = $conn->query($sql);
                             $candidatures = [];
                             while ($candidatureRow = $result->fetch_assoc()) {
